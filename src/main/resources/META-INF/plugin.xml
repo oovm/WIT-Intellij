@@ -1,18 +1,111 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.oovm.witintellij</id>
-    <name>Wit-Intellij</name>
-    <vendor>oovm</vendor>
+	<id>wit</id>
+	<name>WIT Language</name>
+	<vendor>voml</vendor>
+	<!-- Product and plugin compatibility requirements -->
+	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
+	<depends>com.intellij.modules.platform</depends>
+	<depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>
+	<resource-bundle>messages.FluentBundle</resource-bundle>
+	<extensions defaultExtensionNs="com.intellij">
+		<fileType
+			name="Fluent"
+			language="Fluent"
+			extensions="ftl;"
+			implementationClass="com.github.projectfluent.language.file.FluentFileType"
+			fieldName="INSTANCE"
+		/>
+		<lang.parserDefinition
+			language="Fluent"
+			implementationClass="com.github.projectfluent.language.psi.FluentParserDefinition"
+		/>
+		<!-- StructureView -->
+		<!--iconProvider implementation="com.github.projectfluent.ide.file.FluentIconProvider"-->
+		<lang.psiStructureViewFactory language="Fluent"
+		                              implementationClass="com.github.projectfluent.ide.view.FluentStructureViewFactory"/>
+		<projectViewNestingRulesProvider implementation="com.github.projectfluent.language.file.FluentFileGroup"/>
+		<!-- Highlight -->
+		<additionalTextAttributes scheme="Default" file="colors/FluentDefault.xml"/>
+		<additionalTextAttributes scheme="Darcula" file="colors/FluentDarcula.xml"/>
+		<colorSettingsPage implementation="com.github.projectfluent.ide.highlight.FluentHighlightSetting"/>
+		<highlightVisitor implementation="com.github.projectfluent.ide.highlight.FluentHighlightVisitor"/>
+		<lang.syntaxHighlighter
+			language="Fluent"
+			implementationClass="com.github.projectfluent.ide.highlight.FluentSyntaxHighlighter"
+		/>
+		<!-- Formatter -->
+		<lang.formatter
+			language="Fluent"
+			implementationClass="com.github.projectfluent.ide.formatter.FluentFormatBuilder"
+		/>
+		<lang.commenter
+			language="Fluent"
+			implementationClass="com.github.projectfluent.ide.formatter.JssCommenter"
+		/>
+		<lang.smartEnterProcessor
+			language="Fluent"
+			implementationClass="com.github.projectfluent.ide.formatter.JssSmartEnter"
+		/>
+		<!-- Document -->
+		<!--documentationProvider implementation="com.github.projectfluent.ide.doc.JssDocumentationExtender"-->
+		<!--		<psi.referenceContributor implementation="com.github.projectfluent.ide.doc.JssUrlReferenceContributor"/>-->
+		<!--		<lang.documentationProvider-->
+		<!--				language="Fluent"-->
+		<!--				implementationClass="com.github.projectfluent.ide.doc.JssDocumentationProvider"-->
+		<!--		/>-->
+		<lang.braceMatcher
+			language="Fluent"
+			implementationClass="com.github.projectfluent.ide.matcher.FluentBraceMatcher"
+		/>
+		<!--		<lang.quoteHandler-->
+		<!--				language="Fluent"-->
+		<!--				implementationClass="com.github.projectfluent.ide.matcher.JssQuoteHandler"-->
+		<!--		/>-->
+		<lang.foldingBuilder
+			language="Fluent"
+			implementationClass="com.github.projectfluent.ide.matcher.FluentFoldingBuilder"
+		/>
+		<!--		<indexPatternBuilder-->
+		<!--				implementation="com.github.projectfluent.ide.todo.VomlTodoIndexPatternBuilder"-->
+		<!--		/>-->
+		<!--		<todoIndexer-->
+		<!--				filetype="Fluent"-->
+		<!--				implementationClass="com.github.projectfluent.ide.todo.VomlTodoIndexer"-->
+		<!--		/>-->
+		<!--		<completion.contributor-->
+		<!--				language="Fluent"-->
+		<!--				implementationClass="com.github.projectfluent.ide.completion.VomlOptionCompletionContributor"-->
+		<!--		/>-->
 
-    <depends>com.intellij.modules.platform</depends>
+		<annotator language="Fluent" implementationClass="com.github.projectfluent.ide.annotator.LiteralChecker"/>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
+		<langCodeStyleSettingsProvider
+			implementation="com.github.projectfluent.ide.codeStyle.FluentLanguageCodeStyleSettingsProvider"
+		/>
+		<!--		<languageInjectionContributor-->
+		<!--			language="Fluent"-->
+		<!--			implementationClass="com.github.projectfluent.ide.highlight.InjectMarkdown"-->
+		<!--		/>-->
+		<languageInjectionContributor
+			language="Fluent"
+			implementationClass="com.github.projectfluent.ide.highlight.InjectVue"
+		/>
+		<multiHostInjector implementation="com.github.projectfluent.ide.highlight.InjectVue"/>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.oovm.witintellij.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.oovm.witintellij.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+	</extensions>
+	<actions>
+		<action id="NewFluentFile" class="com.github.projectfluent.ide.actions.FluentCreateFile">
+			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
+		</action>
+		<action id="jss.JssConvertJson"
+		        class="com.github.projectfluent.ide.actions.FluentConvertMo"/>
+		<group id="jss.JssGenerator" popup="true" text="JssGenerator">
+			<reference ref="NewFluentFile"/>
+			<!--			<reference ref="jss.JssConvertJson"/>-->
+			<add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>
+			<add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>
+			<add-to-group group-id="EditorTabPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>
+			<add-to-group group-id="ConsoleEditorPopupMenu" anchor="after" relative-to-action="Github.Create.Gist"/>
+		</group>
+	</actions>
 </idea-plugin>
