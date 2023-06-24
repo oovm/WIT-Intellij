@@ -1,12 +1,12 @@
 package com.github.projectfluent.ide.codeStyle
 
-import com.github.projectfluent.FluentLanguage
+import com.github.projectfluent.WitLanguage
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.application.options.codeStyle.OtherFileTypesCodeStyleConfigurable
 import com.intellij.psi.codeStyle.*
 
 class FluentLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider() {
-    override fun getLanguage() = FluentLanguage
+    override fun getLanguage() = WitLanguage
 
     override fun getIndentOptionsEditor() = SmartIndentOptionsEditor()
 

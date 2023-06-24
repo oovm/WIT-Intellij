@@ -1,6 +1,6 @@
 package com.github.projectfluent.ide.highlight
 
-import com.github.projectfluent.FluentLanguage
+import com.github.projectfluent.WitLanguage
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
 import com.intellij.psi.PsiElement
@@ -14,7 +14,7 @@ class InjectVue : MultiHostInjector {
             val tag = context.parent;
             if (tag is XmlTag && tag.name == "fluent") {
                 val range = context.textRange.shiftLeft(context.startOffset);
-                registrar.startInjecting(FluentLanguage)
+                registrar.startInjecting(WitLanguage)
                 registrar.addPlace(null, null, context, range)
                 registrar.doneInjecting()
             }

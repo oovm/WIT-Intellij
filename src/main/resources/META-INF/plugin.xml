@@ -9,19 +9,19 @@
 	<resource-bundle>messages.FluentBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType
-			name="Fluent"
-			language="Fluent"
-			extensions="ftl;"
-			implementationClass="com.github.projectfluent.language.file.FluentFileType"
+			name="wit"
+			language="wit"
+			extensions="wit;"
+			implementationClass="com.github.projectfluent.language.file.WitFileType"
 			fieldName="INSTANCE"
 		/>
 		<lang.parserDefinition
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.language.psi.FluentParserDefinition"
 		/>
 		<!-- StructureView -->
 		<!--iconProvider implementation="com.github.projectfluent.ide.file.FluentIconProvider"-->
-		<lang.psiStructureViewFactory language="Fluent"
+		<lang.psiStructureViewFactory language="wit"
 		                              implementationClass="com.github.projectfluent.ide.view.FluentStructureViewFactory"/>
 		<projectViewNestingRulesProvider implementation="com.github.projectfluent.language.file.FluentFileGroup"/>
 		<!-- Highlight -->
@@ -30,20 +30,20 @@
 		<colorSettingsPage implementation="com.github.projectfluent.ide.highlight.FluentHighlightSetting"/>
 		<highlightVisitor implementation="com.github.projectfluent.ide.highlight.FluentHighlightVisitor"/>
 		<lang.syntaxHighlighter
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.ide.highlight.FluentSyntaxHighlighter"
 		/>
 		<!-- Formatter -->
 		<lang.formatter
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.ide.formatter.FluentFormatBuilder"
 		/>
 		<lang.commenter
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.ide.formatter.JssCommenter"
 		/>
 		<lang.smartEnterProcessor
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
@@ -54,7 +54,7 @@
 		<!--				implementationClass="com.github.projectfluent.ide.doc.JssDocumentationProvider"-->
 		<!--		/>-->
 		<lang.braceMatcher
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.ide.matcher.FluentBraceMatcher"
 		/>
 		<!--		<lang.quoteHandler-->
@@ -62,7 +62,7 @@
 		<!--				implementationClass="com.github.projectfluent.ide.matcher.JssQuoteHandler"-->
 		<!--		/>-->
 		<lang.foldingBuilder
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.ide.matcher.FluentFoldingBuilder"
 		/>
 		<!--		<indexPatternBuilder-->
@@ -77,7 +77,7 @@
 		<!--				implementationClass="com.github.projectfluent.ide.completion.VomlOptionCompletionContributor"-->
 		<!--		/>-->
 
-		<annotator language="Fluent" implementationClass="com.github.projectfluent.ide.annotator.LiteralChecker"/>
+		<annotator language="wit" implementationClass="com.github.projectfluent.ide.annotator.LiteralChecker"/>
 
 		<langCodeStyleSettingsProvider
 			implementation="com.github.projectfluent.ide.codeStyle.FluentLanguageCodeStyleSettingsProvider"
@@ -87,7 +87,7 @@
 		<!--			implementationClass="com.github.projectfluent.ide.highlight.InjectMarkdown"-->
 		<!--		/>-->
 		<languageInjectionContributor
-			language="Fluent"
+			language="wit"
 			implementationClass="com.github.projectfluent.ide.highlight.InjectVue"
 		/>
 		<multiHostInjector implementation="com.github.projectfluent.ide.highlight.InjectVue"/>

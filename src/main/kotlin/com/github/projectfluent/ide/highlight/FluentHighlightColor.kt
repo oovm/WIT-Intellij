@@ -1,6 +1,6 @@
 package com.github.projectfluent.ide.highlight
 
-import com.github.projectfluent.FluentBundle
+import com.github.projectfluent.WitBundle
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -13,37 +13,37 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as Default
 enum class FluentHighlightColor(humanName: Supplier<@AttributeDescriptor String>, default: TextAttributesKey? = null) {
     // 特殊关键词
     KEYWORD(OptionsBundle.messagePointer("options.language.defaults.keyword"), Default.KEYWORD),
-    IDIOM_SYMBOL(FluentBundle.messagePointer("color.token.symbol.idiom"), Default.METADATA),
-    IDIOM_MARK(FluentBundle.messagePointer("color.token.idiom_mark"), IDIOM_SYMBOL.textAttributesKey),
-    PROP_MARK(FluentBundle.messagePointer("color.token.properties_mark"), KEYWORD.textAttributesKey),
+    IDIOM_SYMBOL(WitBundle.messagePointer("color.token.symbol.idiom"), Default.METADATA),
+    IDIOM_MARK(WitBundle.messagePointer("color.token.idiom_mark"), IDIOM_SYMBOL.textAttributesKey),
+    PROP_MARK(WitBundle.messagePointer("color.token.properties_mark"), KEYWORD.textAttributesKey),
 
     // 字面量
-    NULL(FluentBundle.messagePointer("color.token.null"), Default.KEYWORD),
-    BOOLEAN(FluentBundle.messagePointer("color.token.boolean"), Default.KEYWORD),
-    DECIMAL(FluentBundle.messagePointer("color.token.decimal"), Default.NUMBER),
-    INTEGER(FluentBundle.messagePointer("color.token.integer"), Default.NUMBER),
-    STRING(FluentBundle.messagePointer("color.token.string"), Default.STRING),
-    TEXT(FluentBundle.messagePointer("color.token.text"), STRING.textAttributesKey),
-    STRING_ESCAPED(FluentBundle.messagePointer("color.token.text"), Default.VALID_STRING_ESCAPE),
-    STRING_BAD(FluentBundle.messagePointer("color.token.text"), Default.INVALID_STRING_ESCAPE),
+    NULL(WitBundle.messagePointer("color.token.null"), Default.KEYWORD),
+    BOOLEAN(WitBundle.messagePointer("color.token.boolean"), Default.KEYWORD),
+    DECIMAL(WitBundle.messagePointer("color.token.decimal"), Default.NUMBER),
+    INTEGER(WitBundle.messagePointer("color.token.integer"), Default.NUMBER),
+    STRING(WitBundle.messagePointer("color.token.string"), Default.STRING),
+    TEXT(WitBundle.messagePointer("color.token.text"), STRING.textAttributesKey),
+    STRING_ESCAPED(WitBundle.messagePointer("color.token.text"), Default.VALID_STRING_ESCAPE),
+    STRING_BAD(WitBundle.messagePointer("color.token.text"), Default.INVALID_STRING_ESCAPE),
     // 标识符
     IDENTIFIER(OptionsBundle.messagePointer("options.language.defaults.identifier"), Default.IDENTIFIER),
-    SYM_MESSAGE(FluentBundle.messagePointer("color.token.symbol.message"), Default.STATIC_FIELD),
-    SYM_TERM(FluentBundle.messagePointer("color.token.symbol.term"), Default.CONSTANT),
-    SYM_ATTRIBUTE(FluentBundle.messagePointer("color.token.symbol.attribute"), Default.STATIC_METHOD),
-    SYM_VARIABLE(FluentBundle.messagePointer("color.token.symbol.variable"), Default.REASSIGNED_PARAMETER),
-    SYM_FUNCTION(FluentBundle.messagePointer("color.token.symbol.function"), Default.PREDEFINED_SYMBOL),
+    SYM_MESSAGE(WitBundle.messagePointer("color.token.symbol.message"), Default.STATIC_FIELD),
+    SYM_TERM(WitBundle.messagePointer("color.token.symbol.term"), Default.CONSTANT),
+    SYM_ATTRIBUTE(WitBundle.messagePointer("color.token.symbol.attribute"), Default.STATIC_METHOD),
+    SYM_VARIABLE(WitBundle.messagePointer("color.token.symbol.variable"), Default.REASSIGNED_PARAMETER),
+    SYM_FUNCTION(WitBundle.messagePointer("color.token.symbol.function"), Default.PREDEFINED_SYMBOL),
     //
-    TYPE_HINT(FluentBundle.messagePointer("color.token.symbol.type"), Default.CLASS_NAME),
+    TYPE_HINT(WitBundle.messagePointer("color.token.symbol.type"), Default.CLASS_NAME),
 
     // 标点符号
     PARENTHESES(OptionsBundle.messagePointer("options.language.defaults.parentheses"), Default.PARENTHESES),
     BRACKETS(OptionsBundle.messagePointer("options.language.defaults.brackets"), Default.BRACKETS),
     BRACES(OptionsBundle.messagePointer("options.language.defaults.braces"), Default.BRACES),
     DOT(OptionsBundle.messagePointer("options.language.defaults.dot"), Default.DOT),
-    STAR(FluentBundle.messagePointer("color.token.default"), Default.KEYWORD),
+    STAR(WitBundle.messagePointer("color.token.default"), Default.KEYWORD),
     COMMA(OptionsBundle.messagePointer("options.language.defaults.comma"), Default.COMMA),
-    SET(FluentBundle.messagePointer("color.token.set"), Default.OPERATION_SIGN),
+    SET(WitBundle.messagePointer("color.token.set"), Default.OPERATION_SIGN),
     SEMICOLON(OptionsBundle.messagePointer("options.language.defaults.semicolon"), Default.SEMICOLON),
 
     // 注释

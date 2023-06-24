@@ -5,17 +5,17 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiElement
 import javax.swing.Icon
 
-class FluentIcons : IconProvider() {
+class WitIcons : IconProvider() {
     override fun getIcon(psiElement: PsiElement, flags: Int): Icon? {
         val fileName = psiElement.containingFile.name
 
         return when {
-            fileName.endsWith(".ftl") -> FILE
+            fileName.endsWith(".wit") -> FILE
             else -> null
         }
     }
 
     companion object {
-        val FILE = IconLoader.getIcon("/icons/ftl.svg", FluentIcons::class.java)
+        val FILE = IconLoader.getIcon("/icons/ftl.svg", WitIcons::class.java)
     }
 }

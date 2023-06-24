@@ -1,7 +1,7 @@
 package com.github.projectfluent.ide.highlight
 
-import com.github.projectfluent.FluentBundle
-import com.github.projectfluent.language.file.FluentIcons
+import com.github.projectfluent.WitBundle
+import com.github.projectfluent.language.file.WitIcons
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
@@ -17,9 +17,9 @@ class FluentHighlightSetting : ColorSettingsPage {
 
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
 
-    override fun getDisplayName() = FluentBundle.message("filetype.name")
+    override fun getDisplayName() = WitBundle.message("filetype.name")
 
-    override fun getIcon() = FluentIcons.FILE
+    override fun getIcon() = WitIcons.FILE
 
     override fun getHighlighter() = FluentSyntaxHighlighter()
 

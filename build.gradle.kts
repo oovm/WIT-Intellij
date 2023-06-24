@@ -15,6 +15,7 @@ plugins {
 
 group = properties("pluginGroup").get()
 version = properties("pluginVersion").get()
+sourceSets["main"].java.srcDirs("src/main/gen")
 
 // Configure project's dependencies
 repositories {
