@@ -9,15 +9,15 @@
 	<resource-bundle>messages.FluentBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType
-			name="wit"
-			language="wit"
-			extensions="wit;"
-			implementationClass="com.github.projectfluent.language.file.WitFileType"
-			fieldName="INSTANCE"
+				name="wit"
+				language="wit"
+				extensions="wit;"
+				implementationClass="com.github.projectfluent.language.file.WitFileType"
+				fieldName="INSTANCE"
 		/>
 		<lang.parserDefinition
-			language="wit"
-			implementationClass="com.github.projectfluent.language.psi.FluentParserDefinition"
+				language="wit"
+				implementationClass="com.github.projectfluent.language.psi.FluentParserDefinition"
 		/>
 		<!-- StructureView -->
 		<!--iconProvider implementation="com.github.projectfluent.ide.file.FluentIconProvider"-->
@@ -30,21 +30,21 @@
 		<colorSettingsPage implementation="com.github.projectfluent.ide.highlight.FluentHighlightSetting"/>
 		<highlightVisitor implementation="com.github.projectfluent.ide.highlight.FluentHighlightVisitor"/>
 		<lang.syntaxHighlighter
-			language="wit"
-			implementationClass="com.github.projectfluent.ide.highlight.FluentSyntaxHighlighter"
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.highlight.FluentSyntaxHighlighter"
 		/>
 		<!-- Formatter -->
 		<lang.formatter
-			language="wit"
-			implementationClass="com.github.projectfluent.ide.formatter.FluentFormatBuilder"
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.formatter.FluentFormatBuilder"
 		/>
 		<lang.commenter
-			language="wit"
-			implementationClass="com.github.projectfluent.ide.formatter.JssCommenter"
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.formatter.JssCommenter"
 		/>
 		<lang.smartEnterProcessor
-			language="wit"
-			implementationClass="com.github.projectfluent.ide.formatter.JssSmartEnter"
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
 		<!--documentationProvider implementation="com.github.projectfluent.ide.doc.JssDocumentationExtender"-->
@@ -54,16 +54,16 @@
 		<!--				implementationClass="com.github.projectfluent.ide.doc.JssDocumentationProvider"-->
 		<!--		/>-->
 		<lang.braceMatcher
-			language="wit"
-			implementationClass="com.github.projectfluent.ide.matcher.FluentBraceMatcher"
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.matcher.FluentBraceMatcher"
 		/>
 		<!--		<lang.quoteHandler-->
 		<!--				language="Fluent"-->
 		<!--				implementationClass="com.github.projectfluent.ide.matcher.JssQuoteHandler"-->
 		<!--		/>-->
 		<lang.foldingBuilder
-			language="wit"
-			implementationClass="com.github.projectfluent.ide.matcher.FluentFoldingBuilder"
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.matcher.FluentFoldingBuilder"
 		/>
 		<!--		<indexPatternBuilder-->
 		<!--				implementation="com.github.projectfluent.ide.todo.VomlTodoIndexPatternBuilder"-->
@@ -80,15 +80,15 @@
 		<annotator language="wit" implementationClass="com.github.projectfluent.ide.annotator.LiteralChecker"/>
 
 		<langCodeStyleSettingsProvider
-			implementation="com.github.projectfluent.ide.codeStyle.FluentLanguageCodeStyleSettingsProvider"
+				implementation="com.github.projectfluent.ide.codeStyle.FluentLanguageCodeStyleSettingsProvider"
 		/>
 		<!--		<languageInjectionContributor-->
 		<!--			language="Fluent"-->
 		<!--			implementationClass="com.github.projectfluent.ide.highlight.InjectMarkdown"-->
 		<!--		/>-->
 		<languageInjectionContributor
-			language="wit"
-			implementationClass="com.github.projectfluent.ide.highlight.InjectVue"
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.highlight.InjectVue"
 		/>
 		<multiHostInjector implementation="com.github.projectfluent.ide.highlight.InjectVue"/>
 
@@ -97,8 +97,7 @@
 		<action id="NewFluentFile" class="com.github.projectfluent.ide.actions.FluentCreateFile">
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
 		</action>
-		<action id="jss.JssConvertJson"
-		        class="com.github.projectfluent.ide.actions.FluentConvertMo"/>
+<!--		<action id="jss.JssConvertJson" class="com.github.projectfluent.ide.actions.FluentConvertMo"/>-->
 		<group id="jss.JssGenerator" popup="true" text="JssGenerator">
 			<reference ref="NewFluentFile"/>
 			<!--			<reference ref="jss.JssConvertJson"/>-->
