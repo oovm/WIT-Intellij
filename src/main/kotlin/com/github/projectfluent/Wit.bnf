@@ -29,6 +29,14 @@
         STRING_ESCAPE = "String Escaped"
         SELECTION_LINE = "SELECTION_LINE"
 
+KW_PACKAGE    = "package"
+KW_WORLD      = "world"
+KW_INTERFACE  = "interface"
+KW_INCLUDE    = "include"
+KW_IMPORT     = "import"
+KW_USE        = "use"
+KW_RECORD     = "record"
+
         PARENTHESIS_L = '('
         PARENTHESIS_R = ')'
         BRACKET_L = '['

@@ -10,13 +10,13 @@ import static com.github.projectfluent.language.psi.FluentTypes.*;
 %%
 
 %{
-public _FluentLexer() {
+public WitLexer() {
 	this((java.io.Reader)null);
 }
 %}
 
 %public
-%class _FluentLexer
+%class _WitLexer
 %implements FlexLexer
 %function advance
 %type IElementType
@@ -29,7 +29,8 @@ COMMENT_DOCUMENT=("///")[^\r\n]*
 COMMENT_LINE = "//"[^\r\n]*
 COMMENT_BLOCK=[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
-SYMBOL = [a-zA-Z][a-zA-Z0-9_-]*
+WORD = [a-zA-Z][a-zA-Z0-9]*
+SYMBOL = {WORD}([-]{WORD})*
 //STRING=\"([^\"\\]|\\.)*\"
 BYTE=(0[bBoOxXfF][0-9A-Fa-f][0-9A-Fa-f_]*)
 INTEGER=(0|[1-9][0-9_]*)
@@ -43,6 +44,14 @@ CRLF      = \r\n | \n | \r
 ESCAPE_SPECIAL= \\[^]
 ESCAPE_UNICODE= \\(u{HEX}{4}|U{HEX}{6})
 HEX = [0-9a-fA-F]
+
+KW_PACKAGE    = "package"
+KW_WORLD      = "world"
+KW_INTERFACE  = "interface"
+KW_INCLUDE    = "include"
+KW_IMPORT     = "import"
+KW_USE        = "use"
+KW_RECORD     = "record"
 
 %%
 
@@ -65,7 +74,11 @@ HEX = [0-9a-fA-F]
 	"-" { return HYPHEN; }
 }
 <YYINITIAL> {
-	{SYMBOL} { return SYMBOL; }
+	{KW_PACKAGE}   { return KW_PACKAGE; }
+	{KW_WORLD}     { return KW_WORLD; }
+	{KW_INTERFACE} { return KW_INTERFACE; }
+	{KW_USE}       { return KW_USE; }
+	{SYMBOL}       { return SYMBOL; }
 }
 // =====================================================================================================================
 [^] { return BAD_CHARACTER; }

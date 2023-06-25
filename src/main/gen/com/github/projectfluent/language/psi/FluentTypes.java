@@ -55,6 +55,13 @@ public interface FluentTypes {
   IElementType EQ = new FluentTokenType("=");
   IElementType HYPHEN = new FluentTokenType("-");
   IElementType INTEGER = new FluentTokenType("INTEGER");
+  IElementType KW_IMPORT = new FluentTokenType("import");
+  IElementType KW_INCLUDE = new FluentTokenType("include");
+  IElementType KW_INTERFACE = new FluentTokenType("interface");
+  IElementType KW_PACKAGE = new FluentTokenType("package");
+  IElementType KW_RECORD = new FluentTokenType("record");
+  IElementType KW_USE = new FluentTokenType("use");
+  IElementType KW_WORLD = new FluentTokenType("world");
   IElementType PARENTHESIS_L = new FluentTokenType("(");
   IElementType PARENTHESIS_R = new FluentTokenType(")");
   IElementType SELECTION_LINE = new FluentTokenType("SELECTION_LINE");
