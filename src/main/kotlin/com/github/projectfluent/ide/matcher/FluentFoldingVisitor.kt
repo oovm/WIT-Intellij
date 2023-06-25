@@ -13,10 +13,7 @@ class FluentFoldingVisitor(private val descriptors: MutableList<FoldingDescripto
         super.visitInlinePlaceable(o)
     }
 
-    override fun visitMessage(o: FluentMessage) {
-        //TODO: folding end of =
-        super.visitMessage(o)
-    }
+
 
 
 

@@ -1,8 +1,8 @@
 package com.github.projectfluent.ide.view
 
 import com.github.projectfluent.language.file.FluentFile
-import com.github.projectfluent.language.psi_node.FluentAttributeNode
-import com.github.projectfluent.language.psi_node.FluentMessageNode
+import com.github.projectfluent.language.psi_node.WitAttributeNode
+import com.github.projectfluent.language.psi_node.FluentPackageNode
 import com.github.projectfluent.language.psi_node.FluentTermNode
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.structureView.StructureViewTreeElement
@@ -43,13 +43,13 @@ class FluentStructureViewElement(private val node: NavigatablePsiElement) :
 
     override fun getChildren(): Array<out TreeElement> = when (node) {
         is FluentFile -> getChildOfType(
-            FluentMessageNode::class.java,
+            FluentPackageNode::class.java,
             FluentTermNode::class.java,
         )
-        is FluentMessageNode, is FluentTermNode -> getChildOfType(
-            FluentAttributeNode::class.java,
+        is FluentPackageNode, is FluentTermNode -> getChildOfType(
+            WitAttributeNode::class.java,
         )
-        is FluentAttributeNode -> arrayOf()
+        is WitAttributeNode -> arrayOf()
         else -> getChildOfType(
             NavigatablePsiElement::class.java,
         )

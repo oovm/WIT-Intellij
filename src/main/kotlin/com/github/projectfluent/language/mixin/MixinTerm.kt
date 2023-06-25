@@ -1,7 +1,7 @@
 package com.github.projectfluent.language.mixin
 
 import com.github.projectfluent.ide.view.FluentItemPresentation
-import com.github.projectfluent.language.psi.FluentElement
+import com.github.projectfluent.language.psi.WitElement
 import com.github.projectfluent.language.psi.FluentTerm
 import com.intellij.icons.AllIcons
 import com.intellij.lang.ASTNode
@@ -10,7 +10,7 @@ import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner
 
-abstract class MixinTerm(node: ASTNode) : FluentElement(node),
+abstract class MixinTerm(node: ASTNode) : WitElement(node),
     NavigatablePsiElement,
     PsiNameIdentifierOwner,
     FluentTerm {

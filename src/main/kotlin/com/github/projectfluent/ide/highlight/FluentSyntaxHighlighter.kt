@@ -24,6 +24,11 @@ class FluentSyntaxHighlighter : SyntaxHighlighterBase() {
             // AS, SCHEMA, PROP -> JssColor.KEYWORD
             // ANNOTATION -> JssColor.ANNOTATION
             //
+            KW_PACKAGE, KW_WORLD, KW_INTERFACE,
+            KW_INCLUDE, KW_IMPORT, KW_USE,
+            KW_RECORD,
+            -> FluentHighlightColor.KEYWORD
+
             PARENTHESIS_L, PARENTHESIS_R -> FluentHighlightColor.PARENTHESES
             BRACKET_L, BRACKET_R -> FluentHighlightColor.BRACKETS
             BRACE_L, BRACE_R -> FluentHighlightColor.BRACES

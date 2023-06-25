@@ -2,7 +2,7 @@
     parserClass = "com.github.projectfluent.language.parser.FluentParser"
     parserUtilClass = "com.github.projectfluent.language.psi.FluentParserExtension"
 
-    extends = "com.github.projectfluent.language.psi.FluentElement"
+    extends = "com.github.projectfluent.language.psi.WitElement"
 
     psiClassPrefix = "Fluent"
     psiImplClassSuffix = "Node"
@@ -37,6 +37,7 @@ KW_IMPORT     = "import"
 KW_USE        = "use"
 KW_RECORD     = "record"
 
+		VERSION = "1.0.0-semver"
         PARENTHESIS_L = '('
         PARENTHESIS_R = ')'
         BRACKET_L = '['
@@ -56,22 +57,26 @@ KW_RECORD     = "record"
         AT = '@'
         TO = "->"
         HYPHEN = "-"
+        SLASH = '/'
 //      SPACE='regexp:\s+'
 //      ANY = 'regexp:.'
     ]
 }
 
 // https://github.com/projectfluent/fluent/blob/master/spec/fluent.ebnf
-Fluent ::= Entry*
-private Entry ::=
-    Message
-  | Term
+wit ::= statements*
+private statements ::=
+    package
+  | world
   | Attribute
   | COMMENT_LINE
-Message ::= MessageID EQ ((Pattern Attribute*) | Attribute+) {
-    mixin = "com.github.projectfluent.language.mixin.MixinMessage"
+
+// package wasi:cloud-core@0.2.0-draft;
+package ::= KW_PACKAGE identifier (COLON identifier)? (AT VERSION)? {
+	pin = 2
+    mixin = "com.github.projectfluent.language.mixin.MixinPackage"
 }
-Term ::= TermID EQ Pattern Attribute* {
+world ::= KW_WORLD EQ Pattern Attribute* {
     mixin = "com.github.projectfluent.language.mixin.MixinTerm"
 }
 /* Attributes of Messages and Terms. */
@@ -129,3 +134,4 @@ FunctionID          ::= SYMBOL;
 /* Literals */
 StringLiteral       ::= STRING_QUOTE (STRING_ESCAPE|STRING_CHAR)* STRING_QUOTE
 NumberLiteral       ::= INTEGER | DECIMAL
+identifier          ::= SYMBOL

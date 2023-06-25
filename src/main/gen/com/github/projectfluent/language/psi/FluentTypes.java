@@ -17,13 +17,14 @@ public interface FluentTypes {
   IElementType DEFAULT_VARIANT = new FluentElementType("DEFAULT_VARIANT");
   IElementType FUNCTION_ID = new FluentElementType("FUNCTION_ID");
   IElementType FUNCTION_REFERENCE = new FluentElementType("FUNCTION_REFERENCE");
+  IElementType IDENTIFIER = new FluentElementType("IDENTIFIER");
   IElementType INLINE_PLACEABLE = new FluentElementType("INLINE_PLACEABLE");
   IElementType INLINE_TEXT = new FluentElementType("INLINE_TEXT");
-  IElementType MESSAGE = new FluentElementType("MESSAGE");
   IElementType MESSAGE_ID = new FluentElementType("MESSAGE_ID");
   IElementType MESSAGE_REFERENCE = new FluentElementType("MESSAGE_REFERENCE");
   IElementType NAMED_ARGUMENT = new FluentElementType("NAMED_ARGUMENT");
   IElementType NUMBER_LITERAL = new FluentElementType("NUMBER_LITERAL");
+  IElementType PACKAGE = new FluentElementType("PACKAGE");
   IElementType PATTERN = new FluentElementType("PATTERN");
   IElementType SELECT_EXPRESSION = new FluentElementType("SELECT_EXPRESSION");
   IElementType STRING_LITERAL = new FluentElementType("STRING_LITERAL");
@@ -66,6 +67,7 @@ public interface FluentTypes {
   IElementType PARENTHESIS_R = new FluentTokenType(")");
   IElementType SELECTION_LINE = new FluentTokenType("SELECTION_LINE");
   IElementType SEMICOLON = new FluentTokenType(";");
+  IElementType SLASH = new FluentTokenType("/");
   IElementType STAR = new FluentTokenType("*");
   IElementType STRING_CHAR = new FluentTokenType("String Character");
   IElementType STRING_ESCAPE = new FluentTokenType("String Escaped");
@@ -74,6 +76,7 @@ public interface FluentTypes {
   IElementType TEXT_LINE = new FluentTokenType("TEXT_LINE");
   IElementType TO = new FluentTokenType("->");
   IElementType URL = new FluentTokenType("Url");
+  IElementType VERSION = new FluentTokenType("1.0.0-semver");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
@@ -105,14 +108,14 @@ public interface FluentTypes {
       else if (type == FUNCTION_REFERENCE) {
         return new FluentFunctionReferenceNode(node);
       }
+      else if (type == IDENTIFIER) {
+        return new FluentIdentifierNode(node);
+      }
       else if (type == INLINE_PLACEABLE) {
         return new FluentInlinePlaceableNode(node);
       }
       else if (type == INLINE_TEXT) {
         return new FluentInlineTextNode(node);
-      }
-      else if (type == MESSAGE) {
-        return new FluentMessageNode(node);
       }
       else if (type == MESSAGE_ID) {
         return new FluentMessageIDNode(node);
@@ -125,6 +128,9 @@ public interface FluentTypes {
       }
       else if (type == NUMBER_LITERAL) {
         return new FluentNumberLiteralNode(node);
+      }
+      else if (type == PACKAGE) {
+        return new FluentPackageNode(node);
       }
       else if (type == PATTERN) {
         return new FluentPatternNode(node);

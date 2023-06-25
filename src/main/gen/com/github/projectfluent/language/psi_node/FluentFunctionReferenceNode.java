@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.projectfluent.language.psi.FluentTypes.*;
-import com.github.projectfluent.language.psi.FluentElement;
+import com.github.projectfluent.language.psi.WitElement;
 import com.github.projectfluent.language.psi.*;
 
-public class FluentFunctionReferenceNode extends FluentElement implements FluentFunctionReference {
+public class FluentFunctionReferenceNode extends WitElement implements FluentFunctionReference {
 
   public FluentFunctionReferenceNode(@NotNull ASTNode node) {
     super(node);

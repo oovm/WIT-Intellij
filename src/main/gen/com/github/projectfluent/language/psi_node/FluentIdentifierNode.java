@@ -11,14 +11,14 @@ import static com.github.projectfluent.language.psi.FluentTypes.*;
 import com.github.projectfluent.language.psi.WitElement;
 import com.github.projectfluent.language.psi.*;
 
-public class FluentNumberLiteralNode extends WitElement implements FluentNumberLiteral {
+public class FluentIdentifierNode extends WitElement implements FluentIdentifier {
 
-  public FluentNumberLiteralNode(@NotNull ASTNode node) {
+  public FluentIdentifierNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FluentVisitor visitor) {
-    visitor.visitNumberLiteral(this);
+    visitor.visitIdentifier(this);
   }
 
   @Override

@@ -47,10 +47,6 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMessage(@NotNull FluentMessage o) {
-    visitPsiElement(o);
-  }
-
   public void visitMessageID(@NotNull FluentMessageID o) {
     visitPsiElement(o);
   }
@@ -104,6 +100,14 @@ public class FluentVisitor extends PsiElementVisitor {
   }
 
   public void visitBlockPlaceable(@NotNull FluentBlockPlaceable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentifier(@NotNull FluentIdentifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPackage(@NotNull FluentPackage o) {
     visitPsiElement(o);
   }
 

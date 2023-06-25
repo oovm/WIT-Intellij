@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.projectfluent.language.psi.FluentTypes.*;
-import com.github.projectfluent.language.psi.FluentElement;
+import com.github.projectfluent.language.psi.WitElement;
 import com.github.projectfluent.language.psi.*;
 
-public class FluentArgumentNode extends FluentElement implements FluentArgument {
+public class FluentArgumentNode extends WitElement implements FluentArgument {
 
   public FluentArgumentNode(@NotNull ASTNode node) {
     super(node);

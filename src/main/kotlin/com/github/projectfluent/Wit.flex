@@ -9,11 +9,11 @@ import static com.github.projectfluent.language.psi.FluentTypes.*;
 
 %%
 
-%{
-public WitLexer() {
-	this((java.io.Reader)null);
-}
-%}
+//%{
+//public WitLexer() {
+//	this((java.io.Reader)null);
+//}
+//%}
 
 %public
 %class _WitLexer
@@ -24,13 +24,14 @@ public WitLexer() {
 
 //%state TextContextIndent
 
-WHITE_SPACE=[\s\t]
-COMMENT_DOCUMENT=("///")[^\r\n]*
-COMMENT_LINE = "//"[^\r\n]*
-COMMENT_BLOCK=[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
+WHITE_SPACE      = [\s\t]
+COMMENT_DOCUMENT = [/]{3}[^\r\n]*
+COMMENT_LINE     = [/]{2}[^\r\n]*
+COMMENT_BLOCK    = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
 WORD = [a-zA-Z][a-zA-Z0-9]*
 SYMBOL = {WORD}([-]{WORD})*
+VERSION = ([0-9]+)(\.[0-9]+)(\.[0-9]+)(-[a-zA-Z0-9\-.]+)?
 //STRING=\"([^\"\\]|\\.)*\"
 BYTE=(0[bBoOxXfF][0-9A-Fa-f][0-9A-Fa-f_]*)
 INTEGER=(0|[1-9][0-9_]*)
@@ -68,8 +69,11 @@ KW_RECORD     = "record"
 	"<" { return ANGLE_L; }
 	">" { return ANGLE_R; }
 	"^" { return ACCENT; }
+	":" { return COLON; }
 	";" { return SEMICOLON; }
 	"$" { return DOLLAR; }
+	"@" { return AT; }
+	"/" { return SLASH; }
 	"." { return DOT; }
 	"-" { return HYPHEN; }
 }
@@ -78,6 +82,9 @@ KW_RECORD     = "record"
 	{KW_WORLD}     { return KW_WORLD; }
 	{KW_INTERFACE} { return KW_INTERFACE; }
 	{KW_USE}       { return KW_USE; }
+      	{KW_INCLUDE}   { return KW_INCLUDE; }
+      {KW_IMPORT}   { return KW_IMPORT; }
+	{VERSION}      { return VERSION; }
 	{SYMBOL}       { return SYMBOL; }
 }
 // =====================================================================================================================
