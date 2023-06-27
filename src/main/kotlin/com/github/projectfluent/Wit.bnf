@@ -68,19 +68,23 @@ wit ::= statements*
 private statements ::=
     package
   | world
-  | Attribute
+  | include
   | COMMENT_LINE
 
-// package wasi:cloud-core@0.2.0-draft;
 package ::= KW_PACKAGE identifier (COLON identifier)? (AT VERSION)? {
 	pin = 2
     mixin = "com.github.projectfluent.language.mixin.MixinPackage"
 }
-world ::= KW_WORLD EQ Pattern Attribute* {
-    mixin = "com.github.projectfluent.language.mixin.MixinTerm"
+world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
+	pin = 2
+    mixin = "com.github.projectfluent.language.mixin.MixinWorld"
 }
+private world-element ::=
+   include
+  | COMMENT_LINE
+// include wasi:keyvalue/imports@0.2.0-draft;
 /* Attributes of Messages and Terms. */
-Attribute ::= AttributeID EQ Pattern {
+include ::= KW_INCLUDE identifier (COLON identifier) {
     mixin = "com.github.projectfluent.language.mixin.MixinAttribute"
 }
 /* Patterns are values of Messages, Terms, Attributes and Variants. */

@@ -28,12 +28,12 @@ public interface FluentTypes {
   IElementType PATTERN = new FluentElementType("PATTERN");
   IElementType SELECT_EXPRESSION = new FluentElementType("SELECT_EXPRESSION");
   IElementType STRING_LITERAL = new FluentElementType("STRING_LITERAL");
-  IElementType TERM = new FluentElementType("TERM");
   IElementType TERM_ID = new FluentElementType("TERM_ID");
   IElementType TERM_REFERENCE = new FluentElementType("TERM_REFERENCE");
   IElementType VARIABLE_ID = new FluentElementType("VARIABLE_ID");
   IElementType VARIANT = new FluentElementType("VARIANT");
   IElementType VARIANT_KEY = new FluentElementType("VARIANT_KEY");
+  IElementType WORLD = new FluentElementType("WORLD");
 
   IElementType ACCENT = new FluentTokenType("^");
   IElementType ANGLE_L = new FluentTokenType("<");
@@ -141,9 +141,6 @@ public interface FluentTypes {
       else if (type == STRING_LITERAL) {
         return new FluentStringLiteralNode(node);
       }
-      else if (type == TERM) {
-        return new FluentTermNode(node);
-      }
       else if (type == TERM_ID) {
         return new FluentTermIDNode(node);
       }
@@ -158,6 +155,9 @@ public interface FluentTypes {
       }
       else if (type == VARIANT_KEY) {
         return new FluentVariantKeyNode(node);
+      }
+      else if (type == WORLD) {
+        return new FluentWorldNode(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

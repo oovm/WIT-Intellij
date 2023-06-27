@@ -75,10 +75,6 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTerm(@NotNull FluentTerm o) {
-    visitPsiElement(o);
-  }
-
   public void visitTermID(@NotNull FluentTermID o) {
     visitPsiElement(o);
   }
@@ -108,6 +104,10 @@ public class FluentVisitor extends PsiElementVisitor {
   }
 
   public void visitPackage(@NotNull FluentPackage o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWorld(@NotNull FluentWorld o) {
     visitPsiElement(o);
   }
 

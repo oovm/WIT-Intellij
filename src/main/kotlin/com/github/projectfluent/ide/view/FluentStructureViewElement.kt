@@ -3,7 +3,7 @@ package com.github.projectfluent.ide.view
 import com.github.projectfluent.language.file.FluentFile
 import com.github.projectfluent.language.psi_node.WitAttributeNode
 import com.github.projectfluent.language.psi_node.FluentPackageNode
-import com.github.projectfluent.language.psi_node.FluentTermNode
+import com.github.projectfluent.language.psi_node.FluentWorldNode
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.util.treeView.smartTree.SortableTreeElement
@@ -44,9 +44,9 @@ class FluentStructureViewElement(private val node: NavigatablePsiElement) :
     override fun getChildren(): Array<out TreeElement> = when (node) {
         is FluentFile -> getChildOfType(
             FluentPackageNode::class.java,
-            FluentTermNode::class.java,
+            FluentWorldNode::class.java,
         )
-        is FluentPackageNode, is FluentTermNode -> getChildOfType(
+        is FluentPackageNode, is FluentWorldNode -> getChildOfType(
             WitAttributeNode::class.java,
         )
         is WitAttributeNode -> arrayOf()

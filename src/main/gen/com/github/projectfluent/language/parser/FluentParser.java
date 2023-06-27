@@ -365,32 +365,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TermID EQ Pattern Attribute*
-  public static boolean Term(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Term")) return false;
-    if (!nextTokenIs(b, HYPHEN)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = TermID(b, l + 1);
-    r = r && consumeToken(b, EQ);
-    r = r && Pattern(b, l + 1);
-    r = r && Term_3(b, l + 1);
-    exit_section_(b, m, TERM, r);
-    return r;
-  }
-
-  // Attribute*
-  private static boolean Term_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Term_3")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!Attribute(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "Term_3", c)) break;
-    }
-    return true;
-  }
-
-  /* ********************************************************** */
   // HYPHEN SYMBOL
   public static boolean TermID(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TermID")) return false;
@@ -582,14 +556,14 @@ public class FluentParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // package
-  //   | Term
+  //   | world
   //   | Attribute
   //   | COMMENT_LINE
   static boolean statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statements")) return false;
     boolean r;
     r = package_$(b, l + 1);
-    if (!r) r = Term(b, l + 1);
+    if (!r) r = world(b, l + 1);
     if (!r) r = Attribute(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
@@ -605,6 +579,49 @@ public class FluentParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "wit", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // KW_WORLD identifier BRACE_L world-element* BRACE_R
+  public static boolean world(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "world")) return false;
+    if (!nextTokenIs(b, KW_WORLD)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, WORLD, null);
+    r = consumeToken(b, KW_WORLD);
+    r = r && identifier(b, l + 1);
+    p = r; // pin = 2
+    r = r && report_error_(b, consumeToken(b, BRACE_L));
+    r = p && report_error_(b, world_3(b, l + 1)) && r;
+    r = p && consumeToken(b, BRACE_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // world-element*
+  private static boolean world_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "world_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!world_element(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "world_3", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // package
+  //   | world
+  //   | Attribute
+  //   | COMMENT_LINE
+  static boolean world_element(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "world_element")) return false;
+    boolean r;
+    r = package_$(b, l + 1);
+    if (!r) r = world(b, l + 1);
+    if (!r) r = Attribute(b, l + 1);
+    if (!r) r = consumeToken(b, COMMENT_LINE);
+    return r;
   }
 
 }
