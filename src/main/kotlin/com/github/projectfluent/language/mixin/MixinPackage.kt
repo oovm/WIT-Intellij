@@ -19,7 +19,7 @@ abstract class MixinPackage(node: ASTNode) : WitElement(node),
     }
 
     override fun getNameIdentifier(): PsiElement {
-        return this.identifierList.first()
+        return this.packageName
     }
 
     override fun getPresentation(): ItemPresentation? {

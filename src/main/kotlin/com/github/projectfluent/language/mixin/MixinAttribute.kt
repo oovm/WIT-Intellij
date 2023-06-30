@@ -2,6 +2,7 @@ package com.github.projectfluent.language.mixin
 
 import com.github.projectfluent.ide.view.FluentItemPresentation
 import com.github.projectfluent.language.psi.FluentAttribute
+import com.github.projectfluent.language.psi.FluentPattern
 import com.github.projectfluent.language.psi.WitElement
 import com.intellij.icons.AllIcons
 import com.intellij.lang.ASTNode
@@ -18,6 +19,10 @@ abstract class MixinAttribute(node: ASTNode) : WitElement(node),
 
     override fun getNameIdentifier(): PsiElement {
         return this.attributeID
+    }
+
+    override fun getPattern(): FluentPattern {
+        TODO("Not yet implemented")
     }
 
     override fun getPresentation(): ItemPresentation? {

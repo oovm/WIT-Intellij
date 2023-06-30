@@ -1,7 +1,7 @@
 package com.github.projectfluent.ide.view
 
 import com.github.projectfluent.language.file.FluentFile
-import com.github.projectfluent.language.psi_node.WitAttributeNode
+import com.github.projectfluent.language.psi_node.FluentIncludeNode
 import com.github.projectfluent.language.psi_node.FluentPackageNode
 import com.github.projectfluent.language.psi_node.FluentWorldNode
 import com.intellij.ide.projectView.PresentationData
@@ -47,9 +47,9 @@ class FluentStructureViewElement(private val node: NavigatablePsiElement) :
             FluentWorldNode::class.java,
         )
         is FluentPackageNode, is FluentWorldNode -> getChildOfType(
-            WitAttributeNode::class.java,
+            FluentIncludeNode::class.java,
         )
-        is WitAttributeNode -> arrayOf()
+        is FluentIncludeNode -> arrayOf()
         else -> getChildOfType(
             NavigatablePsiElement::class.java,
         )

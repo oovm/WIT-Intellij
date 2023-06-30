@@ -29,8 +29,8 @@ public class FluentPackageNode extends MixinPackage implements FluentPackage {
 
   @Override
   @NotNull
-  public List<FluentIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentIdentifier.class);
+  public FluentPackageName getPackageName() {
+    return findNotNullChildByClass(FluentPackageName.class);
   }
 
 }

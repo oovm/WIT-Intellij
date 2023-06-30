@@ -9,7 +9,6 @@ import com.github.projectfluent.language.psi_node.*;
 public interface FluentTypes {
 
   IElementType ARGUMENT = new FluentElementType("ARGUMENT");
-  IElementType ATTRIBUTE = new FluentElementType("ATTRIBUTE");
   IElementType ATTRIBUTE_ID = new FluentElementType("ATTRIBUTE_ID");
   IElementType BLOCK_PLACEABLE = new FluentElementType("BLOCK_PLACEABLE");
   IElementType BLOCK_TEXT = new FluentElementType("BLOCK_TEXT");
@@ -18,6 +17,8 @@ public interface FluentTypes {
   IElementType FUNCTION_ID = new FluentElementType("FUNCTION_ID");
   IElementType FUNCTION_REFERENCE = new FluentElementType("FUNCTION_REFERENCE");
   IElementType IDENTIFIER = new FluentElementType("IDENTIFIER");
+  IElementType INCLUDE = new FluentElementType("INCLUDE");
+  IElementType INCLUDE_NAME = new FluentElementType("INCLUDE_NAME");
   IElementType INLINE_PLACEABLE = new FluentElementType("INLINE_PLACEABLE");
   IElementType INLINE_TEXT = new FluentElementType("INLINE_TEXT");
   IElementType MESSAGE_ID = new FluentElementType("MESSAGE_ID");
@@ -25,6 +26,7 @@ public interface FluentTypes {
   IElementType NAMED_ARGUMENT = new FluentElementType("NAMED_ARGUMENT");
   IElementType NUMBER_LITERAL = new FluentElementType("NUMBER_LITERAL");
   IElementType PACKAGE = new FluentElementType("PACKAGE");
+  IElementType PACKAGE_NAME = new FluentElementType("PACKAGE_NAME");
   IElementType PATTERN = new FluentElementType("PATTERN");
   IElementType SELECT_EXPRESSION = new FluentElementType("SELECT_EXPRESSION");
   IElementType STRING_LITERAL = new FluentElementType("STRING_LITERAL");
@@ -84,9 +86,6 @@ public interface FluentTypes {
       if (type == ARGUMENT) {
         return new FluentArgumentNode(node);
       }
-      else if (type == ATTRIBUTE) {
-        return new FluentAttributeNode(node);
-      }
       else if (type == ATTRIBUTE_ID) {
         return new FluentAttributeIDNode(node);
       }
@@ -111,6 +110,12 @@ public interface FluentTypes {
       else if (type == IDENTIFIER) {
         return new FluentIdentifierNode(node);
       }
+      else if (type == INCLUDE) {
+        return new FluentIncludeNode(node);
+      }
+      else if (type == INCLUDE_NAME) {
+        return new FluentIncludeNameNode(node);
+      }
       else if (type == INLINE_PLACEABLE) {
         return new FluentInlinePlaceableNode(node);
       }
@@ -131,6 +136,9 @@ public interface FluentTypes {
       }
       else if (type == PACKAGE) {
         return new FluentPackageNode(node);
+      }
+      else if (type == PACKAGE_NAME) {
+        return new FluentPackageNameNode(node);
       }
       else if (type == PATTERN) {
         return new FluentPatternNode(node);

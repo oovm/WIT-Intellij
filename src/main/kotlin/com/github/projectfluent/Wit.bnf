@@ -71,10 +71,11 @@ private statements ::=
   | include
   | COMMENT_LINE
 
-package ::= KW_PACKAGE identifier (COLON identifier)? (AT VERSION)? {
+package ::= KW_PACKAGE package-name {
 	pin = 2
     mixin = "com.github.projectfluent.language.mixin.MixinPackage"
 }
+package-name ::= identifier (COLON identifier)? (AT VERSION)?
 world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
 	pin = 2
     mixin = "com.github.projectfluent.language.mixin.MixinWorld"
@@ -84,9 +85,11 @@ private world-element ::=
   | COMMENT_LINE
 // include wasi:keyvalue/imports@0.2.0-draft;
 /* Attributes of Messages and Terms. */
-include ::= KW_INCLUDE identifier (COLON identifier) {
+include ::= KW_INCLUDE include-name {
+	pin = 2
     mixin = "com.github.projectfluent.language.mixin.MixinAttribute"
 }
+include-name ::= identifier (COLON identifier)? (SLASH identifier)? (AT VERSION)?
 /* Patterns are values of Messages, Terms, Attributes and Variants. */
 Pattern ::= pattern_element+
 /* TextElement and Placeable can occur inline or as block.

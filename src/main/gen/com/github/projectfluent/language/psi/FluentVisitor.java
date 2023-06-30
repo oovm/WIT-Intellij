@@ -11,10 +11,6 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitAttribute(@NotNull FluentAttribute o) {
-    visitPsiElement(o);
-  }
-
   public void visitAttributeID(@NotNull FluentAttributeID o) {
     visitPsiElement(o);
   }
@@ -103,7 +99,19 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitInclude(@NotNull FluentInclude o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIncludeName(@NotNull FluentIncludeName o) {
+    visitPsiElement(o);
+  }
+
   public void visitPackage(@NotNull FluentPackage o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPackageName(@NotNull FluentPackageName o) {
     visitPsiElement(o);
   }
 

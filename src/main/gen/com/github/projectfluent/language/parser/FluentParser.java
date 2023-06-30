@@ -48,20 +48,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AttributeID EQ Pattern
-  public static boolean Attribute(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Attribute")) return false;
-    if (!nextTokenIs(b, DOT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = AttributeID(b, l + 1);
-    r = r && consumeToken(b, EQ);
-    r = r && Pattern(b, l + 1);
-    exit_section_(b, m, ATTRIBUTE, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // DOT SYMBOL
   public static boolean AttributeID(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "AttributeID")) return false;
@@ -491,31 +477,123 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_PACKAGE identifier (COLON identifier)? (AT VERSION)?
-  public static boolean package_$(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "package_$")) return false;
-    if (!nextTokenIs(b, KW_PACKAGE)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PACKAGE, null);
-    r = consumeToken(b, KW_PACKAGE);
-    r = r && identifier(b, l + 1);
-    p = r; // pin = 2
-    r = r && report_error_(b, package_2(b, l + 1));
-    r = p && package_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+  // KW_INCLUDE include-name
+  public static boolean include(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include")) return false;
+    if (!nextTokenIs(b, KW_INCLUDE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, KW_INCLUDE);
+    r = r && include_name(b, l + 1);
+    exit_section_(b, m, INCLUDE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier (COLON identifier)? (SLASH identifier)? (AT VERSION)?
+  public static boolean include_name(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include_name")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    r = r && include_name_1(b, l + 1);
+    r = r && include_name_2(b, l + 1);
+    r = r && include_name_3(b, l + 1);
+    exit_section_(b, m, INCLUDE_NAME, r);
+    return r;
   }
 
   // (COLON identifier)?
-  private static boolean package_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "package_2")) return false;
-    package_2_0(b, l + 1);
+  private static boolean include_name_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include_name_1")) return false;
+    include_name_1_0(b, l + 1);
     return true;
   }
 
   // COLON identifier
-  private static boolean package_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "package_2_0")) return false;
+  private static boolean include_name_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include_name_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COLON);
+    r = r && identifier(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (SLASH identifier)?
+  private static boolean include_name_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include_name_2")) return false;
+    include_name_2_0(b, l + 1);
+    return true;
+  }
+
+  // SLASH identifier
+  private static boolean include_name_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include_name_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SLASH);
+    r = r && identifier(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (AT VERSION)?
+  private static boolean include_name_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include_name_3")) return false;
+    include_name_3_0(b, l + 1);
+    return true;
+  }
+
+  // AT VERSION
+  private static boolean include_name_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "include_name_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, AT, VERSION);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // KW_PACKAGE package-name
+  public static boolean package_$(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_$")) return false;
+    if (!nextTokenIs(b, KW_PACKAGE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, KW_PACKAGE);
+    r = r && package_name(b, l + 1);
+    exit_section_(b, m, PACKAGE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier (COLON identifier)? (AT VERSION)?
+  public static boolean package_name(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_name")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    r = r && package_name_1(b, l + 1);
+    r = r && package_name_2(b, l + 1);
+    exit_section_(b, m, PACKAGE_NAME, r);
+    return r;
+  }
+
+  // (COLON identifier)?
+  private static boolean package_name_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_name_1")) return false;
+    package_name_1_0(b, l + 1);
+    return true;
+  }
+
+  // COLON identifier
+  private static boolean package_name_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_name_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COLON);
@@ -525,15 +603,15 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   // (AT VERSION)?
-  private static boolean package_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "package_3")) return false;
-    package_3_0(b, l + 1);
+  private static boolean package_name_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_name_2")) return false;
+    package_name_2_0(b, l + 1);
     return true;
   }
 
   // AT VERSION
-  private static boolean package_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "package_3_0")) return false;
+  private static boolean package_name_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_name_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, AT, VERSION);
@@ -557,14 +635,14 @@ public class FluentParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // package
   //   | world
-  //   | Attribute
+  //   | include
   //   | COMMENT_LINE
   static boolean statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statements")) return false;
     boolean r;
     r = package_$(b, l + 1);
     if (!r) r = world(b, l + 1);
-    if (!r) r = Attribute(b, l + 1);
+    if (!r) r = include(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
   }
@@ -610,16 +688,13 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // package
-  //   | world
-  //   | Attribute
+  // include
   //   | COMMENT_LINE
   static boolean world_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "world_element")) return false;
+    if (!nextTokenIs(b, "", COMMENT_LINE, KW_INCLUDE)) return false;
     boolean r;
-    r = package_$(b, l + 1);
-    if (!r) r = world(b, l + 1);
-    if (!r) r = Attribute(b, l + 1);
+    r = include(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
   }

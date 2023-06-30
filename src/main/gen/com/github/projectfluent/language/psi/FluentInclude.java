@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FluentWorld extends PsiElement {
+public interface FluentInclude extends PsiElement {
 
   @NotNull
-  FluentIdentifier getIdentifier();
-
-  @NotNull
-  List<FluentInclude> getIncludeList();
+  FluentIncludeName getIncludeName();
 
 }

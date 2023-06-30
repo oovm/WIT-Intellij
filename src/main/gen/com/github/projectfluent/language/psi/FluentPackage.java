@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FluentPackage extends PsiElement {
 
   @NotNull
-  List<FluentIdentifier> getIdentifierList();
+  FluentPackageName getPackageName();
 
 }
