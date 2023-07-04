@@ -28,13 +28,9 @@ public class FluentIncludeNode extends MixinAttribute implements FluentInclude {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FluentIncludeName getIncludeName() {
-    return findNotNullChildByClass(FluentIncludeName.class);
+    return findChildByClass(FluentIncludeName.class);
   }
 
-  @Override
-  public @NotNull FluentAttributeID getAttributeID() {
-    return null;
-  }
 }

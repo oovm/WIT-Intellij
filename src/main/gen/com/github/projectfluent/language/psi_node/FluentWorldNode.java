@@ -28,9 +28,9 @@ public class FluentWorldNode extends MixinWorld implements FluentWorld {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FluentIdentifier getIdentifier() {
-    return findNotNullChildByClass(FluentIdentifier.class);
+    return findChildByClass(FluentIdentifier.class);
   }
 
   @Override

@@ -1,20 +1,17 @@
 package com.github.projectfluent.language.mixin
 
 import com.github.projectfluent.ide.view.FluentItemPresentation
+import com.github.projectfluent.language.psi.FluentInterface
 import com.github.projectfluent.language.psi.WitElement
-import com.github.projectfluent.language.psi.FluentTerm
-import com.github.projectfluent.language.psi.FluentWorld
 import com.intellij.icons.AllIcons
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
-import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner
 
-abstract class MixinWorld(node: ASTNode) : WitElement(node),
-    NavigatablePsiElement,
+abstract class MixinInterface(node: ASTNode) : WitElement(node),
     PsiNameIdentifierOwner,
-    FluentWorld {
+    FluentInterface {
     override fun setName(name: String): PsiElement {
         TODO("Not yet implemented")
     }
@@ -23,7 +20,8 @@ abstract class MixinWorld(node: ASTNode) : WitElement(node),
         return this.identifier
     }
 
+
     override fun getPresentation(): ItemPresentation? {
-        return FluentItemPresentation(AllIcons.Nodes.Enum, nameIdentifier?.text ?: "missing world")
+        return FluentItemPresentation(AllIcons.Nodes.Method, nameIdentifier?.text ?: "missing interface")
     }
 }

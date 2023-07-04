@@ -52,6 +52,7 @@ KW_INTERFACE  = "interface"
 KW_INCLUDE    = "include"
 KW_IMPORT     = "import"
 KW_USE        = "use"
+KW_TYPE       = "type"
 KW_RECORD     = "record"
 
 %%
@@ -76,14 +77,19 @@ KW_RECORD     = "record"
 	"/" { return SLASH; }
 	"." { return DOT; }
 	"-" { return HYPHEN; }
+	"=" { return EQ; }
 }
 <YYINITIAL> {
 	{KW_PACKAGE}   { return KW_PACKAGE; }
 	{KW_WORLD}     { return KW_WORLD; }
 	{KW_INTERFACE} { return KW_INTERFACE; }
 	{KW_USE}       { return KW_USE; }
+
       	{KW_INCLUDE}   { return KW_INCLUDE; }
       {KW_IMPORT}   { return KW_IMPORT; }
+
+      {KW_TYPE}    { return KW_TYPE; }
+      {KW_RECORD}    { return KW_RECORD; }
 	{VERSION}      { return VERSION; }
 	{SYMBOL}       { return SYMBOL; }
 }

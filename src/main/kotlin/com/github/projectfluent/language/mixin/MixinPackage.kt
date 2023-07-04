@@ -18,11 +18,11 @@ abstract class MixinPackage(node: ASTNode) : WitElement(node),
         TODO("Not yet implemented")
     }
 
-    override fun getNameIdentifier(): PsiElement {
+    override fun getNameIdentifier(): PsiElement? {
         return this.packageName
     }
 
     override fun getPresentation(): ItemPresentation? {
-        return FluentItemPresentation(AllIcons.Nodes.Field, nameIdentifier.text)
+        return FluentItemPresentation(AllIcons.Nodes.Field, nameIdentifier?.text ?: "missing package")
     }
 }

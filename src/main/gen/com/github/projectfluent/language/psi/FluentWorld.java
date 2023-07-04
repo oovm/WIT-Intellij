@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface FluentWorld extends PsiElement {
 
-  @NotNull
+  @Nullable
   FluentIdentifier getIdentifier();
 
   @NotNull

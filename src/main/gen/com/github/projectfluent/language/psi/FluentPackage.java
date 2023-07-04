@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface FluentPackage extends PsiElement {
 
-  @NotNull
+  @Nullable
   FluentPackageName getPackageName();
 
 }

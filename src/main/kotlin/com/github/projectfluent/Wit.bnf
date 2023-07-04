@@ -35,9 +35,10 @@ KW_INTERFACE  = "interface"
 KW_INCLUDE    = "include"
 KW_IMPORT     = "import"
 KW_USE        = "use"
+KW_TYPE       = "type"
 KW_RECORD     = "record"
 
-		VERSION = "1.0.0-semver"
+		VERSION = "<<semver>>"
         PARENTHESIS_L = '('
         PARENTHESIS_R = ')'
         BRACKET_L = '['
@@ -69,15 +70,16 @@ private statements ::=
     package
   | world
   | include
+  | interface
   | COMMENT_LINE
 
 package ::= KW_PACKAGE package-name {
-	pin = 2
+	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinPackage"
 }
 package-name ::= identifier (COLON identifier)? (AT VERSION)?
 world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
-	pin = 2
+	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinWorld"
 }
 private world-element ::=
@@ -86,16 +88,37 @@ private world-element ::=
 // include wasi:keyvalue/imports@0.2.0-draft;
 /* Attributes of Messages and Terms. */
 include ::= KW_INCLUDE include-name {
-	pin = 2
+	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinAttribute"
 }
 include-name ::= identifier (COLON identifier)? (SLASH identifier)? (AT VERSION)?
 /* Patterns are values of Messages, Terms, Attributes and Variants. */
-Pattern ::= pattern_element+
-/* TextElement and Placeable can occur inline or as block.
- * Text needs to be indented and start with a non-special character.
- * Placeables can start at the beginning of the line or be indented.
- * Adjacent TextElements are joined in AST creation. */
+interface ::= KW_INTERFACE identifier BRACE_L interface-element* BRACE_R {
+	pin = 1
+    mixin = "com.github.projectfluent.language.mixin.MixinInterface"
+}
+private interface-element ::=
+    type
+  | function
+  | COMMENT_LINE
+// get-insecure-random-bytes: func(len: u64) -> list<u8>;
+function ::= identifier COLON function-signature {
+
+//	mixin = "com.github.projectfluent.language.mixin.MixinFunction"
+}
+function-signature ::= KW_FUNCTION PARENTHESIS_L function-args PARENTHESIS_R TO function-return {
+	pin = 1
+}
+private function-args ::= parameter (COMMA parameter)*;
+parameter ::= identifier COLON type-hint {
+
+}
+// type container-name = string;
+type ::= KW_TYPE identifier EQ type-hint {
+	pin = 1
+}
+type-hint ::= identifier;
+
 private pattern_element ::=
     InlineText
   | BlockText
@@ -128,8 +151,8 @@ NamedArgument       ::= MessageID COLON (StringLiteral | NumberLiteral)
 
 /* Block Expressions */
 SelectExpression    ::= expression TO (Variant|DefaultVariant)+
-Variant             ::= VariantKey Pattern
-DefaultVariant      ::= STAR VariantKey Pattern
+Variant             ::= VariantKey interface
+DefaultVariant      ::= STAR VariantKey interface
 VariantKey          ::= BRACKET_L (NumberLiteral | MessageID) BRACKET_R
 
 /* Identifier */

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface FluentInclude extends PsiElement {
 
-  @NotNull
+  @Nullable
   FluentIncludeName getIncludeName();
 
 }

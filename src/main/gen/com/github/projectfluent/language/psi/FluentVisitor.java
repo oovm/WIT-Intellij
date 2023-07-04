@@ -59,10 +59,6 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPattern(@NotNull FluentPattern o) {
-    visitPsiElement(o);
-  }
-
   public void visitSelectExpression(@NotNull FluentSelectExpression o) {
     visitPsiElement(o);
   }
@@ -95,6 +91,14 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFunction(@NotNull FluentFunction o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionSignature(@NotNull FluentFunctionSignature o) {
+    visitPsiElement(o);
+  }
+
   public void visitIdentifier(@NotNull FluentIdentifier o) {
     visitPsiElement(o);
   }
@@ -107,11 +111,27 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitInterface(@NotNull FluentInterface o) {
+    visitPsiElement(o);
+  }
+
   public void visitPackage(@NotNull FluentPackage o) {
     visitPsiElement(o);
   }
 
   public void visitPackageName(@NotNull FluentPackageName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParameter(@NotNull FluentParameter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitType(@NotNull FluentType o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeHint(@NotNull FluentTypeHint o) {
     visitPsiElement(o);
   }
 

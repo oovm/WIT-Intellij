@@ -29,14 +29,14 @@ public class FluentDefaultVariantNode extends WitElement implements FluentDefaul
 
   @Override
   @NotNull
-  public FluentPattern getPattern() {
-    return findNotNullChildByClass(FluentPattern.class);
+  public FluentVariantKey getVariantKey() {
+    return findNotNullChildByClass(FluentVariantKey.class);
   }
 
   @Override
   @NotNull
-  public FluentVariantKey getVariantKey() {
-    return findNotNullChildByClass(FluentVariantKey.class);
+  public FluentInterface getInterface() {
+    return findNotNullChildByClass(FluentInterface.class);
   }
 
 }

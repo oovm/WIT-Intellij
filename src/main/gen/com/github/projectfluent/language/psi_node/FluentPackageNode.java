@@ -28,9 +28,9 @@ public class FluentPackageNode extends MixinPackage implements FluentPackage {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public FluentPackageName getPackageName() {
-    return findNotNullChildByClass(FluentPackageName.class);
+    return findChildByClass(FluentPackageName.class);
   }
 
 }
