@@ -36,6 +36,7 @@ KW_INCLUDE    = "include"
 KW_IMPORT     = "import"
 KW_USE        = "use"
 KW_TYPE       = "type"
+KW_RESOURCE   = "resource"
 KW_RECORD     = "record"
 
 		VERSION = "<<semver>>"
@@ -99,6 +100,8 @@ interface ::= KW_INTERFACE identifier BRACE_L interface-element* BRACE_R {
 }
 private interface-element ::=
     type
+  | resource
+  | record
   | function
   | COMMENT_LINE
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
@@ -113,16 +116,34 @@ private function-args ::= parameter (COMMA parameter)*;
 parameter ::= identifier COLON type-hint {
 
 }
-// type container-name = string;
+// type type-name = type-hint;
 type ::= KW_TYPE identifier EQ type-hint {
 	pin = 1
 }
 type-hint ::= identifier;
+// resource type-name { method: func() };
+resource    ::= KW_RESOURCE identifier BRACE_L resource-element* BRACE_R {
+	pin = 1
+}
+private resource-element ::=
+    function
+  | COMMENT_LINE
+// record type-name { field: type-hint, key: value };
+record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {
+	pin = 1
+}
+private record-element ::=
+    record-field
+  | COMMA
+  | COMMENT_LINE
 
-private pattern_element ::=
-    InlineText
-  | BlockText
-  | InlinePlaceable
+record-field    ::= identifier COLON type-hint
+
+
+
+
+
+
 //    | block_placeable
 InlineText        ::= TEXT_LINE | SELECTION_LINE;
 BlockText         ::= InlineText+;
@@ -135,16 +156,16 @@ block_placeable   ::= BLANK_BLOCK  InlinePlaceable
 private expression    ::=
     StringLiteral
   | NumberLiteral
-  | FunctionReference
-  | MessageReference
-  | TermReference
+  | record
+  | resource
+  | record-field
   | VariableID
   | InlinePlaceable
 
 /* Inline Expressions */
-FunctionReference   ::= FunctionID CallArguments
-MessageReference    ::= MessageID [AttributeID]
-TermReference       ::= TermID [CallArguments]
+
+
+
 CallArguments       ::= PARENTHESIS_L (Argument COMMA)* [Argument] PARENTHESIS_R
 Argument            ::= NamedArgument | expression
 NamedArgument       ::= MessageID COLON (StringLiteral | NumberLiteral)

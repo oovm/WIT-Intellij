@@ -53,6 +53,7 @@ KW_INCLUDE    = "include"
 KW_IMPORT     = "import"
 KW_USE        = "use"
 KW_TYPE       = "type"
+KW_RESOURCE   = "resource"
 KW_RECORD     = "record"
 
 %%
@@ -76,6 +77,7 @@ KW_RECORD     = "record"
 	"@" { return AT; }
 	"/" { return SLASH; }
 	"." { return DOT; }
+	"," { return COMMA; }
 	"-" { return HYPHEN; }
 	"=" { return EQ; }
 }
@@ -89,6 +91,7 @@ KW_RECORD     = "record"
       {KW_IMPORT}   { return KW_IMPORT; }
 
       {KW_TYPE}    { return KW_TYPE; }
+      {KW_RESOURCE}    { return KW_RESOURCE; }
       {KW_RECORD}    { return KW_RECORD; }
 	{VERSION}      { return VERSION; }
 	{SYMBOL}       { return SYMBOL; }

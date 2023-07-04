@@ -11,13 +11,7 @@ public interface FluentSelectExpression extends PsiElement {
   List<FluentDefaultVariant> getDefaultVariantList();
 
   @Nullable
-  FluentFunctionReference getFunctionReference();
-
-  @Nullable
   FluentInlinePlaceable getInlinePlaceable();
-
-  @Nullable
-  FluentMessageReference getMessageReference();
 
   @Nullable
   FluentNumberLiteral getNumberLiteral();
@@ -26,12 +20,18 @@ public interface FluentSelectExpression extends PsiElement {
   FluentStringLiteral getStringLiteral();
 
   @Nullable
-  FluentTermReference getTermReference();
-
-  @Nullable
   FluentVariableID getVariableID();
 
   @NotNull
   List<FluentVariant> getVariantList();
+
+  @Nullable
+  FluentRecord getRecord();
+
+  @Nullable
+  FluentRecordField getRecordField();
+
+  @Nullable
+  FluentResource getResource();
 
 }

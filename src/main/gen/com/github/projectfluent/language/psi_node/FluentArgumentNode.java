@@ -29,20 +29,8 @@ public class FluentArgumentNode extends WitElement implements FluentArgument {
 
   @Override
   @Nullable
-  public FluentFunctionReference getFunctionReference() {
-    return findChildByClass(FluentFunctionReference.class);
-  }
-
-  @Override
-  @Nullable
   public FluentInlinePlaceable getInlinePlaceable() {
     return findChildByClass(FluentInlinePlaceable.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentMessageReference getMessageReference() {
-    return findChildByClass(FluentMessageReference.class);
   }
 
   @Override
@@ -65,14 +53,26 @@ public class FluentArgumentNode extends WitElement implements FluentArgument {
 
   @Override
   @Nullable
-  public FluentTermReference getTermReference() {
-    return findChildByClass(FluentTermReference.class);
+  public FluentVariableID getVariableID() {
+    return findChildByClass(FluentVariableID.class);
   }
 
   @Override
   @Nullable
-  public FluentVariableID getVariableID() {
-    return findChildByClass(FluentVariableID.class);
+  public FluentRecord getRecord() {
+    return findChildByClass(FluentRecord.class);
+  }
+
+  @Override
+  @Nullable
+  public FluentRecordField getRecordField() {
+    return findChildByClass(FluentRecordField.class);
+  }
+
+  @Override
+  @Nullable
+  public FluentResource getResource() {
+    return findChildByClass(FluentResource.class);
   }
 
 }

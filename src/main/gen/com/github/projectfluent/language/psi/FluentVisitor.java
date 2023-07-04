@@ -31,10 +31,6 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFunctionReference(@NotNull FluentFunctionReference o) {
-    visitPsiElement(o);
-  }
-
   public void visitInlinePlaceable(@NotNull FluentInlinePlaceable o) {
     visitPsiElement(o);
   }
@@ -44,10 +40,6 @@ public class FluentVisitor extends PsiElementVisitor {
   }
 
   public void visitMessageID(@NotNull FluentMessageID o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMessageReference(@NotNull FluentMessageReference o) {
     visitPsiElement(o);
   }
 
@@ -68,10 +60,6 @@ public class FluentVisitor extends PsiElementVisitor {
   }
 
   public void visitTermID(@NotNull FluentTermID o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTermReference(@NotNull FluentTermReference o) {
     visitPsiElement(o);
   }
 
@@ -124,6 +112,18 @@ public class FluentVisitor extends PsiElementVisitor {
   }
 
   public void visitParameter(@NotNull FluentParameter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRecord(@NotNull FluentRecord o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRecordField(@NotNull FluentRecordField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitResource(@NotNull FluentResource o) {
     visitPsiElement(o);
   }
 

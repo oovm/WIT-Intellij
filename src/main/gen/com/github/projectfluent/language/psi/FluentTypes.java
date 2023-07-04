@@ -16,7 +16,6 @@ public interface FluentTypes {
   IElementType DEFAULT_VARIANT = new FluentElementType("DEFAULT_VARIANT");
   IElementType FUNCTION = new FluentElementType("FUNCTION");
   IElementType FUNCTION_ID = new FluentElementType("FUNCTION_ID");
-  IElementType FUNCTION_REFERENCE = new FluentElementType("FUNCTION_REFERENCE");
   IElementType FUNCTION_SIGNATURE = new FluentElementType("FUNCTION_SIGNATURE");
   IElementType IDENTIFIER = new FluentElementType("IDENTIFIER");
   IElementType INCLUDE = new FluentElementType("INCLUDE");
@@ -25,16 +24,17 @@ public interface FluentTypes {
   IElementType INLINE_TEXT = new FluentElementType("INLINE_TEXT");
   IElementType INTERFACE = new FluentElementType("INTERFACE");
   IElementType MESSAGE_ID = new FluentElementType("MESSAGE_ID");
-  IElementType MESSAGE_REFERENCE = new FluentElementType("MESSAGE_REFERENCE");
   IElementType NAMED_ARGUMENT = new FluentElementType("NAMED_ARGUMENT");
   IElementType NUMBER_LITERAL = new FluentElementType("NUMBER_LITERAL");
   IElementType PACKAGE = new FluentElementType("PACKAGE");
   IElementType PACKAGE_NAME = new FluentElementType("PACKAGE_NAME");
   IElementType PARAMETER = new FluentElementType("PARAMETER");
+  IElementType RECORD = new FluentElementType("RECORD");
+  IElementType RECORD_FIELD = new FluentElementType("RECORD_FIELD");
+  IElementType RESOURCE = new FluentElementType("RESOURCE");
   IElementType SELECT_EXPRESSION = new FluentElementType("SELECT_EXPRESSION");
   IElementType STRING_LITERAL = new FluentElementType("STRING_LITERAL");
   IElementType TERM_ID = new FluentElementType("TERM_ID");
-  IElementType TERM_REFERENCE = new FluentElementType("TERM_REFERENCE");
   IElementType TYPE = new FluentElementType("TYPE");
   IElementType TYPE_HINT = new FluentElementType("TYPE_HINT");
   IElementType VARIABLE_ID = new FluentElementType("VARIABLE_ID");
@@ -70,6 +70,7 @@ public interface FluentTypes {
   IElementType KW_INTERFACE = new FluentTokenType("interface");
   IElementType KW_PACKAGE = new FluentTokenType("package");
   IElementType KW_RECORD = new FluentTokenType("record");
+  IElementType KW_RESOURCE = new FluentTokenType("resource");
   IElementType KW_TYPE = new FluentTokenType("type");
   IElementType KW_USE = new FluentTokenType("use");
   IElementType KW_WORLD = new FluentTokenType("world");
@@ -115,9 +116,6 @@ public interface FluentTypes {
       else if (type == FUNCTION_ID) {
         return new FluentFunctionIDNode(node);
       }
-      else if (type == FUNCTION_REFERENCE) {
-        return new FluentFunctionReferenceNode(node);
-      }
       else if (type == FUNCTION_SIGNATURE) {
         return new FluentFunctionSignatureNode(node);
       }
@@ -142,9 +140,6 @@ public interface FluentTypes {
       else if (type == MESSAGE_ID) {
         return new FluentMessageIDNode(node);
       }
-      else if (type == MESSAGE_REFERENCE) {
-        return new FluentMessageReferenceNode(node);
-      }
       else if (type == NAMED_ARGUMENT) {
         return new FluentNamedArgumentNode(node);
       }
@@ -160,6 +155,15 @@ public interface FluentTypes {
       else if (type == PARAMETER) {
         return new FluentParameterNode(node);
       }
+      else if (type == RECORD) {
+        return new FluentRecordNode(node);
+      }
+      else if (type == RECORD_FIELD) {
+        return new FluentRecordFieldNode(node);
+      }
+      else if (type == RESOURCE) {
+        return new FluentResourceNode(node);
+      }
       else if (type == SELECT_EXPRESSION) {
         return new FluentSelectExpressionNode(node);
       }
@@ -168,9 +172,6 @@ public interface FluentTypes {
       }
       else if (type == TERM_ID) {
         return new FluentTermIDNode(node);
-      }
-      else if (type == TERM_REFERENCE) {
-        return new FluentTermReferenceNode(node);
       }
       else if (type == TYPE) {
         return new FluentTypeNode(node);

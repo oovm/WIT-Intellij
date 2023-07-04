@@ -8,13 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface FluentInlinePlaceable extends PsiElement {
 
   @Nullable
-  FluentFunctionReference getFunctionReference();
-
-  @Nullable
   FluentInlinePlaceable getInlinePlaceable();
-
-  @Nullable
-  FluentMessageReference getMessageReference();
 
   @Nullable
   FluentNumberLiteral getNumberLiteral();
@@ -26,9 +20,15 @@ public interface FluentInlinePlaceable extends PsiElement {
   FluentStringLiteral getStringLiteral();
 
   @Nullable
-  FluentTermReference getTermReference();
+  FluentVariableID getVariableID();
 
   @Nullable
-  FluentVariableID getVariableID();
+  FluentRecord getRecord();
+
+  @Nullable
+  FluentRecordField getRecordField();
+
+  @Nullable
+  FluentResource getResource();
 
 }

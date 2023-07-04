@@ -147,19 +147,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FunctionID CallArguments
-  public static boolean FunctionReference(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "FunctionReference")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = FunctionID(b, l + 1);
-    r = r && CallArguments(b, l + 1);
-    exit_section_(b, m, FUNCTION_REFERENCE, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // BRACE_L (SelectExpression | expression) BRACE_R
   public static boolean InlinePlaceable(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "InlinePlaceable")) return false;
@@ -205,26 +192,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, SYMBOL);
     exit_section_(b, m, MESSAGE_ID, r);
     return r;
-  }
-
-  /* ********************************************************** */
-  // MessageID [AttributeID]
-  public static boolean MessageReference(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MessageReference")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = MessageID(b, l + 1);
-    r = r && MessageReference_1(b, l + 1);
-    exit_section_(b, m, MESSAGE_REFERENCE, r);
-    return r;
-  }
-
-  // [AttributeID]
-  private static boolean MessageReference_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MessageReference_1")) return false;
-    AttributeID(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */
@@ -347,26 +314,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TermID [CallArguments]
-  public static boolean TermReference(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TermReference")) return false;
-    if (!nextTokenIs(b, HYPHEN)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = TermID(b, l + 1);
-    r = r && TermReference_1(b, l + 1);
-    exit_section_(b, m, TERM_REFERENCE, r);
-    return r;
-  }
-
-  // [CallArguments]
-  private static boolean TermReference_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TermReference_1")) return false;
-    CallArguments(b, l + 1);
-    return true;
-  }
-
-  /* ********************************************************** */
   // DOLLAR SYMBOL
   public static boolean VariableID(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableID")) return false;
@@ -430,9 +377,9 @@ public class FluentParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // StringLiteral
   //   | NumberLiteral
-  //   | FunctionReference
-  //   | MessageReference
-  //   | TermReference
+  //   | record
+  //   | resource
+  //   | record-field
   //   | VariableID
   //   | InlinePlaceable
   static boolean expression(PsiBuilder b, int l) {
@@ -440,9 +387,9 @@ public class FluentParser implements PsiParser, LightPsiParser {
     boolean r;
     r = StringLiteral(b, l + 1);
     if (!r) r = NumberLiteral(b, l + 1);
-    if (!r) r = FunctionReference(b, l + 1);
-    if (!r) r = MessageReference(b, l + 1);
-    if (!r) r = TermReference(b, l + 1);
+    if (!r) r = record(b, l + 1);
+    if (!r) r = resource(b, l + 1);
+    if (!r) r = record_field(b, l + 1);
     if (!r) r = VariableID(b, l + 1);
     if (!r) r = InlinePlaceable(b, l + 1);
     return r;
@@ -646,12 +593,16 @@ public class FluentParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // type
+  //   | resource
+  //   | record
   //   | function
   //   | COMMENT_LINE
   static boolean interface_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "interface_element")) return false;
     boolean r;
     r = type(b, l + 1);
+    if (!r) r = resource(b, l + 1);
+    if (!r) r = record(b, l + 1);
     if (!r) r = function(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
@@ -743,15 +694,97 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // InlineText
-  //   | BlockText
-  //   | InlinePlaceable
-  static boolean pattern_element(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pattern_element")) return false;
+  // KW_RECORD identifier BRACE_L record-element* BRACE_R
+  public static boolean record(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "record")) return false;
+    if (!nextTokenIs(b, KW_RECORD)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RECORD, null);
+    r = consumeToken(b, KW_RECORD);
+    p = r; // pin = 1
+    r = r && report_error_(b, identifier(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
+    r = p && report_error_(b, record_3(b, l + 1)) && r;
+    r = p && consumeToken(b, BRACE_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // record-element*
+  private static boolean record_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "record_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!record_element(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "record_3", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // record-field
+  //   | COMMA
+  //   | COMMENT_LINE
+  static boolean record_element(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "record_element")) return false;
     boolean r;
-    r = InlineText(b, l + 1);
-    if (!r) r = BlockText(b, l + 1);
-    if (!r) r = InlinePlaceable(b, l + 1);
+    r = record_field(b, l + 1);
+    if (!r) r = consumeToken(b, COMMA);
+    if (!r) r = consumeToken(b, COMMENT_LINE);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // identifier COLON type-hint
+  public static boolean record_field(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "record_field")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = identifier(b, l + 1);
+    r = r && consumeToken(b, COLON);
+    r = r && type_hint(b, l + 1);
+    exit_section_(b, m, RECORD_FIELD, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // KW_RESOURCE identifier BRACE_L resource-element* BRACE_R
+  public static boolean resource(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resource")) return false;
+    if (!nextTokenIs(b, KW_RESOURCE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RESOURCE, null);
+    r = consumeToken(b, KW_RESOURCE);
+    p = r; // pin = 1
+    r = r && report_error_(b, identifier(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
+    r = p && report_error_(b, resource_3(b, l + 1)) && r;
+    r = p && consumeToken(b, BRACE_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // resource-element*
+  private static boolean resource_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resource_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!resource_element(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "resource_3", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // function
+  //   | COMMENT_LINE
+  static boolean resource_element(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resource_element")) return false;
+    if (!nextTokenIs(b, "", COMMENT_LINE, SYMBOL)) return false;
+    boolean r;
+    r = function(b, l + 1);
+    if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
   }
 
