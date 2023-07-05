@@ -26,7 +26,7 @@ class FluentSyntaxHighlighter : SyntaxHighlighterBase() {
             //
             KW_PACKAGE, KW_WORLD, KW_INTERFACE,
             KW_INCLUDE, KW_IMPORT, KW_USE,
-            KW_RECORD,
+            KW_TYPE, KW_RESOURCE, KW_RECORD, KW_FUNCTION,
             -> FluentHighlightColor.KEYWORD
 
             PARENTHESIS_L, PARENTHESIS_R -> FluentHighlightColor.PARENTHESES
@@ -46,8 +46,8 @@ class FluentSyntaxHighlighter : SyntaxHighlighterBase() {
             SYMBOL -> FluentHighlightColor.IDENTIFIER
             // 注释
             COMMENT_LINE -> FluentHighlightColor.LINE_COMMENT
-//            COMMENT_BLOCK -> AwslColor.BLOCK_COMMENT
-//            COMMENT_DOCUMENT -> AwslColor.DOC_COMMENT
+            COMMENT_BLOCK -> FluentHighlightColor.BLOCK_COMMENT
+            COMMENT_DOCUMENT -> FluentHighlightColor.DOC_COMMENT
             // 错误
             TokenType.BAD_CHARACTER -> FluentHighlightColor.BAD_CHARACTER
             else -> null

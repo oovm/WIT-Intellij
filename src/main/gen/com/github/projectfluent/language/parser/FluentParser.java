@@ -420,32 +420,39 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // parameter (COMMA parameter)*
+  // (parameter (COMMA parameter)* COMMA?)?
   static boolean function_args(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_args")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
+    function_args_0(b, l + 1);
+    return true;
+  }
+
+  // parameter (COMMA parameter)* COMMA?
+  private static boolean function_args_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_args_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = parameter(b, l + 1);
-    r = r && function_args_1(b, l + 1);
+    r = r && function_args_0_1(b, l + 1);
+    r = r && function_args_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (COMMA parameter)*
-  private static boolean function_args_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args_1")) return false;
+  private static boolean function_args_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_args_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!function_args_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "function_args_1", c)) break;
+      if (!function_args_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "function_args_0_1", c)) break;
     }
     return true;
   }
 
   // COMMA parameter
-  private static boolean function_args_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args_1_0")) return false;
+  private static boolean function_args_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_args_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
@@ -454,19 +461,53 @@ public class FluentParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  // COMMA?
+  private static boolean function_args_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_args_0_2")) return false;
+    consumeToken(b, COMMA);
+    return true;
+  }
+
   /* ********************************************************** */
-  // KW_FUNCTION PARENTHESIS_L function-args PARENTHESIS_R TO function-return
+  // identifier? KW_FUNCTION PARENTHESIS_L function-args PARENTHESIS_R (TO type-hint)?
   public static boolean function_signature(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_signature")) return false;
-    if (!nextTokenIs(b, KW_FUNCTION)) return false;
+    if (!nextTokenIs(b, "<function signature>", KW_FUNCTION, SYMBOL)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, FUNCTION_SIGNATURE, null);
-    r = consumeTokens(b, 1, KW_FUNCTION, PARENTHESIS_L);
-    p = r; // pin = 1
+    Marker m = enter_section_(b, l, _NONE_, FUNCTION_SIGNATURE, "<function signature>");
+    r = function_signature_0(b, l + 1);
+    r = r && consumeTokens(b, 1, KW_FUNCTION, PARENTHESIS_L);
+    p = r; // pin = 2
     r = r && report_error_(b, function_args(b, l + 1));
-    r = p && report_error_(b, consumeTokens(b, -1, PARENTHESIS_R, TO, FUNCTION_RETURN)) && r;
+    r = p && report_error_(b, consumeToken(b, PARENTHESIS_R)) && r;
+    r = p && function_signature_5(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // identifier?
+  private static boolean function_signature_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_signature_0")) return false;
+    identifier(b, l + 1);
+    return true;
+  }
+
+  // (TO type-hint)?
+  private static boolean function_signature_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_signature_5")) return false;
+    function_signature_5_0(b, l + 1);
+    return true;
+  }
+
+  // TO type-hint
+  private static boolean function_signature_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_signature_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, TO);
+    r = r && type_hint(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -596,6 +637,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
   //   | resource
   //   | record
   //   | function
+  //   | SEMICOLON
   //   | COMMENT_LINE
   static boolean interface_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "interface_element")) return false;
@@ -604,6 +646,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
     if (!r) r = resource(b, l + 1);
     if (!r) r = record(b, l + 1);
     if (!r) r = function(b, l + 1);
+    if (!r) r = consumeToken(b, SEMICOLON);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
   }
@@ -793,6 +836,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
   //   | world
   //   | include
   //   | interface
+  //   | SEMICOLON
   //   | COMMENT_LINE
   static boolean statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statements")) return false;
@@ -801,6 +845,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
     if (!r) r = world(b, l + 1);
     if (!r) r = include(b, l + 1);
     if (!r) r = interface_$(b, l + 1);
+    if (!r) r = consumeToken(b, SEMICOLON);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
   }

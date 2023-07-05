@@ -28,9 +28,21 @@ public class FluentFunctionSignatureNode extends WitElement implements FluentFun
   }
 
   @Override
+  @Nullable
+  public FluentIdentifier getIdentifier() {
+    return findChildByClass(FluentIdentifier.class);
+  }
+
+  @Override
   @NotNull
   public List<FluentParameter> getParameterList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentParameter.class);
+  }
+
+  @Override
+  @Nullable
+  public FluentTypeHint getTypeHint() {
+    return findChildByClass(FluentTypeHint.class);
   }
 
 }

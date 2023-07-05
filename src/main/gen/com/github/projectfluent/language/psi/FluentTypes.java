@@ -61,10 +61,9 @@ public interface FluentTypes {
   IElementType DOLLAR = new FluentTokenType("$");
   IElementType DOT = new FluentTokenType(".");
   IElementType EQ = new FluentTokenType("=");
-  IElementType FUNCTION_RETURN = new FluentTokenType("function-return");
   IElementType HYPHEN = new FluentTokenType("-");
   IElementType INTEGER = new FluentTokenType("INTEGER");
-  IElementType KW_FUNCTION = new FluentTokenType("KW_FUNCTION");
+  IElementType KW_FUNCTION = new FluentTokenType("func");
   IElementType KW_IMPORT = new FluentTokenType("import");
   IElementType KW_INCLUDE = new FluentTokenType("include");
   IElementType KW_INTERFACE = new FluentTokenType("interface");

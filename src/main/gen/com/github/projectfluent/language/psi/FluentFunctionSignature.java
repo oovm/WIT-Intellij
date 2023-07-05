@@ -7,7 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface FluentFunctionSignature extends PsiElement {
 
+  @Nullable
+  FluentIdentifier getIdentifier();
+
   @NotNull
   List<FluentParameter> getParameterList();
+
+  @Nullable
+  FluentTypeHint getTypeHint();
 
 }

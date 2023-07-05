@@ -38,6 +38,7 @@ KW_USE        = "use"
 KW_TYPE       = "type"
 KW_RESOURCE   = "resource"
 KW_RECORD     = "record"
+KW_FUNCTION   = "func"
 
 		VERSION = "<<semver>>"
         PARENTHESIS_L = '('
@@ -72,6 +73,7 @@ private statements ::=
   | world
   | include
   | interface
+  | SEMICOLON
   | COMMENT_LINE
 
 package ::= KW_PACKAGE package-name {
@@ -103,16 +105,17 @@ private interface-element ::=
   | resource
   | record
   | function
+  | SEMICOLON
   | COMMENT_LINE
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
 function ::= identifier COLON function-signature {
 
 //	mixin = "com.github.projectfluent.language.mixin.MixinFunction"
 }
-function-signature ::= KW_FUNCTION PARENTHESIS_L function-args PARENTHESIS_R TO function-return {
-	pin = 1
+function-signature ::= identifier? KW_FUNCTION PARENTHESIS_L function-args PARENTHESIS_R (TO type-hint)? {
+	pin = 2
 }
-private function-args ::= parameter (COMMA parameter)*;
+private function-args ::= (parameter (COMMA parameter)* COMMA?)?;
 parameter ::= identifier COLON type-hint {
 
 }

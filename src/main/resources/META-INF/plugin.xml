@@ -86,11 +86,6 @@
 		<!--			language="Fluent"-->
 		<!--			implementationClass="com.github.projectfluent.ide.highlight.InjectMarkdown"-->
 		<!--		/>-->
-		<languageInjectionContributor
-				language="wit"
-				implementationClass="com.github.projectfluent.ide.highlight.InjectVue"
-		/>
-		<multiHostInjector implementation="com.github.projectfluent.ide.highlight.InjectVue"/>
 
 	</extensions>
 	<actions>

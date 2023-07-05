@@ -15,7 +15,7 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
     override fun visitMessageID(o: FluentMessageID) {
-        highlight(o, SYM_MESSAGE)
+        highlight(o, SYM_RECORD)
     }
 
     override fun visitTermID(o: FluentTermID) {
@@ -32,6 +32,22 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
 
     override fun visitFunctionID(o: FluentFunctionID) {
         highlight(o, SYM_FUNCTION)
+    }
+
+    override fun visitInterface(o: FluentInterface) {
+        o.identifier?.let { highlight(it, SYM_INTERFACE) }
+    }
+
+    override fun visitResource(o: FluentResource) {
+        o.identifier?.let { highlight(it, SYM_RESOURCE) }
+    }
+
+    override fun visitRecord(o: FluentRecord) {
+        o.identifier?.let { highlight(it, SYM_RECORD) }
+    }
+
+    override fun visitRecordField(o: FluentRecordField) {
+        highlight(o.identifier, SYM_FIELD)
     }
 
 //    override fun visitSchemaStatement(o: JssSchemaStatement) {

@@ -55,6 +55,7 @@ KW_USE        = "use"
 KW_TYPE       = "type"
 KW_RESOURCE   = "resource"
 KW_RECORD     = "record"
+KW_FUNCTION   = "func"
 
 %%
 
@@ -66,10 +67,15 @@ KW_RECORD     = "record"
 }
 
 <YYINITIAL> {
+	"(" { return PARENTHESIS_L; }
+    ")" { return PARENTHESIS_R; }
+    "[" { return BRACKET_L; }
+    "]" { return BRACKET_R; }
 	"{" { return BRACE_L; }
 	"}" { return BRACE_R; }
 	"<" { return ANGLE_L; }
 	">" { return ANGLE_R; }
+    "->" { return TO; }
 	"^" { return ACCENT; }
 	":" { return COLON; }
 	";" { return SEMICOLON; }
@@ -93,6 +99,7 @@ KW_RECORD     = "record"
       {KW_TYPE}    { return KW_TYPE; }
       {KW_RESOURCE}    { return KW_RESOURCE; }
       {KW_RECORD}    { return KW_RECORD; }
+      {KW_FUNCTION}    { return KW_FUNCTION; }
 	{VERSION}      { return VERSION; }
 	{SYMBOL}       { return SYMBOL; }
 }
