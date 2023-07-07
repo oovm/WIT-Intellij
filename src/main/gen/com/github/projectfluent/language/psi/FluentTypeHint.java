@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface FluentTypeHint extends PsiElement {
 
+  @Nullable
+  FluentGeneric getGeneric();
+
   @NotNull
   FluentIdentifier getIdentifier();
 

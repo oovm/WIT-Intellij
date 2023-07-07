@@ -29,18 +29,17 @@ COMMENT_DOCUMENT = [/]{3}[^\r\n]*
 COMMENT_LINE     = [/]{2}[^\r\n]*
 COMMENT_BLOCK    = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
-WORD = [a-zA-Z][a-zA-Z0-9]*
-SYMBOL = {WORD}([-]{WORD})*
 VERSION = ([0-9]+)(\.[0-9]+)(\.[0-9]+)(-[a-zA-Z0-9\-.]+)?
+SYMBOL = {WORD}([-]{WORD})*
+PLACEHOLDER  = "_"
+WORD = [a-zA-Z][a-zA-Z0-9]*
 //STRING=\"([^\"\\]|\\.)*\"
-BYTE=(0[bBoOxXfF][0-9A-Fa-f][0-9A-Fa-f_]*)
 INTEGER=(0|[1-9][0-9_]*)
 DECIMAL=([0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 
 TEXT_LINE_HEAD = [^\r\n\s\t{}][^\r\n{}]*
 TEXT_LINE = [^\r\n{}]+
 CRLF      = \r\n | \n | \r
-
 
 ESCAPE_SPECIAL= \\[^]
 ESCAPE_UNICODE= \\(u{HEX}{4}|U{HEX}{6})
@@ -50,12 +49,15 @@ KW_PACKAGE    = "package"
 KW_WORLD      = "world"
 KW_INTERFACE  = "interface"
 KW_INCLUDE    = "include"
+KW_EXPORT     = "export"
 KW_IMPORT     = "import"
 KW_USE        = "use"
 KW_TYPE       = "type"
 KW_RESOURCE   = "resource"
 KW_RECORD     = "record"
 KW_FUNCTION   = "func"
+
+
 
 %%
 
@@ -95,13 +97,14 @@ KW_FUNCTION   = "func"
 
       	{KW_INCLUDE}   { return KW_INCLUDE; }
       {KW_IMPORT}   { return KW_IMPORT; }
-
+      {KW_EXPORT}   { return KW_EXPORT; }
       {KW_TYPE}    { return KW_TYPE; }
       {KW_RESOURCE}    { return KW_RESOURCE; }
       {KW_RECORD}    { return KW_RECORD; }
       {KW_FUNCTION}    { return KW_FUNCTION; }
 	{VERSION}      { return VERSION; }
 	{SYMBOL}       { return SYMBOL; }
+      {PLACEHOLDER} { return PLACE_HOLDER; }
 }
 // =====================================================================================================================
 [^] { return BAD_CHARACTER; }

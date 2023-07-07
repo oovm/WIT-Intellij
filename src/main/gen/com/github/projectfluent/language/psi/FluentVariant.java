@@ -7,10 +7,28 @@ import com.intellij.psi.PsiElement;
 
 public interface FluentVariant extends PsiElement {
 
-  @NotNull
-  FluentVariantKey getVariantKey();
+  @Nullable
+  FluentInlinePlaceable getInlinePlaceable();
 
-  @NotNull
-  FluentInterface getInterface();
+  @Nullable
+  FluentNumberLiteral getNumberLiteral();
+
+  @Nullable
+  FluentStringLiteral getStringLiteral();
+
+  @Nullable
+  FluentVariableID getVariableID();
+
+  @Nullable
+  FluentFlags getFlags();
+
+  @Nullable
+  FluentRecord getRecord();
+
+  @Nullable
+  FluentRecordField getRecordField();
+
+  @Nullable
+  FluentResource getResource();
 
 }

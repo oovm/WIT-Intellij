@@ -41,12 +41,6 @@ public class FluentInlinePlaceableNode extends WitElement implements FluentInlin
 
   @Override
   @Nullable
-  public FluentSelectExpression getSelectExpression() {
-    return findChildByClass(FluentSelectExpression.class);
-  }
-
-  @Override
-  @Nullable
   public FluentStringLiteral getStringLiteral() {
     return findChildByClass(FluentStringLiteral.class);
   }
@@ -55,6 +49,12 @@ public class FluentInlinePlaceableNode extends WitElement implements FluentInlin
   @Nullable
   public FluentVariableID getVariableID() {
     return findChildByClass(FluentVariableID.class);
+  }
+
+  @Override
+  @Nullable
+  public FluentImport getImport() {
+    return findChildByClass(FluentImport.class);
   }
 
   @Override

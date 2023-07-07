@@ -20,7 +20,7 @@ class FluentFormatBuilder : FormattingModelBuilder {
     companion object {
         fun getChildAttributes(node: ASTNode, newChildIndex: Int): ChildAttributes {
             val indent = when (node.elementType) {
-                FluentTypes.SELECT_EXPRESSION -> Indent.getNormalIndent()
+//                FluentTypes.SELECT_EXPRESSION -> Indent.getNormalIndent()
                 else -> Indent.getNoneIndent()
             }
             return ChildAttributes(indent, null)

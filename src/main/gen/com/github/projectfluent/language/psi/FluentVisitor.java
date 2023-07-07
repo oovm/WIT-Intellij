@@ -7,19 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public class FluentVisitor extends PsiElementVisitor {
 
-  public void visitArgument(@NotNull FluentArgument o) {
-    visitPsiElement(o);
-  }
-
   public void visitAttributeID(@NotNull FluentAttributeID o) {
     visitPsiElement(o);
   }
 
   public void visitBlockText(@NotNull FluentBlockText o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCallArguments(@NotNull FluentCallArguments o) {
     visitPsiElement(o);
   }
 
@@ -43,15 +35,7 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNamedArgument(@NotNull FluentNamedArgument o) {
-    visitPsiElement(o);
-  }
-
   public void visitNumberLiteral(@NotNull FluentNumberLiteral o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSelectExpression(@NotNull FluentSelectExpression o) {
     visitPsiElement(o);
   }
 
@@ -67,15 +51,23 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitVariant(@NotNull FluentVariant o) {
-    visitPsiElement(o);
-  }
-
   public void visitVariantKey(@NotNull FluentVariantKey o) {
     visitPsiElement(o);
   }
 
   public void visitBlockPlaceable(@NotNull FluentBlockPlaceable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnum(@NotNull FluentEnum o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExport(@NotNull FluentExport o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFlags(@NotNull FluentFlags o) {
     visitPsiElement(o);
   }
 
@@ -87,7 +79,15 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitGeneric(@NotNull FluentGeneric o) {
+    visitPsiElement(o);
+  }
+
   public void visitIdentifier(@NotNull FluentIdentifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitImport(@NotNull FluentImport o) {
     visitPsiElement(o);
   }
 
@@ -132,6 +132,10 @@ public class FluentVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeHint(@NotNull FluentTypeHint o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariant(@NotNull FluentVariant o) {
     visitPsiElement(o);
   }
 

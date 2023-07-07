@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.projectfluent.language.psi.FluentTypes.*;
-import com.github.projectfluent.language.mixin.MixinWorld;
+import com.github.projectfluent.language.psi.WitElement;
 import com.github.projectfluent.language.psi.*;
 
-public class FluentWorldNode extends MixinWorld implements FluentWorld {
+public class FluentImportNode extends WitElement implements FluentImport {
 
-  public FluentWorldNode(@NotNull ASTNode node) {
+  public FluentImportNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FluentVisitor visitor) {
-    visitor.visitWorld(this);
+    visitor.visitImport(this);
   }
 
   @Override
@@ -29,20 +29,8 @@ public class FluentWorldNode extends MixinWorld implements FluentWorld {
 
   @Override
   @Nullable
-  public FluentIdentifier getIdentifier() {
-    return findChildByClass(FluentIdentifier.class);
-  }
-
-  @Override
-  @NotNull
-  public List<FluentImport> getImportList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentImport.class);
-  }
-
-  @Override
-  @NotNull
-  public List<FluentInclude> getIncludeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentInclude.class);
+  public FluentIncludeName getIncludeName() {
+    return findChildByClass(FluentIncludeName.class);
   }
 
 }

@@ -28,6 +28,12 @@ public class FluentTypeHintNode extends WitElement implements FluentTypeHint {
   }
 
   @Override
+  @Nullable
+  public FluentGeneric getGeneric() {
+    return findChildByClass(FluentGeneric.class);
+  }
+
+  @Override
   @NotNull
   public FluentIdentifier getIdentifier() {
     return findNotNullChildByClass(FluentIdentifier.class);

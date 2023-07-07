@@ -11,14 +11,14 @@ import static com.github.projectfluent.language.psi.FluentTypes.*;
 import com.github.projectfluent.language.psi.WitElement;
 import com.github.projectfluent.language.psi.*;
 
-public class FluentVariantNode extends WitElement implements FluentVariant {
+public class FluentFlagsNode extends WitElement implements FluentFlags {
 
-  public FluentVariantNode(@NotNull ASTNode node) {
+  public FluentFlagsNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FluentVisitor visitor) {
-    visitor.visitVariant(this);
+    visitor.visitFlags(this);
   }
 
   @Override
@@ -28,9 +28,9 @@ public class FluentVariantNode extends WitElement implements FluentVariant {
   }
 
   @Override
-  @Nullable
-  public FluentInlinePlaceable getInlinePlaceable() {
-    return findChildByClass(FluentInlinePlaceable.class);
+  @NotNull
+  public FluentMessageID getMessageID() {
+    return findNotNullChildByClass(FluentMessageID.class);
   }
 
   @Override
@@ -43,36 +43,6 @@ public class FluentVariantNode extends WitElement implements FluentVariant {
   @Nullable
   public FluentStringLiteral getStringLiteral() {
     return findChildByClass(FluentStringLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentVariableID getVariableID() {
-    return findChildByClass(FluentVariableID.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentFlags getFlags() {
-    return findChildByClass(FluentFlags.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentRecord getRecord() {
-    return findChildByClass(FluentRecord.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentRecordField getRecordField() {
-    return findChildByClass(FluentRecordField.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentResource getResource() {
-    return findChildByClass(FluentResource.class);
   }
 
 }

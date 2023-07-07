@@ -61,6 +61,7 @@ KW_FUNCTION   = "func"
         TO = "->"
         HYPHEN = "-"
         SLASH = '/'
+        PLACE_HOLDER = "_"
 //      SPACE='regexp:\s+'
 //      ANY = 'regexp:.'
     ]
@@ -87,14 +88,23 @@ world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
 }
 private world-element ::=
    include
+  | import
+  | export
+  | SEMICOLON
   | COMMENT_LINE
 // include wasi:keyvalue/imports@0.2.0-draft;
-/* Attributes of Messages and Terms. */
 include ::= KW_INCLUDE include-name {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinAttribute"
 }
 include-name ::= identifier (COLON identifier)? (SLASH identifier)? (AT VERSION)?
+// import imports;
+import    ::= KW_IMPORT include-name {
+	pin = 1
+}
+export    ::= KW_EXPORT identifier {
+	pin = 1
+}
 /* Patterns are values of Messages, Terms, Attributes and Variants. */
 interface ::= KW_INTERFACE identifier BRACE_L interface-element* BRACE_R {
 	pin = 1
@@ -112,10 +122,10 @@ function ::= identifier COLON function-signature {
 
 //	mixin = "com.github.projectfluent.language.mixin.MixinFunction"
 }
-function-signature ::= identifier? KW_FUNCTION PARENTHESIS_L function-args PARENTHESIS_R (TO type-hint)? {
+function-signature ::= identifier? KW_FUNCTION function-args (TO type-hint)? {
 	pin = 2
 }
-private function-args ::= (parameter (COMMA parameter)* COMMA?)?;
+private function-args ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R;
 parameter ::= identifier COLON type-hint {
 
 }
@@ -123,7 +133,11 @@ parameter ::= identifier COLON type-hint {
 type ::= KW_TYPE identifier EQ type-hint {
 	pin = 1
 }
-type-hint ::= identifier;
+type-hint ::= identifier generic?;
+generic ::= ANGLE_L (generic-elements (COMMA generic-elements)* COMMA?)? ANGLE_R;
+private generic-elements ::=
+	type-hint
+  | PLACE_HOLDER
 // resource type-name { method: func() };
 resource    ::= KW_RESOURCE identifier BRACE_L resource-element* BRACE_R {
 	pin = 1
@@ -143,14 +157,19 @@ private record-element ::=
 record-field    ::= identifier COLON type-hint
 
 
+enum       ::= PARENTHESIS_L (variant COMMA)* [variant] PARENTHESIS_R
 
 
+variant            ::= flags | expression
+
+
+flags       ::= MessageID COLON (StringLiteral | NumberLiteral)
 
 
 //    | block_placeable
 InlineText        ::= TEXT_LINE | SELECTION_LINE;
 BlockText         ::= InlineText+;
-InlinePlaceable   ::= BRACE_L (SelectExpression | expression) BRACE_R
+InlinePlaceable   ::= BRACE_L (import | expression) BRACE_R
 block_placeable   ::= BLANK_BLOCK  InlinePlaceable
 
 /* Rules for validating expressions in Placeables and as selectors of
@@ -169,13 +188,13 @@ private expression    ::=
 
 
 
-CallArguments       ::= PARENTHESIS_L (Argument COMMA)* [Argument] PARENTHESIS_R
-Argument            ::= NamedArgument | expression
-NamedArgument       ::= MessageID COLON (StringLiteral | NumberLiteral)
+
+
+
 
 /* Block Expressions */
-SelectExpression    ::= expression TO (Variant|DefaultVariant)+
-Variant             ::= VariantKey interface
+
+
 DefaultVariant      ::= STAR VariantKey interface
 VariantKey          ::= BRACKET_L (NumberLiteral | MessageID) BRACKET_R
 

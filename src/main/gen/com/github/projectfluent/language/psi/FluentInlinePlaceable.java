@@ -14,13 +14,13 @@ public interface FluentInlinePlaceable extends PsiElement {
   FluentNumberLiteral getNumberLiteral();
 
   @Nullable
-  FluentSelectExpression getSelectExpression();
-
-  @Nullable
   FluentStringLiteral getStringLiteral();
 
   @Nullable
   FluentVariableID getVariableID();
+
+  @Nullable
+  FluentImport getImport();
 
   @Nullable
   FluentRecord getRecord();
