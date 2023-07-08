@@ -4,14 +4,14 @@
 
     extends = "com.github.projectfluent.language.psi.WitElement"
 
-    psiClassPrefix = "Fluent"
+    psiClassPrefix = "Wit"
     psiImplClassSuffix = "Node"
     psiPackage = "com.github.projectfluent.language.psi"
     psiImplPackage = "com.github.projectfluent.language.psi_node"
 
-    elementTypeHolderClass = "com.github.projectfluent.language.psi.FluentTypes"
-    elementTypeClass = "com.github.projectfluent.language.psi.FluentElementType"
-    tokenTypeClass = "com.github.projectfluent.language.psi.FluentTokenType"
+    elementTypeHolderClass = "com.github.projectfluent.language.psi.WitTypes"
+    elementTypeClass = "com.github.projectfluent.language.psi.WitElementType"
+    tokenTypeClass = "com.github.projectfluent.language.psi.WitTokenType"
 
     psiImplUtilClass = "com.github.projectfluent.language.psi_node.FluentPsiExtension"
 

@@ -2,7 +2,6 @@ package com.github.projectfluent.language.mixin
 
 import com.github.projectfluent.ide.view.FluentItemPresentation
 import com.github.projectfluent.language.psi.WitElement
-import com.github.projectfluent.language.psi.FluentTerm
 import com.github.projectfluent.language.psi.FluentWorld
 import com.intellij.icons.AllIcons
 import com.intellij.lang.ASTNode

@@ -1,9 +1,15 @@
 package com.github.projectfluent.ide.view
 
 import com.github.projectfluent.language.file.FluentFile
-import com.github.projectfluent.language.psi_node.FluentIncludeNode
-import com.github.projectfluent.language.psi_node.FluentPackageNode
-import com.github.projectfluent.language.psi_node.FluentWorldNode
+import com.github.projectfluent.language.psi.WitInterface
+import com.github.projectfluent.language.psi.WitWorld
+import com.github.projectfluent.language.psi_node.WitEnumNode
+import com.github.projectfluent.language.psi_node.WitFlagsNode
+import com.github.projectfluent.language.psi_node.WitIncludeNode
+import com.github.projectfluent.language.psi_node.WitInterfaceNode
+import com.github.projectfluent.language.psi_node.WitRecordNode
+import com.github.projectfluent.language.psi_node.WitVariantNode
+import com.github.projectfluent.language.psi_node.WitWorldNode
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.util.treeView.smartTree.SortableTreeElement
@@ -43,13 +49,18 @@ class FluentStructureViewElement(private val node: NavigatablePsiElement) :
 
     override fun getChildren(): Array<out TreeElement> = when (node) {
         is FluentFile -> getChildOfType(
-            FluentPackageNode::class.java,
-            FluentWorldNode::class.java,
+            WitWorldNode::class.java,
+            WitInterfaceNode::class.java,
         )
-        is FluentPackageNode, is FluentWorldNode -> getChildOfType(
-            FluentIncludeNode::class.java,
+        is WitWorld -> getChildOfType(
+            WitIncludeNode::class.java,
         )
-        is FluentIncludeNode -> arrayOf()
+        is WitInterface -> getChildOfType(
+            WitRecordNode::class.java,
+            WitVariantNode::class.java,
+            WitEnumNode::class.java,
+            WitFlagsNode::class.java,
+        )
         else -> getChildOfType(
             NavigatablePsiElement::class.java,
         )

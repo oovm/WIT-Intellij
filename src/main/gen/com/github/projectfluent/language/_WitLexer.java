@@ -4,11 +4,11 @@
 package com.github.projectfluent.language;
 
 import com.intellij.lexer.FlexLexer;
-import com.intellij.psi.tree.IElementType;import com.intellij.util.containers.IntStack;
+import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static com.github.projectfluent.language.psi.FluentTypes.*;
+import static com.github.projectfluent.language.psi.WitTypes.*;
 
 
 public class _WitLexer implements FlexLexer {

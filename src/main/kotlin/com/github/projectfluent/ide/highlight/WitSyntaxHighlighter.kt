@@ -2,7 +2,7 @@ package com.github.projectfluent.ide.highlight
 
 
 import com.github.projectfluent.language.psi.FluentLexerAdapter
-import com.github.projectfluent.language.psi.FluentTypes.*
+import com.github.projectfluent.language.psi.WitTypes.*
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase

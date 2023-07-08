@@ -1,0 +1,158 @@
+// This is a generated file. Not intended for manual editing.
+package com.github.projectfluent.language.psi;
+
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiElement;
+
+public class WitVisitor extends PsiElementVisitor {
+
+  public void visitAttributeID(@NotNull WitAttributeID o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBlockText(@NotNull WitBlockText o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInlinePlaceable(@NotNull WitInlinePlaceable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInlineText(@NotNull WitInlineText o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNumberLiteral(@NotNull WitNumberLiteral o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStringLiteral(@NotNull WitStringLiteral o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableID(@NotNull WitVariableID o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBlockPlaceable(@NotNull WitBlockPlaceable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnum(@NotNull WitEnum o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExport(@NotNull WitExport o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFlags(@NotNull WitFlags o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunction(@NotNull WitFunction o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionSignature(@NotNull WitFunctionSignature o) {
+    visitPsiElement(o);
+  }
+
+  public void visitGeneric(@NotNull WitGeneric o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentifier(@NotNull WitIdentifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitImport(@NotNull WitImport o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInclude(@NotNull WitInclude o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIncludeName(@NotNull WitIncludeName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInterface(@NotNull WitInterface o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInterfaceName(@NotNull WitInterfaceName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModuleName(@NotNull WitModuleName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOrganizationName(@NotNull WitOrganizationName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPackage(@NotNull WitPackage o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPackageName(@NotNull WitPackageName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParameter(@NotNull WitParameter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRecord(@NotNull WitRecord o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRecordField(@NotNull WitRecordField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitResource(@NotNull WitResource o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSemanticNumber(@NotNull WitSemanticNumber o) {
+    visitPsiElement(o);
+  }
+
+  public void visitType(@NotNull WitType o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeHint(@NotNull WitTypeHint o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUse(@NotNull WitUse o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUseItems(@NotNull WitUseItems o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariant(@NotNull WitVariant o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariantItem(@NotNull WitVariantItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWorld(@NotNull WitWorld o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPsiElement(@NotNull PsiElement o) {
+    visitElement(o);
+  }
+
+}

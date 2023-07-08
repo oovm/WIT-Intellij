@@ -8,11 +8,11 @@ import com.intellij.psi.PsiElement
 
 class WitFoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>) : WitRecursiveVisitor() {
 
-    override fun visitInlinePlaceable(o: FluentInlinePlaceable) {
-        descriptors += FoldingDescriptor(o.node, TextRange(o.firstChild.endOffset, o.lastChild.startOffset))
-        super.visitInlinePlaceable(o)
-    }
 
+    override fun visitInterface(o: WitInterface) {
+        descriptors += FoldingDescriptor(o.node, TextRange(o.firstChild.endOffset, o.lastChild.startOffset))
+        super.visitInterface(o)
+    }
 
 
 

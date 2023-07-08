@@ -14,44 +14,46 @@ import com.intellij.psi.PsiFile
 class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
-    override fun visitUseItems(o: FluentUseItems) {
+
+    override fun visitUseItems(o: WitUseItems) {
         o.identifierList.forEach { highlight(it, SYM_TYPE) }
     }
 
-    override fun visitImport(o: FluentImport) {
+
+    override fun visitImport(o: WitImport) {
         super.visitImport(o)
     }
 
-    override fun visitResource(o: FluentResource) {
+    override fun visitResource(o: WitResource) {
         o.identifier?.let { highlight(it, SYM_TYPE) }
     }
 
-    override fun visitRecord(o: FluentRecord) {
+    override fun visitRecord(o: WitRecord) {
         o.identifier?.let { highlight(it, SYM_TYPE) }
     }
 
-    override fun visitRecordField(o: FluentRecordField) {
+    override fun visitRecordField(o: WitRecordField) {
         highlight(o.identifier, SYM_FIELD)
     }
 
 
-    override fun visitFunction(o: FluentFunction) {
+    override fun visitFunction(o: WitFunction) {
         highlight(o.identifier, SYM_FUNCTION)
     }
 
-    override fun visitFunctionSignature(o: FluentFunctionSignature) {
+    override fun visitFunctionSignature(o: WitFunctionSignature) {
         o.identifier?.let { highlight(it, KEYWORD) }
     }
 
-    override fun visitParameter(o: FluentParameter) {
+    override fun visitParameter(o: WitParameter) {
         highlight(o.identifier, SYM_FIELD)
     }
 
-    override fun visitType(o: FluentType) {
+    override fun visitType(o: WitType) {
         super.visitType(o)
     }
 
-    override fun visitTypeHint(o: FluentTypeHint) {
+    override fun visitTypeHint(o: WitTypeHint) {
         when (o.identifier.text) {
             "_", "bool",
             "u8", "u16", "u32", "u64",
@@ -73,7 +75,7 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
         }
     }
 
-    override fun visitInterfaceName(o: FluentInterfaceName) {
+    override fun visitInterfaceName(o: WitInterfaceName) {
         highlight(o, SYM_INTERFACE)
     }
 

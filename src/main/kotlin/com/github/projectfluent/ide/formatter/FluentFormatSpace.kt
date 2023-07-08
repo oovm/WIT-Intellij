@@ -1,7 +1,7 @@
 package com.github.projectfluent.ide.formatter
 
 import com.github.projectfluent.WitLanguage
-import com.github.projectfluent.language.psi.FluentTypes.*
+import com.github.projectfluent.language.psi.WitTypes.*
 import com.intellij.formatting.SpacingBuilder
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings

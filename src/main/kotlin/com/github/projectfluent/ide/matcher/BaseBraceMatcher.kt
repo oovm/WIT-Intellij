@@ -1,7 +1,7 @@
 package com.github.projectfluent.ide.matcher
 
 import com.github.projectfluent.language.psi.FluentParserDefinition
-import com.github.projectfluent.language.psi.FluentTypes.*
+import com.github.projectfluent.language.psi.WitTypes.*
 import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
 import com.intellij.psi.PsiFile

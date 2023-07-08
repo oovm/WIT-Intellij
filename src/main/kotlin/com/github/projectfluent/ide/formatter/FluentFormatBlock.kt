@@ -2,7 +2,7 @@ package com.github.projectfluent.ide.formatter
 
 import com.github.projectfluent.language.ast.computeSpacing
 import com.github.projectfluent.language.ast.isWhitespaceOrEmpty
-import com.github.projectfluent.language.psi.FluentMessage
+import com.github.projectfluent.language.psi.WitInterface
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
@@ -66,7 +66,7 @@ class FluentFormatBlock(
         // val isCornerChild = node.firstChildNode == child || node.lastChildNode == child
         val firstLine = node.firstChildNode == child;
         return when (node.psi) {
-            is FluentMessage -> when {
+            is WitInterface -> when {
                 firstLine -> Indent.getNoneIndent()
                 else -> Indent.getNormalIndent()
             }
