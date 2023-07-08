@@ -35,6 +35,45 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
         highlight(o, SYM_INTERFACE)
     }
 
+    override fun visitFunction(o: FluentFunction) {
+        highlight(o.identifier, SYM_FUNCTION)
+    }
+
+    override fun visitFunctionSignature(o: FluentFunctionSignature) {
+        o.identifier?.let { highlight(it, KEYWORD) }
+    }
+
+    override fun visitParameter(o: FluentParameter) {
+        highlight(o.identifier, SYM_FIELD)
+    }
+
+    override fun visitType(o: FluentType) {
+        super.visitType(o)
+    }
+
+    override fun visitTypeHint(o: FluentTypeHint) {
+        when (o.identifier.text) {
+            "_" -> {
+                highlight(o.identifier, KEYWORD)
+            }
+
+            "bool",
+            "u8", "u16", "u32", "u64",
+            "s8", "s16", "s32", "s64",
+            "f32", "f64", "float32", "float64",
+            "list", "string",
+            "option", "result",
+            "borrow", "own",
+            -> {
+                highlight(o.identifier, SYM_BUILTIN)
+            }
+
+            else -> {
+                highlight(o.identifier, SYM_RECORD)
+            }
+        }
+    }
+
 //    override fun visitSchemaStatement(o: JssSchemaStatement) {
 //        //
 //        val head = o.firstChild;

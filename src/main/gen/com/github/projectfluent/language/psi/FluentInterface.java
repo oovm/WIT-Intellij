@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface FluentInterface extends PsiElement {
 
   @NotNull
+  List<FluentEnum> getEnumList();
+
+  @NotNull
+  List<FluentFlags> getFlagsList();
+
+  @NotNull
   List<FluentFunction> getFunctionList();
 
   @Nullable
@@ -24,5 +30,8 @@ public interface FluentInterface extends PsiElement {
 
   @NotNull
   List<FluentUse> getUseList();
+
+  @NotNull
+  List<FluentVariant> getVariantList();
 
 }

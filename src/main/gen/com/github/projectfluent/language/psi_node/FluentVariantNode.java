@@ -29,50 +29,14 @@ public class FluentVariantNode extends WitElement implements FluentVariant {
 
   @Override
   @Nullable
-  public FluentInlinePlaceable getInlinePlaceable() {
-    return findChildByClass(FluentInlinePlaceable.class);
+  public FluentIdentifier getIdentifier() {
+    return findChildByClass(FluentIdentifier.class);
   }
 
   @Override
-  @Nullable
-  public FluentNumberLiteral getNumberLiteral() {
-    return findChildByClass(FluentNumberLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentStringLiteral getStringLiteral() {
-    return findChildByClass(FluentStringLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentVariableID getVariableID() {
-    return findChildByClass(FluentVariableID.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentFlags getFlags() {
-    return findChildByClass(FluentFlags.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentRecord getRecord() {
-    return findChildByClass(FluentRecord.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentRecordField getRecordField() {
-    return findChildByClass(FluentRecordField.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentResource getResource() {
-    return findChildByClass(FluentResource.class);
+  @NotNull
+  public List<FluentVariantItem> getVariantItemList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentVariantItem.class);
   }
 
 }

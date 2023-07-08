@@ -37,7 +37,8 @@ enum class FluentHighlightColor(humanName: Supplier<@AttributeDescriptor String>
     SYM_TERM(WitBundle.messagePointer("color.token.symbol.term"), Default.CONSTANT),
     SYM_ATTRIBUTE(WitBundle.messagePointer("color.token.symbol.attribute"), Default.STATIC_METHOD),
     SYM_VARIABLE(WitBundle.messagePointer("color.token.symbol.variable"), Default.REASSIGNED_PARAMETER),
-    SYM_FUNCTION(WitBundle.messagePointer("color.token.symbol.function"), Default.PREDEFINED_SYMBOL),
+    SYM_FUNCTION(WitBundle.messagePointer("color.token.symbol.function"), Default.FUNCTION_DECLARATION),
+    SYM_BUILTIN(WitBundle.messagePointer("color.token.symbol.builtin"), Default.PREDEFINED_SYMBOL),
     //
     TYPE_HINT(WitBundle.messagePointer("color.token.symbol.type"), Default.CLASS_NAME),
 

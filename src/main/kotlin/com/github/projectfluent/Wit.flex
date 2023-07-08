@@ -30,8 +30,7 @@ COMMENT_LINE     = [/]{2}[^\r\n]*
 COMMENT_BLOCK    = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
 VERSION = ([0-9]+)(\.[0-9]+)(\.[0-9]+)(-[a-zA-Z0-9\-]+)?
-SYMBOL = {WORD}([-]{WORD})*
-PLACEHOLDER  = "_"
+SYMBOL = _|{WORD}([-]{WORD})*
 WORD = [a-zA-Z][a-zA-Z0-9]*
 //STRING=\"([^\"\\]|\\.)*\"
 INTEGER=(0|[1-9][0-9_]*)
@@ -55,6 +54,9 @@ KW_USE        = "use"
 KW_TYPE       = "type"
 KW_RESOURCE   = "resource"
 KW_RECORD     = "record"
+KW_ENUM       = "enum"
+KW_FLAGS      = "flags"
+KW_VARIANT    = "variant"
 KW_FUNCTION   = "func"
 
 
@@ -93,18 +95,24 @@ KW_FUNCTION   = "func"
 	{KW_PACKAGE}   { return KW_PACKAGE; }
 	{KW_WORLD}     { return KW_WORLD; }
 	{KW_INTERFACE} { return KW_INTERFACE; }
+
+	{KW_INCLUDE}   { return KW_INCLUDE; }
 	{KW_USE}       { return KW_USE; }
 
-      	{KW_INCLUDE}   { return KW_INCLUDE; }
-      {KW_IMPORT}   { return KW_IMPORT; }
-      {KW_EXPORT}   { return KW_EXPORT; }
-      {KW_TYPE}    { return KW_TYPE; }
-      {KW_RESOURCE}    { return KW_RESOURCE; }
-      {KW_RECORD}    { return KW_RECORD; }
-      {KW_FUNCTION}    { return KW_FUNCTION; }
+	{KW_IMPORT}   { return KW_IMPORT; }
+	{KW_EXPORT}   { return KW_EXPORT; }
+
+	{KW_TYPE}     { return KW_TYPE; }
+	{KW_RESOURCE} { return KW_RESOURCE; }
+	{KW_RECORD}   { return KW_RECORD; }
+	{KW_ENUM}     { return KW_ENUM; }
+	{KW_FLAGS}    { return KW_FLAGS; }
+	{KW_VARIANT}  { return KW_VARIANT; }
+
+	{KW_FUNCTION} { return KW_FUNCTION; }
+
 	{VERSION}      { return VERSION; }
 	{SYMBOL}       { return SYMBOL; }
-      {PLACEHOLDER} { return PLACE_HOLDER; }
 }
 // =====================================================================================================================
 [^] { return BAD_CHARACTER; }

@@ -28,21 +28,9 @@ public class FluentFlagsNode extends WitElement implements FluentFlags {
   }
 
   @Override
-  @Nullable
-  public FluentNumberLiteral getNumberLiteral() {
-    return findChildByClass(FluentNumberLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentStringLiteral getStringLiteral() {
-    return findChildByClass(FluentStringLiteral.class);
-  }
-
-  @Override
   @NotNull
-  public FluentModuleName getModuleName() {
-    return findNotNullChildByClass(FluentModuleName.class);
+  public List<FluentIdentifier> getIdentifierList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentIdentifier.class);
   }
 
 }

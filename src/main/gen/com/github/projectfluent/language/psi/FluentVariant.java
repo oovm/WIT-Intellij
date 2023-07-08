@@ -8,27 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface FluentVariant extends PsiElement {
 
   @Nullable
-  FluentInlinePlaceable getInlinePlaceable();
+  FluentIdentifier getIdentifier();
 
-  @Nullable
-  FluentNumberLiteral getNumberLiteral();
-
-  @Nullable
-  FluentStringLiteral getStringLiteral();
-
-  @Nullable
-  FluentVariableID getVariableID();
-
-  @Nullable
-  FluentFlags getFlags();
-
-  @Nullable
-  FluentRecord getRecord();
-
-  @Nullable
-  FluentRecordField getRecordField();
-
-  @Nullable
-  FluentResource getResource();
+  @NotNull
+  List<FluentVariantItem> getVariantItemList();
 
 }

@@ -42,6 +42,7 @@ public interface FluentTypes {
   IElementType USE_ITEMS = new FluentElementType("USE_ITEMS");
   IElementType VARIABLE_ID = new FluentElementType("VARIABLE_ID");
   IElementType VARIANT = new FluentElementType("VARIANT");
+  IElementType VARIANT_ITEM = new FluentElementType("VARIANT_ITEM");
   IElementType WORLD = new FluentElementType("WORLD");
 
   IElementType ACCENT = new FluentTokenType("^");
@@ -65,7 +66,9 @@ public interface FluentTypes {
   IElementType EQ = new FluentTokenType("=");
   IElementType HYPHEN = new FluentTokenType("-");
   IElementType INTEGER = new FluentTokenType("INTEGER");
-  IElementType KW_EXPORT = new FluentTokenType("KW_EXPORT");
+  IElementType KW_ENUM = new FluentTokenType("enum");
+  IElementType KW_EXPORT = new FluentTokenType("export");
+  IElementType KW_FLAGS = new FluentTokenType("flags");
   IElementType KW_FUNCTION = new FluentTokenType("func");
   IElementType KW_IMPORT = new FluentTokenType("import");
   IElementType KW_INCLUDE = new FluentTokenType("include");
@@ -75,6 +78,7 @@ public interface FluentTypes {
   IElementType KW_RESOURCE = new FluentTokenType("resource");
   IElementType KW_TYPE = new FluentTokenType("type");
   IElementType KW_USE = new FluentTokenType("use");
+  IElementType KW_VARIANT = new FluentTokenType("variant");
   IElementType KW_WORLD = new FluentTokenType("world");
   IElementType PARENTHESIS_L = new FluentTokenType("(");
   IElementType PARENTHESIS_R = new FluentTokenType(")");
@@ -196,6 +200,9 @@ public interface FluentTypes {
       }
       else if (type == VARIANT) {
         return new FluentVariantNode(node);
+      }
+      else if (type == VARIANT_ITEM) {
+        return new FluentVariantItemNode(node);
       }
       else if (type == WORLD) {
         return new FluentWorldNode(node);

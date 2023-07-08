@@ -11,14 +11,14 @@ import static com.github.projectfluent.language.psi.FluentTypes.*;
 import com.github.projectfluent.language.psi.WitElement;
 import com.github.projectfluent.language.psi.*;
 
-public class FluentEnumNode extends WitElement implements FluentEnum {
+public class FluentVariantItemNode extends WitElement implements FluentVariantItem {
 
-  public FluentEnumNode(@NotNull ASTNode node) {
+  public FluentVariantItemNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FluentVisitor visitor) {
-    visitor.visitEnum(this);
+    visitor.visitVariantItem(this);
   }
 
   @Override
@@ -29,8 +29,14 @@ public class FluentEnumNode extends WitElement implements FluentEnum {
 
   @Override
   @NotNull
-  public List<FluentIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentIdentifier.class);
+  public FluentIdentifier getIdentifier() {
+    return findNotNullChildByClass(FluentIdentifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FluentTypeHint getTypeHint() {
+    return findChildByClass(FluentTypeHint.class);
   }
 
 }

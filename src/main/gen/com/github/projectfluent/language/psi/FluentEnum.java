@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FluentEnum extends PsiElement {
 
   @NotNull
-  List<FluentVariant> getVariantList();
+  List<FluentIdentifier> getIdentifierList();
 
 }

@@ -29,6 +29,18 @@ public class FluentInterfaceNode extends MixinInterface implements FluentInterfa
 
   @Override
   @NotNull
+  public List<FluentEnum> getEnumList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentEnum.class);
+  }
+
+  @Override
+  @NotNull
+  public List<FluentFlags> getFlagsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentFlags.class);
+  }
+
+  @Override
+  @NotNull
   public List<FluentFunction> getFunctionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentFunction.class);
   }
@@ -61,6 +73,12 @@ public class FluentInterfaceNode extends MixinInterface implements FluentInterfa
   @NotNull
   public List<FluentUse> getUseList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentUse.class);
+  }
+
+  @Override
+  @NotNull
+  public List<FluentVariant> getVariantList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentVariant.class);
   }
 
 }

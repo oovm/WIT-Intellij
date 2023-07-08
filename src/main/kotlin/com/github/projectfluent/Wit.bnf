@@ -29,16 +29,20 @@
         STRING_ESCAPE = "String Escaped"
         SELECTION_LINE = "SELECTION_LINE"
 
-KW_PACKAGE    = "package"
-KW_WORLD      = "world"
-KW_INTERFACE  = "interface"
-KW_INCLUDE    = "include"
-KW_IMPORT     = "import"
-KW_USE        = "use"
-KW_TYPE       = "type"
-KW_RESOURCE   = "resource"
-KW_RECORD     = "record"
-KW_FUNCTION   = "func"
+		KW_PACKAGE    = "package"
+		KW_WORLD      = "world"
+		KW_INTERFACE  = "interface"
+		KW_INCLUDE    = "include"
+		KW_EXPORT     = "export"
+		KW_IMPORT     = "import"
+		KW_USE        = "use"
+		KW_TYPE       = "type"
+		KW_RESOURCE   = "resource"
+		KW_RECORD     = "record"
+		KW_ENUM       = "enum"
+		KW_FLAGS      = "flags"
+		KW_VARIANT    = "variant"
+		KW_FUNCTION   = "func"
 
 		VERSION = "<<semver>>"
         PARENTHESIS_L = '('
@@ -125,6 +129,9 @@ private interface-element ::=
   | type
   | resource
   | record
+  | flags
+  | enum
+  | variant
   | function
   | SEMICOLON
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
@@ -144,10 +151,7 @@ type ::= KW_TYPE identifier EQ type-hint {
 	pin = 1
 }
 type-hint ::= identifier generic?;
-generic ::= ANGLE_L (generic-elements (COMMA generic-elements)* COMMA?)? ANGLE_R;
-private generic-elements ::=
-	type-hint
-  | PLACE_HOLDER
+generic ::= ANGLE_L (type-hint (COMMA type-hint)* COMMA?)? ANGLE_R;
 // resource type-name { method: func() };
 resource    ::= KW_RESOURCE identifier BRACE_L resource-element* BRACE_R {
 	pin = 1
@@ -166,13 +170,21 @@ private record-element ::=
 record-field    ::= identifier COLON type-hint
 
 
-enum       ::= PARENTHESIS_L (variant COMMA)* [variant] PARENTHESIS_R
+flags       ::= KW_FLAGS identifier BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
+	pin = 1
+}
+
+enum       ::= KW_ENUM identifier BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
+	pin = 1
+}
+
+variant          ::= KW_VARIANT identifier BRACE_L (variant-item (COMMA variant-item)* COMMA?)? BRACE_R {
+	pin = 1
+}
+variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)?
 
 
-variant            ::= flags | expression
 
-
-flags       ::= module-name COLON (StringLiteral | NumberLiteral)
 
 
 //    | block_placeable

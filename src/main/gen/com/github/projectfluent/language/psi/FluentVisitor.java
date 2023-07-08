@@ -143,6 +143,10 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitVariantItem(@NotNull FluentVariantItem o) {
+    visitPsiElement(o);
+  }
+
   public void visitWorld(@NotNull FluentWorld o) {
     visitPsiElement(o);
   }

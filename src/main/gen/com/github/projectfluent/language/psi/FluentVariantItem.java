@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FluentFlags extends PsiElement {
+public interface FluentVariantItem extends PsiElement {
 
   @NotNull
-  List<FluentIdentifier> getIdentifierList();
+  FluentIdentifier getIdentifier();
+
+  @Nullable
+  FluentTypeHint getTypeHint();
 
 }
