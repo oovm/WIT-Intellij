@@ -113,18 +113,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SYMBOL
-  public static boolean MessageID(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MessageID")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, SYMBOL);
-    exit_section_(b, m, MESSAGE_ID, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // INTEGER | DECIMAL
   public static boolean NumberLiteral(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "NumberLiteral")) return false;
@@ -172,18 +160,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // HYPHEN SYMBOL
-  public static boolean TermID(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TermID")) return false;
-    if (!nextTokenIs(b, HYPHEN)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, HYPHEN, SYMBOL);
-    exit_section_(b, m, TERM_ID, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // DOLLAR SYMBOL
   public static boolean VariableID(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableID")) return false;
@@ -192,29 +168,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, DOLLAR, SYMBOL);
     exit_section_(b, m, VARIABLE_ID, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // BRACKET_L (NumberLiteral | MessageID) BRACKET_R
-  public static boolean VariantKey(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariantKey")) return false;
-    if (!nextTokenIs(b, BRACKET_L)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, BRACKET_L);
-    r = r && VariantKey_1(b, l + 1);
-    r = r && consumeToken(b, BRACKET_R);
-    exit_section_(b, m, VARIANT_KEY, r);
-    return r;
-  }
-
-  // NumberLiteral | MessageID
-  private static boolean VariantKey_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariantKey_1")) return false;
-    boolean r;
-    r = NumberLiteral(b, l + 1);
-    if (!r) r = MessageID(b, l + 1);
     return r;
   }
 
@@ -276,7 +229,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_EXPORT identifier
+  // KW_EXPORT interface-name
   public static boolean export(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "export")) return false;
     if (!nextTokenIs(b, KW_EXPORT)) return false;
@@ -284,7 +237,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, EXPORT, null);
     r = consumeToken(b, KW_EXPORT);
     p = r; // pin = 1
-    r = r && identifier(b, l + 1);
+    r = r && interface_name(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
@@ -311,13 +264,13 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MessageID COLON (StringLiteral | NumberLiteral)
+  // module-name COLON (StringLiteral | NumberLiteral)
   public static boolean flags(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "flags")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = MessageID(b, l + 1);
+    r = module_name(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && flags_2(b, l + 1);
     exit_section_(b, m, FLAGS, r);
@@ -575,7 +528,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier (COLON identifier)? (SLASH identifier)? (AT VERSION)?
+  // identifier (COLON identifier)? (SLASH interface-name)? (AT VERSION)?
   public static boolean include_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "include_name")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
@@ -607,20 +560,20 @@ public class FluentParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (SLASH identifier)?
+  // (SLASH interface-name)?
   private static boolean include_name_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "include_name_2")) return false;
     include_name_2_0(b, l + 1);
     return true;
   }
 
-  // SLASH identifier
+  // SLASH interface-name
   private static boolean include_name_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "include_name_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, SLASH);
-    r = r && identifier(b, l + 1);
+    r = r && interface_name(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -643,7 +596,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_INTERFACE identifier BRACE_L interface-element* BRACE_R
+  // KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R
   public static boolean interface_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "interface_$")) return false;
     if (!nextTokenIs(b, KW_INTERFACE)) return false;
@@ -651,7 +604,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, INTERFACE, null);
     r = consumeToken(b, KW_INTERFACE);
     p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
+    r = r && report_error_(b, interface_name(b, l + 1));
     r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
     r = p && report_error_(b, interface_3(b, l + 1)) && r;
     r = p && consumeToken(b, BRACE_R) && r;
@@ -677,7 +630,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
   //   | record
   //   | function
   //   | SEMICOLON
-  //   | COMMENT_LINE
   static boolean interface_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "interface_element")) return false;
     boolean r;
@@ -687,7 +639,30 @@ public class FluentParser implements PsiParser, LightPsiParser {
     if (!r) r = record(b, l + 1);
     if (!r) r = function(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
-    if (!r) r = consumeToken(b, COMMENT_LINE);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SYMBOL
+  public static boolean interface_name(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "interface_name")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    exit_section_(b, m, INTERFACE_NAME, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SYMBOL
+  public static boolean module_name(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "module_name")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    exit_section_(b, m, MODULE_NAME, r);
     return r;
   }
 
@@ -871,12 +846,23 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // SYMBOL
+  public static boolean semantic_number(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "semantic_number")) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SYMBOL);
+    exit_section_(b, m, SEMANTIC_NUMBER, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // package
   //   | world
   //   | include
   //   | interface
   //   | SEMICOLON
-  //   | COMMENT_LINE
   static boolean statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statements")) return false;
     boolean r;
@@ -885,7 +871,6 @@ public class FluentParser implements PsiParser, LightPsiParser {
     if (!r) r = include(b, l + 1);
     if (!r) r = interface_$(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
-    if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
   }
 
@@ -926,7 +911,7 @@ public class FluentParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_USE include-name use-items?
+  // KW_USE (include-name|interface-name) use-items?
   public static boolean use(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use")) return false;
     if (!nextTokenIs(b, KW_USE)) return false;
@@ -934,10 +919,19 @@ public class FluentParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, USE, null);
     r = consumeToken(b, KW_USE);
     p = r; // pin = 1
-    r = r && report_error_(b, include_name(b, l + 1));
+    r = r && report_error_(b, use_1(b, l + 1));
     r = p && use_2(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // include-name|interface-name
+  private static boolean use_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "use_1")) return false;
+    boolean r;
+    r = include_name(b, l + 1);
+    if (!r) r = interface_name(b, l + 1);
+    return r;
   }
 
   // use-items?

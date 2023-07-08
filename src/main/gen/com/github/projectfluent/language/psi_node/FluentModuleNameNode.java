@@ -11,38 +11,20 @@ import static com.github.projectfluent.language.psi.FluentTypes.*;
 import com.github.projectfluent.language.psi.WitElement;
 import com.github.projectfluent.language.psi.*;
 
-public class FluentUseNode extends WitElement implements FluentUse {
+public class FluentModuleNameNode extends WitElement implements FluentModuleName {
 
-  public FluentUseNode(@NotNull ASTNode node) {
+  public FluentModuleNameNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FluentVisitor visitor) {
-    visitor.visitUse(this);
+    visitor.visitModuleName(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FluentVisitor) accept((FluentVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public FluentIncludeName getIncludeName() {
-    return findChildByClass(FluentIncludeName.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentInterfaceName getInterfaceName() {
-    return findChildByClass(FluentInterfaceName.class);
-  }
-
-  @Override
-  @Nullable
-  public FluentUseItems getUseItems() {
-    return findChildByClass(FluentUseItems.class);
   }
 
 }

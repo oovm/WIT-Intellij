@@ -99,24 +99,24 @@ include ::= KW_INCLUDE include-name {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinAttribute"
 }
-include-name ::= identifier (COLON identifier)? (SLASH identifier)? (AT VERSION)?
+include-name ::= identifier (COLON identifier)? (SLASH interface-name)? (AT VERSION)?
 // import imports;
 import    ::= KW_IMPORT include-name {
 	pin = 1
 }
 // import imports;
-export    ::= KW_EXPORT identifier {
+export    ::= KW_EXPORT interface-name {
 	pin = 1
 }
 //  use wasi:io/streams@0.2.0.{input-stream, output-stream};
-use      ::= KW_USE include-name use-items? {
+use      ::= KW_USE (include-name|interface-name) use-items? {
 	pin = 1
 }
 use-items ::= DOT BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
 	pin = 1
 }
 // interface name { }
-interface ::= KW_INTERFACE identifier BRACE_L interface-element* BRACE_R {
+interface ::= KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinInterface"
 }
@@ -172,7 +172,7 @@ enum       ::= PARENTHESIS_L (variant COMMA)* [variant] PARENTHESIS_R
 variant            ::= flags | expression
 
 
-flags       ::= MessageID COLON (StringLiteral | NumberLiteral)
+flags       ::= module-name COLON (StringLiteral | NumberLiteral)
 
 
 //    | block_placeable
@@ -196,24 +196,18 @@ private expression    ::=
 /* Inline Expressions */
 
 
-
-
-
-
-
 /* Block Expressions */
 
 
-
-VariantKey          ::= BRACKET_L (NumberLiteral | MessageID) BRACKET_R
-
-/* Identifier */
-MessageID           ::= SYMBOL;
-TermID              ::= HYPHEN SYMBOL;
-AttributeID         ::= DOT SYMBOL;
-VariableID          ::= DOLLAR SYMBOL;
-FunctionID          ::= SYMBOL;
 /* Literals */
 StringLiteral       ::= STRING_QUOTE (STRING_ESCAPE|STRING_CHAR)* STRING_QUOTE
 NumberLiteral       ::= INTEGER | DECIMAL
+
+/* Identifier */
+interface-name      ::= SYMBOL;
+AttributeID         ::= DOT SYMBOL;
+VariableID          ::= DOLLAR SYMBOL;
+FunctionID          ::= SYMBOL;
+semantic-number     ::= SYMBOL
+module-name         ::= SYMBOL;
 identifier          ::= SYMBOL

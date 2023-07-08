@@ -28,12 +28,6 @@ public class FluentFlagsNode extends WitElement implements FluentFlags {
   }
 
   @Override
-  @NotNull
-  public FluentMessageID getMessageID() {
-    return findNotNullChildByClass(FluentMessageID.class);
-  }
-
-  @Override
   @Nullable
   public FluentNumberLiteral getNumberLiteral() {
     return findChildByClass(FluentNumberLiteral.class);
@@ -43,6 +37,12 @@ public class FluentFlagsNode extends WitElement implements FluentFlags {
   @Nullable
   public FluentStringLiteral getStringLiteral() {
     return findChildByClass(FluentStringLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public FluentModuleName getModuleName() {
+    return findNotNullChildByClass(FluentModuleName.class);
   }
 
 }

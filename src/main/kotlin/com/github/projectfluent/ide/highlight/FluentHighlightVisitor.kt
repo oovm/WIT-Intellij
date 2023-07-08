@@ -14,36 +14,9 @@ import com.intellij.psi.PsiFile
 class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
+
     override fun visitImport(o: FluentImport) {
         super.visitImport(o)
-    }
-
-    override fun visitExport(o: FluentExport) {
-        o.identifier?.let { highlight(it, SYM_INTERFACE) }
-    }
-
-    override fun visitMessageID(o: FluentMessageID) {
-        highlight(o, SYM_RECORD)
-    }
-
-    override fun visitTermID(o: FluentTermID) {
-        highlight(o, SYM_TERM)
-    }
-
-    override fun visitAttributeID(o: FluentAttributeID) {
-        highlight(o, SYM_ATTRIBUTE)
-    }
-
-    override fun visitVariableID(o: FluentVariableID) {
-        highlight(o, SYM_VARIABLE)
-    }
-
-    override fun visitFunctionID(o: FluentFunctionID) {
-        highlight(o, SYM_FUNCTION)
-    }
-
-    override fun visitInterface(o: FluentInterface) {
-        o.identifier?.let { highlight(it, SYM_INTERFACE) }
     }
 
     override fun visitResource(o: FluentResource) {
@@ -56,6 +29,10 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
 
     override fun visitRecordField(o: FluentRecordField) {
         highlight(o.identifier, SYM_FIELD)
+    }
+
+    override fun visitInterfaceName(o: FluentInterfaceName) {
+        highlight(o, SYM_INTERFACE)
     }
 
 //    override fun visitSchemaStatement(o: JssSchemaStatement) {
@@ -82,7 +59,7 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
         file: PsiFile,
         updateWholeFile: Boolean,
         holder: HighlightInfoHolder,
-        action: Runnable
+        action: Runnable,
     ): Boolean {
         infoHolder = holder
         action.run()

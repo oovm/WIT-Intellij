@@ -25,7 +25,8 @@ public interface FluentTypes {
   IElementType INLINE_PLACEABLE = new FluentElementType("INLINE_PLACEABLE");
   IElementType INLINE_TEXT = new FluentElementType("INLINE_TEXT");
   IElementType INTERFACE = new FluentElementType("INTERFACE");
-  IElementType MESSAGE_ID = new FluentElementType("MESSAGE_ID");
+  IElementType INTERFACE_NAME = new FluentElementType("INTERFACE_NAME");
+  IElementType MODULE_NAME = new FluentElementType("MODULE_NAME");
   IElementType NUMBER_LITERAL = new FluentElementType("NUMBER_LITERAL");
   IElementType PACKAGE = new FluentElementType("PACKAGE");
   IElementType PACKAGE_NAME = new FluentElementType("PACKAGE_NAME");
@@ -33,15 +34,14 @@ public interface FluentTypes {
   IElementType RECORD = new FluentElementType("RECORD");
   IElementType RECORD_FIELD = new FluentElementType("RECORD_FIELD");
   IElementType RESOURCE = new FluentElementType("RESOURCE");
+  IElementType SEMANTIC_NUMBER = new FluentElementType("SEMANTIC_NUMBER");
   IElementType STRING_LITERAL = new FluentElementType("STRING_LITERAL");
-  IElementType TERM_ID = new FluentElementType("TERM_ID");
   IElementType TYPE = new FluentElementType("TYPE");
   IElementType TYPE_HINT = new FluentElementType("TYPE_HINT");
   IElementType USE = new FluentElementType("USE");
   IElementType USE_ITEMS = new FluentElementType("USE_ITEMS");
   IElementType VARIABLE_ID = new FluentElementType("VARIABLE_ID");
   IElementType VARIANT = new FluentElementType("VARIANT");
-  IElementType VARIANT_KEY = new FluentElementType("VARIANT_KEY");
   IElementType WORLD = new FluentElementType("WORLD");
 
   IElementType ACCENT = new FluentTokenType("^");
@@ -146,8 +146,11 @@ public interface FluentTypes {
       else if (type == INTERFACE) {
         return new FluentInterfaceNode(node);
       }
-      else if (type == MESSAGE_ID) {
-        return new FluentMessageIDNode(node);
+      else if (type == INTERFACE_NAME) {
+        return new FluentInterfaceNameNode(node);
+      }
+      else if (type == MODULE_NAME) {
+        return new FluentModuleNameNode(node);
       }
       else if (type == NUMBER_LITERAL) {
         return new FluentNumberLiteralNode(node);
@@ -170,11 +173,11 @@ public interface FluentTypes {
       else if (type == RESOURCE) {
         return new FluentResourceNode(node);
       }
+      else if (type == SEMANTIC_NUMBER) {
+        return new FluentSemanticNumberNode(node);
+      }
       else if (type == STRING_LITERAL) {
         return new FluentStringLiteralNode(node);
-      }
-      else if (type == TERM_ID) {
-        return new FluentTermIDNode(node);
       }
       else if (type == TYPE) {
         return new FluentTypeNode(node);
@@ -193,9 +196,6 @@ public interface FluentTypes {
       }
       else if (type == VARIANT) {
         return new FluentVariantNode(node);
-      }
-      else if (type == VARIANT_KEY) {
-        return new FluentVariantKeyNode(node);
       }
       else if (type == WORLD) {
         return new FluentWorldNode(node);

@@ -27,10 +27,6 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMessageID(@NotNull FluentMessageID o) {
-    visitPsiElement(o);
-  }
-
   public void visitNumberLiteral(@NotNull FluentNumberLiteral o) {
     visitPsiElement(o);
   }
@@ -39,15 +35,7 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTermID(@NotNull FluentTermID o) {
-    visitPsiElement(o);
-  }
-
   public void visitVariableID(@NotNull FluentVariableID o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariantKey(@NotNull FluentVariantKey o) {
     visitPsiElement(o);
   }
 
@@ -99,6 +87,14 @@ public class FluentVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitInterfaceName(@NotNull FluentInterfaceName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModuleName(@NotNull FluentModuleName o) {
+    visitPsiElement(o);
+  }
+
   public void visitPackage(@NotNull FluentPackage o) {
     visitPsiElement(o);
   }
@@ -120,6 +116,10 @@ public class FluentVisitor extends PsiElementVisitor {
   }
 
   public void visitResource(@NotNull FluentResource o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSemanticNumber(@NotNull FluentSemanticNumber o) {
     visitPsiElement(o);
   }
 

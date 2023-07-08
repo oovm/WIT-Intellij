@@ -11,6 +11,9 @@ public interface FluentUse extends PsiElement {
   FluentIncludeName getIncludeName();
 
   @Nullable
+  FluentInterfaceName getInterfaceName();
+
+  @Nullable
   FluentUseItems getUseItems();
 
 }

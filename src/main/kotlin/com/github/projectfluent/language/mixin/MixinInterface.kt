@@ -17,7 +17,7 @@ abstract class MixinInterface(node: ASTNode) : WitElement(node),
     }
 
     override fun getNameIdentifier(): PsiElement? {
-        return this.identifier
+        return this.interfaceName
     }
 
 

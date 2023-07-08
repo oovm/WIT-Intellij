@@ -35,8 +35,8 @@ public class FluentInterfaceNode extends MixinInterface implements FluentInterfa
 
   @Override
   @Nullable
-  public FluentIdentifier getIdentifier() {
-    return findChildByClass(FluentIdentifier.class);
+  public FluentInterfaceName getInterfaceName() {
+    return findChildByClass(FluentInterfaceName.class);
   }
 
   @Override

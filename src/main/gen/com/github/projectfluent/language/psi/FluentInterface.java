@@ -11,7 +11,7 @@ public interface FluentInterface extends PsiElement {
   List<FluentFunction> getFunctionList();
 
   @Nullable
-  FluentIdentifier getIdentifier();
+  FluentInterfaceName getInterfaceName();
 
   @NotNull
   List<FluentRecord> getRecordList();

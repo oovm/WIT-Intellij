@@ -5,15 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FluentFlags extends PsiElement {
-
-  @Nullable
-  FluentNumberLiteral getNumberLiteral();
-
-  @Nullable
-  FluentStringLiteral getStringLiteral();
-
-  @NotNull
-  FluentModuleName getModuleName();
+public interface FluentInterfaceName extends PsiElement {
 
 }

@@ -29,8 +29,8 @@ public class FluentExportNode extends WitElement implements FluentExport {
 
   @Override
   @Nullable
-  public FluentIdentifier getIdentifier() {
-    return findChildByClass(FluentIdentifier.class);
+  public FluentInterfaceName getInterfaceName() {
+    return findChildByClass(FluentInterfaceName.class);
   }
 
 }

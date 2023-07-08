@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FluentExport extends PsiElement {
 
   @Nullable
-  FluentIdentifier getIdentifier();
+  FluentInterfaceName getInterfaceName();
 
 }

@@ -25,7 +25,7 @@ class FluentSyntaxHighlighter : SyntaxHighlighterBase() {
             // ANNOTATION -> JssColor.ANNOTATION
             //
             KW_PACKAGE, KW_WORLD, KW_INTERFACE,
-            KW_INCLUDE, KW_IMPORT, KW_USE,
+            KW_INCLUDE, KW_USE, KW_IMPORT, KW_EXPORT,
             KW_TYPE, KW_RESOURCE, KW_RECORD, KW_FUNCTION,
             -> FluentHighlightColor.KEYWORD
 

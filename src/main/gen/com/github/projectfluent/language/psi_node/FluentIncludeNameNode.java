@@ -33,4 +33,10 @@ public class FluentIncludeNameNode extends WitElement implements FluentIncludeNa
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentIdentifier.class);
   }
 
+  @Override
+  @Nullable
+  public FluentInterfaceName getInterfaceName() {
+    return findChildByClass(FluentInterfaceName.class);
+  }
+
 }

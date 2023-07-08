@@ -10,4 +10,7 @@ public interface FluentIncludeName extends PsiElement {
   @NotNull
   List<FluentIdentifier> getIdentifierList();
 
+  @Nullable
+  FluentInterfaceName getInterfaceName();
+
 }
