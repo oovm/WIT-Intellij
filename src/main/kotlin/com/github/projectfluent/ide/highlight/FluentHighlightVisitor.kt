@@ -14,6 +14,14 @@ import com.intellij.psi.PsiFile
 class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
+    override fun visitImport(o: FluentImport) {
+        super.visitImport(o)
+    }
+
+    override fun visitExport(o: FluentExport) {
+        o.identifier?.let { highlight(it, SYM_INTERFACE) }
+    }
+
     override fun visitMessageID(o: FluentMessageID) {
         highlight(o, SYM_RECORD)
     }

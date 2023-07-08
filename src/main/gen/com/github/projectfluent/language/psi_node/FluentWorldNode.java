@@ -28,6 +28,12 @@ public class FluentWorldNode extends MixinWorld implements FluentWorld {
   }
 
   @Override
+  @NotNull
+  public List<FluentExport> getExportList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentExport.class);
+  }
+
+  @Override
   @Nullable
   public FluentIdentifier getIdentifier() {
     return findChildByClass(FluentIdentifier.class);
@@ -43,6 +49,12 @@ public class FluentWorldNode extends MixinWorld implements FluentWorld {
   @NotNull
   public List<FluentInclude> getIncludeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentInclude.class);
+  }
+
+  @Override
+  @NotNull
+  public List<FluentUse> getUseList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentUse.class);
   }
 
 }

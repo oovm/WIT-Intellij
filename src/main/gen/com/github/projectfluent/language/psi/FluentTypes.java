@@ -11,7 +11,6 @@ public interface FluentTypes {
   IElementType ATTRIBUTE_ID = new FluentElementType("ATTRIBUTE_ID");
   IElementType BLOCK_PLACEABLE = new FluentElementType("BLOCK_PLACEABLE");
   IElementType BLOCK_TEXT = new FluentElementType("BLOCK_TEXT");
-  IElementType DEFAULT_VARIANT = new FluentElementType("DEFAULT_VARIANT");
   IElementType ENUM = new FluentElementType("ENUM");
   IElementType EXPORT = new FluentElementType("EXPORT");
   IElementType FLAGS = new FluentElementType("FLAGS");
@@ -38,6 +37,8 @@ public interface FluentTypes {
   IElementType TERM_ID = new FluentElementType("TERM_ID");
   IElementType TYPE = new FluentElementType("TYPE");
   IElementType TYPE_HINT = new FluentElementType("TYPE_HINT");
+  IElementType USE = new FluentElementType("USE");
+  IElementType USE_ITEMS = new FluentElementType("USE_ITEMS");
   IElementType VARIABLE_ID = new FluentElementType("VARIABLE_ID");
   IElementType VARIANT = new FluentElementType("VARIANT");
   IElementType VARIANT_KEY = new FluentElementType("VARIANT_KEY");
@@ -102,9 +103,6 @@ public interface FluentTypes {
       }
       else if (type == BLOCK_TEXT) {
         return new FluentBlockTextNode(node);
-      }
-      else if (type == DEFAULT_VARIANT) {
-        return new FluentDefaultVariantNode(node);
       }
       else if (type == ENUM) {
         return new FluentEnumNode(node);
@@ -183,6 +181,12 @@ public interface FluentTypes {
       }
       else if (type == TYPE_HINT) {
         return new FluentTypeHintNode(node);
+      }
+      else if (type == USE) {
+        return new FluentUseNode(node);
+      }
+      else if (type == USE_ITEMS) {
+        return new FluentUseItemsNode(node);
       }
       else if (type == VARIABLE_ID) {
         return new FluentVariableIDNode(node);

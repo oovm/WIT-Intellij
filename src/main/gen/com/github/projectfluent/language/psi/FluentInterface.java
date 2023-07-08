@@ -22,4 +22,7 @@ public interface FluentInterface extends PsiElement {
   @NotNull
   List<FluentType> getTypeList();
 
+  @NotNull
+  List<FluentUse> getUseList();
+
 }

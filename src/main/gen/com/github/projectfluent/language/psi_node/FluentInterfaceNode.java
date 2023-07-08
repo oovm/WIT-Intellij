@@ -57,4 +57,10 @@ public class FluentInterfaceNode extends MixinInterface implements FluentInterfa
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentType.class);
   }
 
+  @Override
+  @NotNull
+  public List<FluentUse> getUseList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FluentUse.class);
+  }
+
 }

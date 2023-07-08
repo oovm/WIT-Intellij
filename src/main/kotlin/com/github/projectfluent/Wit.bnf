@@ -75,21 +75,23 @@ private statements ::=
   | include
   | interface
   | SEMICOLON
-  | COMMENT_LINE
 
+// package wasi:blobstore@0.2.0-draft;
 package ::= KW_PACKAGE package-name {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinPackage"
 }
 package-name ::= identifier (COLON identifier)? (AT VERSION)?
+// world name { }
 world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinWorld"
 }
 private world-element ::=
-   include
+    include
   | import
   | export
+  | use
   | SEMICOLON
   | COMMENT_LINE
 // include wasi:keyvalue/imports@0.2.0-draft;
@@ -102,21 +104,29 @@ include-name ::= identifier (COLON identifier)? (SLASH identifier)? (AT VERSION)
 import    ::= KW_IMPORT include-name {
 	pin = 1
 }
+// import imports;
 export    ::= KW_EXPORT identifier {
 	pin = 1
 }
-/* Patterns are values of Messages, Terms, Attributes and Variants. */
+//  use wasi:io/streams@0.2.0.{input-stream, output-stream};
+use      ::= KW_USE include-name use-items? {
+	pin = 1
+}
+use-items ::= DOT BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
+	pin = 1
+}
+// interface name { }
 interface ::= KW_INTERFACE identifier BRACE_L interface-element* BRACE_R {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinInterface"
 }
 private interface-element ::=
-    type
+	use
+  | type
   | resource
   | record
   | function
   | SEMICOLON
-  | COMMENT_LINE
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
 function ::= identifier COLON function-signature {
 
@@ -144,7 +154,7 @@ resource    ::= KW_RESOURCE identifier BRACE_L resource-element* BRACE_R {
 }
 private resource-element ::=
     function
-  | COMMENT_LINE
+  | SEMICOLON
 // record type-name { field: type-hint, key: value };
 record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {
 	pin = 1
@@ -152,7 +162,6 @@ record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {
 private record-element ::=
     record-field
   | COMMA
-  | COMMENT_LINE
 
 record-field    ::= identifier COLON type-hint
 
@@ -195,7 +204,7 @@ private expression    ::=
 /* Block Expressions */
 
 
-DefaultVariant      ::= STAR VariantKey interface
+
 VariantKey          ::= BRACKET_L (NumberLiteral | MessageID) BRACKET_R
 
 /* Identifier */

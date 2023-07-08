@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface FluentWorld extends PsiElement {
 
+  @NotNull
+  List<FluentExport> getExportList();
+
   @Nullable
   FluentIdentifier getIdentifier();
 
@@ -15,5 +18,8 @@ public interface FluentWorld extends PsiElement {
 
   @NotNull
   List<FluentInclude> getIncludeList();
+
+  @NotNull
+  List<FluentUse> getUseList();
 
 }
