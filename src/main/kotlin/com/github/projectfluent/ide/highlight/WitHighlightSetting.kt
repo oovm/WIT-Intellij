@@ -5,12 +5,12 @@ import com.github.projectfluent.language.file.WitIcons
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
-class FluentHighlightSetting : ColorSettingsPage {
-    private val annotatorTags = FluentHighlightColor
+class WitHighlightSetting : ColorSettingsPage {
+    private val annotatorTags = WitHighlightColor
         .values()
         .associateBy({ it.name }, { it.textAttributesKey })
 
-    override fun getAttributeDescriptors() = FluentHighlightColor
+    override fun getAttributeDescriptors() = WitHighlightColor
         .values()
         .map { it.attributesDescriptor }
         .toTypedArray()
@@ -21,7 +21,7 @@ class FluentHighlightSetting : ColorSettingsPage {
 
     override fun getIcon() = WitIcons.FILE
 
-    override fun getHighlighter() = FluentSyntaxHighlighter()
+    override fun getHighlighter() = WitSyntaxHighlighter()
 
     override fun getAdditionalHighlightingTagToDescriptorMap() = annotatorTags
 

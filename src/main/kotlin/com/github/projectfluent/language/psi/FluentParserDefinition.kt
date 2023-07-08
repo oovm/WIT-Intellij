@@ -3,7 +3,7 @@ package com.github.projectfluent.language.psi
 
 import com.github.projectfluent.WitLanguage
 import com.github.projectfluent.language.file.FluentFile
-import com.github.projectfluent.language.parser.FluentParser
+import com.github.projectfluent.language.parser.WitParser
 
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
@@ -20,7 +20,8 @@ import com.intellij.psi.tree.TokenSet
 
 object FluentParserDefinition : ParserDefinition {
     override fun createLexer(project: Project): Lexer = FluentLexerAdapter()
-    override fun createParser(project: Project): PsiParser = FluentParser()
+    override fun createParser(project: Project): PsiParser =
+        WitParser()
     override fun getFileNodeType(): IFileElementType = IFileElementType(WitLanguage)
     override fun getCommentTokens(): TokenSet = TokenSet.create(FluentTypes.COMMENT_LINE, FluentTypes.COMMENT_DOCUMENT, FluentTypes.COMMENT_BLOCK)
     override fun getStringLiteralElements(): TokenSet = TokenSet.create(FluentTypes.STRING_LITERAL)

@@ -1,6 +1,6 @@
 {
-    parserClass = "com.github.projectfluent.language.parser.FluentParser"
-    parserUtilClass = "com.github.projectfluent.language.psi.FluentParserExtension"
+    parserClass = "com.github.projectfluent.language.parser.WitParser"
+    parserUtilClass = "com.github.projectfluent.language.psi.WitParserExtension"
 
     extends = "com.github.projectfluent.language.psi.WitElement"
 
@@ -85,7 +85,9 @@ package ::= KW_PACKAGE package-name {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinPackage"
 }
-package-name ::= identifier (COLON identifier)? (AT VERSION)?
+package-name ::=
+	organization-name (COLON module-name) (AT VERSION)
+  | module-name
 // world name { }
 world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
 	pin = 1
@@ -103,7 +105,9 @@ include ::= KW_INCLUDE include-name {
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinAttribute"
 }
-include-name ::= identifier (COLON identifier)? (SLASH interface-name)? (AT VERSION)?
+include-name ::=
+    identifier (COLON identifier) (SLASH interface-name) (AT VERSION)
+  | interface-name
 // import imports;
 import    ::= KW_IMPORT include-name {
 	pin = 1
@@ -113,7 +117,7 @@ export    ::= KW_EXPORT interface-name {
 	pin = 1
 }
 //  use wasi:io/streams@0.2.0.{input-stream, output-stream};
-use      ::= KW_USE (include-name|interface-name) use-items? {
+use      ::= KW_USE include-name use-items? {
 	pin = 1
 }
 use-items ::= DOT BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
@@ -219,7 +223,8 @@ NumberLiteral       ::= INTEGER | DECIMAL
 interface-name      ::= SYMBOL;
 AttributeID         ::= DOT SYMBOL;
 VariableID          ::= DOLLAR SYMBOL;
-FunctionID          ::= SYMBOL;
 semantic-number     ::= SYMBOL
+
+organization-name          ::= SYMBOL;
 module-name         ::= SYMBOL;
 identifier          ::= SYMBOL

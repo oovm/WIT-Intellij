@@ -19,7 +19,7 @@ class FluentFoldingBuilder : CustomFoldingBuilder(), DumbAware {
         quick: Boolean
     ) {
         if (root !is FluentFile) return
-        val visitor = FluentFoldingVisitor(descriptors)
+        val visitor = WitFoldingVisitor(descriptors)
         PsiTreeUtil.processElements(root) {
             it.accept(visitor);
             true

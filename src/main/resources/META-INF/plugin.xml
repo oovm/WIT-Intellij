@@ -27,11 +27,11 @@
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/FluentDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/FluentDarcula.xml"/>
-		<colorSettingsPage implementation="com.github.projectfluent.ide.highlight.FluentHighlightSetting"/>
-		<highlightVisitor implementation="com.github.projectfluent.ide.highlight.FluentHighlightVisitor"/>
+		<colorSettingsPage implementation="com.github.projectfluent.ide.highlight.WitHighlightSetting"/>
+		<highlightVisitor implementation="com.github.projectfluent.ide.highlight.WitHighlightVisitor"/>
 		<lang.syntaxHighlighter
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.highlight.FluentSyntaxHighlighter"
+				implementationClass="com.github.projectfluent.ide.highlight.WitSyntaxHighlighter"
 		/>
 		<!-- Formatter -->
 		<lang.formatter

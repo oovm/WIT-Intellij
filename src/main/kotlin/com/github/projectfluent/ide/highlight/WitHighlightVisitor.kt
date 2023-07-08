@@ -1,7 +1,7 @@
 package com.github.projectfluent.ide.highlight
 
 
-import com.github.projectfluent.ide.highlight.FluentHighlightColor.*
+import com.github.projectfluent.ide.highlight.WitHighlightColor.*
 import com.github.projectfluent.language.file.FluentFile
 import com.github.projectfluent.language.psi.*
 import com.intellij.codeInsight.daemon.impl.HighlightInfo
@@ -11,29 +11,29 @@ import com.intellij.codeInsight.daemon.impl.analysis.HighlightInfoHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 
-class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
+class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
+    override fun visitUseItems(o: FluentUseItems) {
+        o.identifierList.forEach { highlight(it, SYM_TYPE) }
+    }
 
     override fun visitImport(o: FluentImport) {
         super.visitImport(o)
     }
 
     override fun visitResource(o: FluentResource) {
-        o.identifier?.let { highlight(it, SYM_RESOURCE) }
+        o.identifier?.let { highlight(it, SYM_TYPE) }
     }
 
     override fun visitRecord(o: FluentRecord) {
-        o.identifier?.let { highlight(it, SYM_RECORD) }
+        o.identifier?.let { highlight(it, SYM_TYPE) }
     }
 
     override fun visitRecordField(o: FluentRecordField) {
         highlight(o.identifier, SYM_FIELD)
     }
 
-    override fun visitInterfaceName(o: FluentInterfaceName) {
-        highlight(o, SYM_INTERFACE)
-    }
 
     override fun visitFunction(o: FluentFunction) {
         highlight(o.identifier, SYM_FUNCTION)
@@ -53,14 +53,13 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
 
     override fun visitTypeHint(o: FluentTypeHint) {
         when (o.identifier.text) {
-            "_" -> {
-                highlight(o.identifier, KEYWORD)
-            }
-
-            "bool",
+            "_", "bool",
             "u8", "u16", "u32", "u64",
             "s8", "s16", "s32", "s64",
             "f32", "f64", "float32", "float64",
+            -> {
+                highlight(o.identifier, KEYWORD)
+            }
             "list", "string",
             "option", "result",
             "borrow", "own",
@@ -69,9 +68,13 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
             }
 
             else -> {
-                highlight(o.identifier, SYM_RECORD)
+                highlight(o.identifier, SYM_TYPE)
             }
         }
+    }
+
+    override fun visitInterfaceName(o: FluentInterfaceName) {
+        highlight(o, SYM_INTERFACE)
     }
 
 //    override fun visitSchemaStatement(o: JssSchemaStatement) {
@@ -86,7 +89,7 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
 //    }
 
 
-    private fun highlight(element: PsiElement, color: FluentHighlightColor) {
+    private fun highlight(element: PsiElement, color: WitHighlightColor) {
         val builder = HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION)
         builder.textAttributes(color.textAttributesKey)
         builder.range(element)
@@ -106,7 +109,7 @@ class FluentHighlightVisitor : FluentVisitor(), HighlightVisitor {
         return true
     }
 
-    override fun clone(): HighlightVisitor = FluentHighlightVisitor()
+    override fun clone(): HighlightVisitor = WitHighlightVisitor()
 
     override fun suitableForFile(file: PsiFile): Boolean = file is FluentFile
 
