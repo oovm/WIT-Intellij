@@ -36,7 +36,7 @@
 		<!-- Formatter -->
 		<lang.formatter
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.formatter.FluentFormatBuilder"
+				implementationClass="com.github.projectfluent.ide.formatter.WitFormatBuilder"
 		/>
 		<lang.commenter
 				language="wit"
@@ -47,16 +47,18 @@
 				implementationClass="com.github.projectfluent.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
+
 		<!--documentationProvider implementation="com.github.projectfluent.ide.doc.JssDocumentationExtender"-->
 		<!--		<psi.referenceContributor implementation="com.github.projectfluent.ide.doc.JssUrlReferenceContributor"/>-->
-		<!--		<lang.documentationProvider-->
-		<!--				language="Fluent"-->
-		<!--				implementationClass="com.github.projectfluent.ide.doc.JssDocumentationProvider"-->
-		<!--		/>-->
+		<lang.documentationProvider
+				language="wit"
+				implementationClass="com.github.projectfluent.ide.doc.WitDocumentationProvider"
+		/>
 		<lang.braceMatcher
 				language="wit"
 				implementationClass="com.github.projectfluent.ide.matcher.FluentBraceMatcher"
 		/>
+
 		<!--		<lang.quoteHandler-->
 		<!--				language="Fluent"-->
 		<!--				implementationClass="com.github.projectfluent.ide.matcher.JssQuoteHandler"-->
@@ -92,7 +94,7 @@
 		<action id="NewFluentFile" class="com.github.projectfluent.ide.actions.FluentCreateFile">
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
 		</action>
-<!--		<action id="jss.JssConvertJson" class="com.github.projectfluent.ide.actions.FluentConvertMo"/>-->
+		<!--		<action id="jss.JssConvertJson" class="com.github.projectfluent.ide.actions.FluentConvertMo"/>-->
 		<group id="jss.JssGenerator" popup="true" text="JssGenerator">
 			<reference ref="NewFluentFile"/>
 			<!--			<reference ref="jss.JssConvertJson"/>-->
