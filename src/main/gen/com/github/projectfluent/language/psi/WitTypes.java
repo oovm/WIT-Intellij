@@ -64,6 +64,7 @@ public interface WitTypes {
   IElementType DOLLAR = new WitTokenType("$");
   IElementType DOT = new WitTokenType(".");
   IElementType EQ = new WitTokenType("=");
+  IElementType ESCAPED = new WitTokenType("ESCAPED");
   IElementType HYPHEN = new WitTokenType("-");
   IElementType INTEGER = new WitTokenType("INTEGER");
   IElementType KW_ENUM = new WitTokenType("enum");

@@ -28,6 +28,7 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
         o.identifier?.let { highlight(it, SYM_TYPE) }
     }
 
+
     override fun visitRecord(o: WitRecord) {
         o.identifier?.let { highlight(it, SYM_TYPE) }
     }
@@ -36,6 +37,25 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
         highlight(o.identifier, SYM_FIELD)
     }
 
+    override fun visitEnum(o: WitEnum) {
+        o.identifier?.let { highlight(it, NUMBER) }
+    }
+
+    override fun visitFlags(o: WitFlags) {
+        o.identifier?.let { highlight(it, NUMBER) }
+    }
+
+    override fun visitSemanticNumber(o: WitSemanticNumber) {
+        highlight(o, SYM_FIELD)
+    }
+
+    override fun visitVariant(o: WitVariant) {
+        o.identifier?.let { highlight(it, SYM_TYPE) }
+    }
+
+    override fun visitVariantItem(o: WitVariantItem) {
+        highlight(o.identifier, SYM_FIELD)
+    }
 
     override fun visitFunction(o: WitFunction) {
         highlight(o.identifier, SYM_FUNCTION)
@@ -50,7 +70,7 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
     }
 
     override fun visitType(o: WitType) {
-        super.visitType(o)
+        o.identifier?.let { highlight(it, SYM_TYPE) }
     }
 
     override fun visitTypeHint(o: WitTypeHint) {
@@ -59,10 +79,12 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
             "u8", "u16", "u32", "u64",
             "s8", "s16", "s32", "s64",
             "f32", "f64", "float32", "float64",
+            "string",
             -> {
                 highlight(o.identifier, KEYWORD)
             }
-            "list", "string",
+
+            "list",
             "option", "result",
             "borrow", "own",
             -> {

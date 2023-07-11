@@ -30,6 +30,7 @@ COMMENT_LINE     = [/]{2}[^\r\n]*
 COMMENT_BLOCK    = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
 VERSION = ([0-9]+)(\.[0-9]+)(\.[0-9]+)(-[a-zA-Z0-9\-]+)?
+ESCAPED = %[a-zA-Z0-9]+
 SYMBOL = _|{WORD}([-]{WORD})*
 WORD = [a-zA-Z][a-zA-Z0-9]*
 //STRING=\"([^\"\\]|\\.)*\"
@@ -112,6 +113,7 @@ KW_FUNCTION   = "func"
 	{KW_FUNCTION} { return KW_FUNCTION; }
 
 	{VERSION}      { return VERSION; }
+    {ESCAPED}      { return ESCAPED; }
 	{SYMBOL}       { return SYMBOL; }
 }
 // =====================================================================================================================

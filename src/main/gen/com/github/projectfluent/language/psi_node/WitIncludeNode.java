@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.projectfluent.language.psi.WitTypes.*;
-import com.github.projectfluent.language.mixin.MixinAttribute;
+import com.github.projectfluent.language.mixin.MixinInclude;
 import com.github.projectfluent.language.psi.*;
 
-public class WitIncludeNode extends MixinAttribute implements WitInclude {
+public class WitIncludeNode extends MixinInclude implements WitInclude {
 
   public WitIncludeNode(@NotNull ASTNode node) {
     super(node);

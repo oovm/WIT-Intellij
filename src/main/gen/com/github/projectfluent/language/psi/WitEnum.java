@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface WitEnum extends PsiElement {
 
+  @Nullable
+  WitIdentifier getIdentifier();
+
   @NotNull
-  List<WitIdentifier> getIdentifierList();
+  List<WitSemanticNumber> getSemanticNumberList();
 
 }

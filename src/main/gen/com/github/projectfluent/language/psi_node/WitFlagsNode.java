@@ -28,9 +28,15 @@ public class WitFlagsNode extends WitElement implements WitFlags {
   }
 
   @Override
+  @Nullable
+  public WitIdentifier getIdentifier() {
+    return findChildByClass(WitIdentifier.class);
+  }
+
+  @Override
   @NotNull
-  public List<WitIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitIdentifier.class);
+  public List<WitSemanticNumber> getSemanticNumberList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitSemanticNumber.class);
   }
 
 }

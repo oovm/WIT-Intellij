@@ -103,7 +103,7 @@ private world-element ::=
 // include wasi:keyvalue/imports@0.2.0-draft;
 include ::= KW_INCLUDE include-name {
 	pin = 1
-    mixin = "com.github.projectfluent.language.mixin.MixinAttribute"
+    mixin = "com.github.projectfluent.language.mixin.MixinInclude"
 }
 include-name ::=
     identifier (COLON identifier) (SLASH interface-name) (AT VERSION)
@@ -174,13 +174,13 @@ private record-element ::=
 record-field    ::= identifier COLON type-hint
 
 
-flags       ::= KW_FLAGS identifier BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
+flags       ::= KW_FLAGS identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
+	pin = 1
+}
+enum       ::= KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
 	pin = 1
 }
 
-enum       ::= KW_ENUM identifier BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
-	pin = 1
-}
 
 variant          ::= KW_VARIANT identifier BRACE_L (variant-item (COMMA variant-item)* COMMA?)? BRACE_R {
 	pin = 1
@@ -188,43 +188,12 @@ variant          ::= KW_VARIANT identifier BRACE_L (variant-item (COMMA variant-
 variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)?
 
 
-
-
-
-//    | block_placeable
-InlineText        ::= TEXT_LINE | SELECTION_LINE;
-BlockText         ::= InlineText+;
-InlinePlaceable   ::= BRACE_L (import | expression) BRACE_R
-block_placeable   ::= BLANK_BLOCK  InlinePlaceable
-
-/* Rules for validating expressions in Placeables and as selectors of
- * SelectExpressions are documented in spec/valid.md and enforced in
- * syntax/abstract.js. */
-private expression    ::=
-    StringLiteral
-  | NumberLiteral
-  | record
-  | resource
-  | record-field
-  | VariableID
-  | InlinePlaceable
-
-/* Inline Expressions */
-
-
-/* Block Expressions */
-
-
 /* Literals */
-StringLiteral       ::= STRING_QUOTE (STRING_ESCAPE|STRING_CHAR)* STRING_QUOTE
-NumberLiteral       ::= INTEGER | DECIMAL
+
 
 /* Identifier */
-interface-name      ::= SYMBOL;
-AttributeID         ::= DOT SYMBOL;
-VariableID          ::= DOLLAR SYMBOL;
-semantic-number     ::= SYMBOL
-
-organization-name          ::= SYMBOL;
-module-name         ::= SYMBOL;
-identifier          ::= SYMBOL
+organization-name   ::= SYMBOL | ESCAPED;
+module-name         ::= SYMBOL | ESCAPED;
+interface-name      ::= SYMBOL | ESCAPED;
+semantic-number     ::= SYMBOL | ESCAPED;
+identifier          ::= SYMBOL | ESCAPED;
