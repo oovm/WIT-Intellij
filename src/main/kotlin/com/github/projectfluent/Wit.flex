@@ -25,7 +25,6 @@ import static com.github.projectfluent.language.psi.WitTypes.*;
 //%state TextContextIndent
 
 WHITE_SPACE      = [\s\t]
-COMMENT_DOCUMENT = [/]{3}[^\r\n]*
 COMMENT_LINE     = [/]{2}[^\r\n]*
 COMMENT_BLOCK    = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*

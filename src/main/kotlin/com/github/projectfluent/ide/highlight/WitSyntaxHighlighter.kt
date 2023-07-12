@@ -34,11 +34,9 @@ class WitSyntaxHighlighter : SyntaxHighlighterBase() {
 
             COMMA -> WitHighlightColor.COMMA
             // atom
-            INTEGER -> WitHighlightColor.NUMBER
-            DECIMAL -> WitHighlightColor.NUMBER
             VERSION -> WitHighlightColor.NUMBER
 
-            TEXT_LINE, SELECTION_LINE -> WitHighlightColor.TEXT
+            SELECTION_LINE -> WitHighlightColor.TEXT
             STRING_QUOTE, STRING_CHAR -> WitHighlightColor.STRING
             STRING_ESCAPE -> WitHighlightColor.STRING_ESCAPED
 //            STRING -> AwslColor.STRING

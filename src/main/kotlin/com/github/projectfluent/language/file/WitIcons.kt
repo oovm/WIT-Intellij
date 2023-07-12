@@ -16,6 +16,6 @@ class WitIcons : IconProvider() {
     }
 
     companion object {
-        val FILE = IconLoader.getIcon("/icons/ftl.svg", WitIcons::class.java)
+        val FILE = IconLoader.getIcon("/icons/wit.svg", WitIcons::class.java)
     }
 }

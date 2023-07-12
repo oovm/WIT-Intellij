@@ -8,9 +8,6 @@ import com.github.projectfluent.language.psi_node.*;
 
 public interface WitTypes {
 
-  IElementType ATTRIBUTE_ID = new WitElementType("ATTRIBUTE_ID");
-  IElementType BLOCK_PLACEABLE = new WitElementType("BLOCK_PLACEABLE");
-  IElementType BLOCK_TEXT = new WitElementType("BLOCK_TEXT");
   IElementType ENUM = new WitElementType("ENUM");
   IElementType EXPORT = new WitElementType("EXPORT");
   IElementType FLAGS = new WitElementType("FLAGS");
@@ -21,12 +18,9 @@ public interface WitTypes {
   IElementType IMPORT = new WitElementType("IMPORT");
   IElementType INCLUDE = new WitElementType("INCLUDE");
   IElementType INCLUDE_NAME = new WitElementType("INCLUDE_NAME");
-  IElementType INLINE_PLACEABLE = new WitElementType("INLINE_PLACEABLE");
-  IElementType INLINE_TEXT = new WitElementType("INLINE_TEXT");
   IElementType INTERFACE = new WitElementType("INTERFACE");
   IElementType INTERFACE_NAME = new WitElementType("INTERFACE_NAME");
   IElementType MODULE_NAME = new WitElementType("MODULE_NAME");
-  IElementType NUMBER_LITERAL = new WitElementType("NUMBER_LITERAL");
   IElementType ORGANIZATION_NAME = new WitElementType("ORGANIZATION_NAME");
   IElementType PACKAGE = new WitElementType("PACKAGE");
   IElementType PACKAGE_NAME = new WitElementType("PACKAGE_NAME");
@@ -35,12 +29,10 @@ public interface WitTypes {
   IElementType RECORD_FIELD = new WitElementType("RECORD_FIELD");
   IElementType RESOURCE = new WitElementType("RESOURCE");
   IElementType SEMANTIC_NUMBER = new WitElementType("SEMANTIC_NUMBER");
-  IElementType STRING_LITERAL = new WitElementType("STRING_LITERAL");
   IElementType TYPE = new WitElementType("TYPE");
   IElementType TYPE_HINT = new WitElementType("TYPE_HINT");
   IElementType USE = new WitElementType("USE");
   IElementType USE_ITEMS = new WitElementType("USE_ITEMS");
-  IElementType VARIABLE_ID = new WitElementType("VARIABLE_ID");
   IElementType VARIANT = new WitElementType("VARIANT");
   IElementType VARIANT_ITEM = new WitElementType("VARIANT_ITEM");
   IElementType WORLD = new WitElementType("WORLD");
@@ -49,7 +41,6 @@ public interface WitTypes {
   IElementType ANGLE_L = new WitTokenType("<");
   IElementType ANGLE_R = new WitTokenType(">");
   IElementType AT = new WitTokenType("@");
-  IElementType BLANK_BLOCK = new WitTokenType("BLANK_BLOCK");
   IElementType BRACE_L = new WitTokenType("{");
   IElementType BRACE_R = new WitTokenType("}");
   IElementType BRACKET_L = new WitTokenType("[");
@@ -60,13 +51,11 @@ public interface WitTypes {
   IElementType COMMENT_BLOCK = new WitTokenType("Comment Block");
   IElementType COMMENT_DOCUMENT = new WitTokenType("Comment Document");
   IElementType COMMENT_LINE = new WitTokenType("COMMENT_LINE");
-  IElementType DECIMAL = new WitTokenType("DECIMAL");
   IElementType DOLLAR = new WitTokenType("$");
   IElementType DOT = new WitTokenType(".");
   IElementType EQ = new WitTokenType("=");
   IElementType ESCAPED = new WitTokenType("ESCAPED");
   IElementType HYPHEN = new WitTokenType("-");
-  IElementType INTEGER = new WitTokenType("INTEGER");
   IElementType KW_ENUM = new WitTokenType("enum");
   IElementType KW_EXPORT = new WitTokenType("export");
   IElementType KW_FLAGS = new WitTokenType("flags");
@@ -92,7 +81,6 @@ public interface WitTypes {
   IElementType STRING_ESCAPE = new WitTokenType("String Escaped");
   IElementType STRING_QUOTE = new WitTokenType("String Quote");
   IElementType SYMBOL = new WitTokenType("Symbol");
-  IElementType TEXT_LINE = new WitTokenType("TEXT_LINE");
   IElementType TO = new WitTokenType("->");
   IElementType URL = new WitTokenType("Url");
   IElementType VERSION = new WitTokenType("<<semver>>");
@@ -100,16 +88,7 @@ public interface WitTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ATTRIBUTE_ID) {
-        return new WitAttributeIDNode(node);
-      }
-      else if (type == BLOCK_PLACEABLE) {
-        return new WitBlockPlaceableNode(node);
-      }
-      else if (type == BLOCK_TEXT) {
-        return new WitBlockTextNode(node);
-      }
-      else if (type == ENUM) {
+      if (type == ENUM) {
         return new WitEnumNode(node);
       }
       else if (type == EXPORT) {
@@ -139,12 +118,6 @@ public interface WitTypes {
       else if (type == INCLUDE_NAME) {
         return new WitIncludeNameNode(node);
       }
-      else if (type == INLINE_PLACEABLE) {
-        return new WitInlinePlaceableNode(node);
-      }
-      else if (type == INLINE_TEXT) {
-        return new WitInlineTextNode(node);
-      }
       else if (type == INTERFACE) {
         return new WitInterfaceNode(node);
       }
@@ -153,9 +126,6 @@ public interface WitTypes {
       }
       else if (type == MODULE_NAME) {
         return new WitModuleNameNode(node);
-      }
-      else if (type == NUMBER_LITERAL) {
-        return new WitNumberLiteralNode(node);
       }
       else if (type == ORGANIZATION_NAME) {
         return new WitOrganizationNameNode(node);
@@ -181,9 +151,6 @@ public interface WitTypes {
       else if (type == SEMANTIC_NUMBER) {
         return new WitSemanticNumberNode(node);
       }
-      else if (type == STRING_LITERAL) {
-        return new WitStringLiteralNode(node);
-      }
       else if (type == TYPE) {
         return new WitTypeNode(node);
       }
@@ -195,9 +162,6 @@ public interface WitTypes {
       }
       else if (type == USE_ITEMS) {
         return new WitUseItemsNode(node);
-      }
-      else if (type == VARIABLE_ID) {
-        return new WitVariableIDNode(node);
       }
       else if (type == VARIANT) {
         return new WitVariantNode(node);

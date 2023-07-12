@@ -2,19 +2,26 @@ package com.github.projectfluent.ide.formatter
 
 import com.github.projectfluent.language.ast.computeSpacing
 import com.github.projectfluent.language.ast.isWhitespaceOrEmpty
+import com.github.projectfluent.language.psi.WitEnum
+import com.github.projectfluent.language.psi.WitFlags
 import com.github.projectfluent.language.psi.WitInterface
+import com.github.projectfluent.language.psi.WitRecord
+import com.github.projectfluent.language.psi.WitResource
+import com.github.projectfluent.language.psi.WitUseItems
+import com.github.projectfluent.language.psi.WitVariant
+import com.github.projectfluent.language.psi.WitWorld
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiErrorElement
 import com.intellij.psi.formatter.FormatterUtil
 
-class FluentFormatBlock(
+class FormatBlock(
     private val node: ASTNode,
     private val alignment: Alignment?,
     private val indent: Indent?,
     private val wrap: Wrap?,
-    private val space: FluentFormatSpace,
+    private val space: WitFormatSpace,
 ) : ASTBlock {
     private val myIsIncomplete: Boolean by lazy {
         node.getChildren(null).any { it.elementType is PsiErrorElement } || FormatterUtil.isIncomplete(node)
@@ -26,7 +33,7 @@ class FluentFormatBlock(
         return node.getChildren(null)
             .filter { !it.isWhitespaceOrEmpty() }
             .map { childNode ->
-                FluentFormatBlock(
+                FormatBlock(
                     node = childNode,
                     alignment = null,
                     indent = computeIndent(childNode),
@@ -63,18 +70,27 @@ class FluentFormatBlock(
     }
 
     private fun computeIndent(child: ASTNode): Indent? {
-        // val isCornerChild = node.firstChildNode == child || node.lastChildNode == child
-        val firstLine = node.firstChildNode == child;
         return when (node.psi) {
-            is WitInterface -> when {
-                firstLine -> Indent.getNoneIndent()
-                else -> Indent.getNormalIndent()
-            }
-//        BRACE_BLOCK -> when {
-//            isCornerChild -> Indent.getNoneIndent()
-//            else -> Indent.getNormalIndent()
-//        }
+            is WitWorld -> node.indentInRange(child, 1, 1)
+            is WitInterface -> node.indentInRange(child, 3, 1)
+            is WitUseItems -> node.indentInRange(child, 2, 1)
+            is WitResource -> node.indentInRange(child, 1, 1)
+            is WitRecord -> node.indentInRange(child, 1, 1)
+            is WitFlags -> node.indentInRange(child, 1, 1)
+            is WitEnum -> node.indentInRange(child, 1, 1)
+            is WitVariant -> node.indentInRange(child, 1, 1)
             else -> Indent.getNoneIndent()
         }
+    }
+}
+
+private fun ASTNode.indentInRange(child: ASTNode, head: Int, tail: Int): Indent {
+    val children = this.getChildren(null);
+    val index = children.indexOf(child)
+    val last = children.size - tail
+    return when {
+        index <= head -> Indent.getNoneIndent()
+        index >= last -> Indent.getNoneIndent()
+        else -> Indent.getNormalIndent()
     }
 }

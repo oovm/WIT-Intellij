@@ -190,7 +190,6 @@ variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)?
 
 /* Literals */
 
-
 /* Identifier */
 organization-name   ::= SYMBOL | ESCAPED;
 module-name         ::= SYMBOL | ESCAPED;

@@ -1,6 +1,6 @@
 package com.github.projectfluent.language.mixin
 
-import com.github.projectfluent.ide.view.FluentItemPresentation
+import com.github.projectfluent.ide.view.WitItemPresentation
 
 import com.github.projectfluent.language.psi.WitElement
 import com.github.projectfluent.language.psi.WitInterface
@@ -23,6 +23,6 @@ abstract class MixinInterface(node: ASTNode) : WitElement(node),
 
 
     override fun getPresentation(): ItemPresentation? {
-        return FluentItemPresentation(AllIcons.Nodes.Method, nameIdentifier?.text ?: "missing interface")
+        return WitItemPresentation(AllIcons.Nodes.Method, nameIdentifier?.text ?: "missing interface")
     }
 }

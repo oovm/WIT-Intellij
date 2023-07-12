@@ -24,7 +24,7 @@ object FluentParserDefinition : ParserDefinition {
         WitParser()
     override fun getFileNodeType(): IFileElementType = IFileElementType(WitLanguage)
     override fun getCommentTokens(): TokenSet = TokenSet.create(WitTypes.COMMENT_LINE, WitTypes.COMMENT_DOCUMENT, WitTypes.COMMENT_BLOCK)
-    override fun getStringLiteralElements(): TokenSet = TokenSet.create(WitTypes.STRING_LITERAL)
+    override fun getStringLiteralElements(): TokenSet = TokenSet.create()
     override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
     override fun createElement(node: ASTNode): PsiElement = WitTypes.Factory.createElement(node)
     override fun createFile(viewProvider: FileViewProvider): PsiFile = FluentFile(viewProvider)

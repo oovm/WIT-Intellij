@@ -84,7 +84,7 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
                 highlight(o.identifier, KEYWORD)
             }
 
-            "list",
+            "list", "tuple",
             "option", "result",
             "borrow", "own",
             -> {

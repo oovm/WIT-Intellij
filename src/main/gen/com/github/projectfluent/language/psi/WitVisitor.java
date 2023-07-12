@@ -7,38 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public class WitVisitor extends PsiElementVisitor {
 
-  public void visitAttributeID(@NotNull WitAttributeID o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBlockText(@NotNull WitBlockText o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInlinePlaceable(@NotNull WitInlinePlaceable o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInlineText(@NotNull WitInlineText o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNumberLiteral(@NotNull WitNumberLiteral o) {
-    visitPsiElement(o);
-  }
-
-  public void visitStringLiteral(@NotNull WitStringLiteral o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariableID(@NotNull WitVariableID o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBlockPlaceable(@NotNull WitBlockPlaceable o) {
-    visitPsiElement(o);
-  }
-
   public void visitEnum(@NotNull WitEnum o) {
     visitPsiElement(o);
   }
