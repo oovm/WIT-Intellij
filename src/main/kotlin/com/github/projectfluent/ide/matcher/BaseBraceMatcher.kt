@@ -1,6 +1,6 @@
 package com.github.projectfluent.ide.matcher
 
-import com.github.projectfluent.language.psi.FluentParserDefinition
+import com.github.projectfluent.language.psi.WitParserDefinition
 import com.github.projectfluent.language.psi.WitTypes.*
 import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
@@ -27,7 +27,7 @@ class BaseBraceMatcher : PairedBraceMatcher {
         )
 
         private val InsertPairBraceBefore = TokenSet.orSet(
-            FluentParserDefinition.commentTokens,
+            WitParserDefinition.commentTokens,
             TokenSet.create(
                 TokenType.WHITE_SPACE,
                 COMMA,

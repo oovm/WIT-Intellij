@@ -159,6 +159,7 @@ generic ::= ANGLE_L (type-hint (COMMA type-hint)* COMMA?)? ANGLE_R;
 // resource type-name { method: func() };
 resource    ::= KW_RESOURCE identifier BRACE_L resource-element* BRACE_R {
 	pin = 1
+    mixin = "com.github.projectfluent.language.mixin.MixinResource"
 }
 private resource-element ::=
     function
@@ -166,12 +167,15 @@ private resource-element ::=
 // record type-name { field: type-hint, key: value };
 record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {
 	pin = 1
+    mixin = "com.github.projectfluent.language.mixin.MixinRecord"
 }
 private record-element ::=
     record-field
   | COMMA
 
-record-field    ::= identifier COLON type-hint
+record-field    ::= identifier COLON type-hint {
+    mixin = "com.github.projectfluent.language.mixin.MixinField"
+}
 
 
 flags       ::= KW_FLAGS identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
@@ -184,6 +188,7 @@ enum       ::= KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-numbe
 
 variant          ::= KW_VARIANT identifier BRACE_L (variant-item (COMMA variant-item)* COMMA?)? BRACE_R {
 	pin = 1
+    mixin = "com.github.projectfluent.language.mixin.MixinVariant"
 }
 variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)?
 

@@ -1,13 +1,24 @@
 package com.github.projectfluent.ide.view
 
 import com.github.projectfluent.language.file.FluentFile
+import com.github.projectfluent.language.psi.WitEnum
+import com.github.projectfluent.language.psi.WitFlags
 import com.github.projectfluent.language.psi.WitInterface
+import com.github.projectfluent.language.psi.WitRecord
+import com.github.projectfluent.language.psi.WitResource
+import com.github.projectfluent.language.psi.WitVariant
 import com.github.projectfluent.language.psi.WitWorld
 import com.github.projectfluent.language.psi_node.WitEnumNode
+import com.github.projectfluent.language.psi_node.WitExportNode
 import com.github.projectfluent.language.psi_node.WitFlagsNode
+import com.github.projectfluent.language.psi_node.WitFunctionNode
 import com.github.projectfluent.language.psi_node.WitIncludeNode
 import com.github.projectfluent.language.psi_node.WitInterfaceNode
+import com.github.projectfluent.language.psi_node.WitRecordFieldNode
 import com.github.projectfluent.language.psi_node.WitRecordNode
+import com.github.projectfluent.language.psi_node.WitResourceNode
+import com.github.projectfluent.language.psi_node.WitSemanticNumberNode
+import com.github.projectfluent.language.psi_node.WitVariantItemNode
 import com.github.projectfluent.language.psi_node.WitVariantNode
 import com.github.projectfluent.language.psi_node.WitWorldNode
 import com.intellij.ide.projectView.PresentationData
@@ -18,7 +29,7 @@ import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.util.PsiTreeUtil
 
-class FluentStructureViewElement(private val node: NavigatablePsiElement) :
+class WitStructureViewElement(private val node: NavigatablePsiElement) :
     StructureViewTreeElement,
     SortableTreeElement {
     override fun getValue(): Any {
@@ -53,22 +64,36 @@ class FluentStructureViewElement(private val node: NavigatablePsiElement) :
             WitInterfaceNode::class.java,
         )
         is WitWorld -> getChildOfType(
-            WitIncludeNode::class.java,
+            WitExportNode::class.java,
         )
         is WitInterface -> getChildOfType(
+            WitResourceNode::class.java,
             WitRecordNode::class.java,
             WitVariantNode::class.java,
             WitEnumNode::class.java,
             WitFlagsNode::class.java,
         )
+        is WitResource -> getChildOfType(
+            WitFunctionNode::class.java
+        )
+        is WitRecord -> getChildOfType(
+            WitRecordFieldNode::class.java
+        )
+        is WitEnum, is WitFlags -> getChildOfType(
+            WitSemanticNumberNode::class.java
+        )
+        is WitVariant -> getChildOfType(
+            WitVariantItemNode::class.java
+        )
+
         else -> getChildOfType(
-            NavigatablePsiElement::class.java,
+//            NavigatablePsiElement::class.java,
         )
     }
 
-    private fun getChildOfType(vararg classes: Class<out NavigatablePsiElement>): Array<FluentStructureViewElement> {
+    private fun getChildOfType(vararg classes: Class<out NavigatablePsiElement>): Array<WitStructureViewElement> {
         return PsiTreeUtil.getChildrenOfAnyType(node, *classes)
-            .map { FluentStructureViewElement(it) }
+            .map { WitStructureViewElement(it) }
             .toTypedArray()
     }
 }

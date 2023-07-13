@@ -22,6 +22,6 @@ abstract class MixinRecord(node: ASTNode) : WitElement(node),
     }
 
     override fun getPresentation(): ItemPresentation? {
-        return WitItemPresentation(AllIcons.Nodes.Method, nameIdentifier?.text ?: "missing record")
+        return WitItemPresentation(AllIcons.Nodes.Record, nameIdentifier?.text ?: "missing record")
     }
 }

@@ -18,10 +18,9 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
 
-object FluentParserDefinition : ParserDefinition {
+object WitParserDefinition : ParserDefinition {
     override fun createLexer(project: Project): Lexer = FluentLexerAdapter()
-    override fun createParser(project: Project): PsiParser =
-        WitParser()
+    override fun createParser(project: Project): PsiParser =        WitParser()
     override fun getFileNodeType(): IFileElementType = IFileElementType(WitLanguage)
     override fun getCommentTokens(): TokenSet = TokenSet.create(WitTypes.COMMENT_LINE, WitTypes.COMMENT_DOCUMENT, WitTypes.COMMENT_BLOCK)
     override fun getStringLiteralElements(): TokenSet = TokenSet.create()

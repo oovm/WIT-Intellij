@@ -9,8 +9,8 @@ import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.util.treeView.smartTree.Sorter
 import com.intellij.psi.PsiFile
 
-class FluentStructureViewModel(psiFile: PsiFile?) :
-    StructureViewModelBase(psiFile!!, FluentStructureViewElement(psiFile)),
+class WitStructureViewModel(psiFile: PsiFile?) :
+    StructureViewModelBase(psiFile!!, WitStructureViewElement(psiFile)),
     StructureViewModel.ElementInfoProvider {
     override fun getSorters(): Array<Sorter> {
         return arrayOf(Sorter.ALPHA_SORTER)

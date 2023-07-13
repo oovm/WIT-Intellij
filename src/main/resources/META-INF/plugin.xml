@@ -6,7 +6,7 @@
 	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
 	<depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>
-	<resource-bundle>messages.FluentBundle</resource-bundle>
+	<resource-bundle>messages.WitBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType
 				name="wit"
@@ -17,12 +17,12 @@
 		/>
 		<lang.parserDefinition
 				language="wit"
-				implementationClass="com.github.projectfluent.language.psi.FluentParserDefinition"
+				implementationClass="com.github.projectfluent.language.psi.WitParserDefinition"
 		/>
 		<!-- StructureView -->
 		<!--iconProvider implementation="com.github.projectfluent.ide.file.FluentIconProvider"-->
 		<lang.psiStructureViewFactory language="wit"
-		                              implementationClass="com.github.projectfluent.ide.view.FluentStructureViewFactory"/>
+		                              implementationClass="com.github.projectfluent.ide.view.WitStructureViewFactory"/>
 		<projectViewNestingRulesProvider implementation="com.github.projectfluent.language.file.FluentFileGroup"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/FluentDefault.xml"/>
