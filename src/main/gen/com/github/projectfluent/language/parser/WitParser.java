@@ -180,9 +180,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier COLON function-signature {
-  // //	mixin = "com.github.projectfluent.language.mixin.MixinFunction"
-  // }
+  // identifier COLON function-signature
   public static boolean function(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function")) return false;
     if (!nextTokenIs(b, "<function>", ESCAPED, SYMBOL)) return false;
@@ -191,65 +189,57 @@ public class WitParser implements PsiParser, LightPsiParser {
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && function_signature(b, l + 1);
-    r = r && function_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // {
-  // //	mixin = "com.github.projectfluent.language.mixin.MixinFunction"
-  // }
-  private static boolean function_3(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
   // PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R
-  static boolean function_args(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args")) return false;
+  static boolean function_items(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_items")) return false;
     if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, PARENTHESIS_L);
-    r = r && function_args_1(b, l + 1);
+    r = r && function_items_1(b, l + 1);
     r = r && consumeToken(b, PARENTHESIS_R);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (parameter (COMMA parameter)* COMMA?)?
-  private static boolean function_args_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args_1")) return false;
-    function_args_1_0(b, l + 1);
+  private static boolean function_items_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_items_1")) return false;
+    function_items_1_0(b, l + 1);
     return true;
   }
 
   // parameter (COMMA parameter)* COMMA?
-  private static boolean function_args_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args_1_0")) return false;
+  private static boolean function_items_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_items_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = parameter(b, l + 1);
-    r = r && function_args_1_0_1(b, l + 1);
-    r = r && function_args_1_0_2(b, l + 1);
+    r = r && function_items_1_0_1(b, l + 1);
+    r = r && function_items_1_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (COMMA parameter)*
-  private static boolean function_args_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args_1_0_1")) return false;
+  private static boolean function_items_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_items_1_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!function_args_1_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "function_args_1_0_1", c)) break;
+      if (!function_items_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "function_items_1_0_1", c)) break;
     }
     return true;
   }
 
   // COMMA parameter
-  private static boolean function_args_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args_1_0_1_0")) return false;
+  private static boolean function_items_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_items_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
@@ -259,14 +249,14 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   // COMMA?
-  private static boolean function_args_1_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_args_1_0_2")) return false;
+  private static boolean function_items_1_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_items_1_0_2")) return false;
     consumeToken(b, COMMA);
     return true;
   }
 
   /* ********************************************************** */
-  // identifier? KW_FUNCTION function-args (TO type-hint)?
+  // identifier? KW_FUNCTION function-items (TO type-hint)?
   public static boolean function_signature(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_signature")) return false;
     boolean r, p;
@@ -274,7 +264,7 @@ public class WitParser implements PsiParser, LightPsiParser {
     r = function_signature_0(b, l + 1);
     r = r && consumeToken(b, KW_FUNCTION);
     p = r; // pin = 2
-    r = r && report_error_(b, function_args(b, l + 1));
+    r = r && report_error_(b, function_items(b, l + 1));
     r = p && function_signature_3(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -534,6 +524,20 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // identifier COLON function-signature
+  public static boolean method(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "method")) return false;
+    if (!nextTokenIs(b, "<method>", ESCAPED, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, METHOD, "<method>");
+    r = identifier(b, l + 1);
+    r = r && consumeToken(b, COLON);
+    r = r && function_signature(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // SYMBOL | ESCAPED
   public static boolean module_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module_name")) return false;
@@ -724,12 +728,12 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // function
+  // method
   //   | SEMICOLON
   static boolean resource_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "resource_element")) return false;
     boolean r;
-    r = function(b, l + 1);
+    r = method(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     return r;
   }

@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.projectfluent.language.psi.WitTypes.*;
-import com.github.projectfluent.language.psi.WitElement;
+import com.github.projectfluent.language.mixin.MixinFlags;
 import com.github.projectfluent.language.psi.*;
 
-public class WitFlagsNode extends WitElement implements WitFlags {
+public class WitFlagsNode extends MixinFlags implements WitFlags {
 
   public WitFlagsNode(@NotNull ASTNode node) {
     super(node);

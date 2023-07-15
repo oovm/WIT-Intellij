@@ -140,13 +140,15 @@ private interface-element ::=
   | SEMICOLON
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
 function ::= identifier COLON function-signature {
-
-//	mixin = "com.github.projectfluent.language.mixin.MixinFunction"
+	mixin = "com.github.projectfluent.language.mixin.MixinFunction"
 }
-function-signature ::= identifier? KW_FUNCTION function-args (TO type-hint)? {
+method ::= identifier COLON function-signature {
+	mixin = "com.github.projectfluent.language.mixin.MixinMethod"
+}
+function-signature ::= identifier? KW_FUNCTION function-items (TO type-hint)? {
 	pin = 2
 }
-private function-args ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R;
+private function-items ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R;
 parameter ::= identifier COLON type-hint {
 
 }
@@ -162,7 +164,7 @@ resource    ::= KW_RESOURCE identifier BRACE_L resource-element* BRACE_R {
     mixin = "com.github.projectfluent.language.mixin.MixinResource"
 }
 private resource-element ::=
-    function
+    method
   | SEMICOLON
 // record type-name { field: type-hint, key: value };
 record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {
@@ -180,6 +182,7 @@ record-field    ::= identifier COLON type-hint {
 
 flags       ::= KW_FLAGS identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
 	pin = 1
+    mixin = "com.github.projectfluent.language.mixin.MixinFlags"
 }
 enum       ::= KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
 	pin = 1
@@ -190,7 +193,9 @@ variant          ::= KW_VARIANT identifier BRACE_L (variant-item (COMMA variant-
 	pin = 1
     mixin = "com.github.projectfluent.language.mixin.MixinVariant"
 }
-variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)?
+variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)? {
+    mixin = "com.github.projectfluent.language.mixin.MixinVariantItem"
+}
 
 
 /* Literals */

@@ -28,15 +28,15 @@ public class WitResourceNode extends MixinResource implements WitResource {
   }
 
   @Override
-  @NotNull
-  public List<WitFunction> getFunctionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitFunction.class);
-  }
-
-  @Override
   @Nullable
   public WitIdentifier getIdentifier() {
     return findChildByClass(WitIdentifier.class);
+  }
+
+  @Override
+  @NotNull
+  public List<WitMethod> getMethodList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitMethod.class);
   }
 
 }

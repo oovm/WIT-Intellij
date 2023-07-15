@@ -55,6 +55,10 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMethod(@NotNull WitMethod o) {
+    visitPsiElement(o);
+  }
+
   public void visitModuleName(@NotNull WitModuleName o) {
     visitPsiElement(o);
   }

@@ -14,6 +14,7 @@ import com.github.projectfluent.language.psi_node.WitFlagsNode
 import com.github.projectfluent.language.psi_node.WitFunctionNode
 import com.github.projectfluent.language.psi_node.WitIncludeNode
 import com.github.projectfluent.language.psi_node.WitInterfaceNode
+import com.github.projectfluent.language.psi_node.WitMethodNode
 import com.github.projectfluent.language.psi_node.WitRecordFieldNode
 import com.github.projectfluent.language.psi_node.WitRecordNode
 import com.github.projectfluent.language.psi_node.WitResourceNode
@@ -72,9 +73,10 @@ class WitStructureViewElement(private val node: NavigatablePsiElement) :
             WitVariantNode::class.java,
             WitEnumNode::class.java,
             WitFlagsNode::class.java,
+            WitFunctionNode::class.java,
         )
         is WitResource -> getChildOfType(
-            WitFunctionNode::class.java
+            WitMethodNode::class.java
         )
         is WitRecord -> getChildOfType(
             WitRecordFieldNode::class.java

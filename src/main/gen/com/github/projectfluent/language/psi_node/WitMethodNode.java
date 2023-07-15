@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.projectfluent.language.psi.WitTypes.*;
-import com.github.projectfluent.language.mixin.MixinVariantItem;
+import com.github.projectfluent.language.mixin.MixinMethod;
 import com.github.projectfluent.language.psi.*;
 
-public class WitVariantItemNode extends MixinVariantItem implements WitVariantItem {
+public class WitMethodNode extends MixinMethod implements WitMethod {
 
-  public WitVariantItemNode(@NotNull ASTNode node) {
+  public WitMethodNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitVisitor visitor) {
-    visitor.visitVariantItem(this);
+    visitor.visitMethod(this);
   }
 
   @Override
@@ -29,14 +29,14 @@ public class WitVariantItemNode extends MixinVariantItem implements WitVariantIt
 
   @Override
   @NotNull
-  public WitIdentifier getIdentifier() {
-    return findNotNullChildByClass(WitIdentifier.class);
+  public WitFunctionSignature getFunctionSignature() {
+    return findNotNullChildByClass(WitFunctionSignature.class);
   }
 
   @Override
-  @Nullable
-  public WitTypeHint getTypeHint() {
-    return findChildByClass(WitTypeHint.class);
+  @NotNull
+  public WitIdentifier getIdentifier() {
+    return findNotNullChildByClass(WitIdentifier.class);
   }
 
 }

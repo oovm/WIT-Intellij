@@ -20,6 +20,7 @@ public interface WitTypes {
   IElementType INCLUDE_NAME = new WitElementType("INCLUDE_NAME");
   IElementType INTERFACE = new WitElementType("INTERFACE");
   IElementType INTERFACE_NAME = new WitElementType("INTERFACE_NAME");
+  IElementType METHOD = new WitElementType("METHOD");
   IElementType MODULE_NAME = new WitElementType("MODULE_NAME");
   IElementType ORGANIZATION_NAME = new WitElementType("ORGANIZATION_NAME");
   IElementType PACKAGE = new WitElementType("PACKAGE");
@@ -123,6 +124,9 @@ public interface WitTypes {
       }
       else if (type == INTERFACE_NAME) {
         return new WitInterfaceNameNode(node);
+      }
+      else if (type == METHOD) {
+        return new WitMethodNode(node);
       }
       else if (type == MODULE_NAME) {
         return new WitModuleNameNode(node);
