@@ -1,8 +1,10 @@
 # Wit-Intellij
 
 ![Build](https://github.com/oovm/Wit-Intellij/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
+[![Version](https://img.shields.io/jetbrains/plugin/v/24001.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/24001.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
+
+<!-- Plugin description -->
 
 ## Features
 
@@ -17,3 +19,4 @@
 
 ![](https://github.com/oovm/WIT-Intellij/assets/17541209/d4e851e3-f55f-4f0d-82b2-b587abefffd2)
 
+<!-- Plugin description end -->

@@ -1,6 +1,6 @@
 <idea-plugin>
 	<id>wit</id>
-	<name>WIT Language</name>
+	<name>WIT IDL</name>
 	<vendor>voml</vendor>
 	<!-- Product and plugin compatibility requirements -->
 	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->

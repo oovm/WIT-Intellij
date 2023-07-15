@@ -28,7 +28,7 @@ enum class WitHighlightColor(humanName: Supplier<@AttributeDescriptor String>, d
     SYM_TYPE(WitBundle.messagePointer("color.token.symbol.type"), Default.CLASS_NAME),
     SYM_FIELD(WitBundle.messagePointer("color.token.symbol.field"), Default.INSTANCE_FIELD),
 
-    SYM_VARIANT(WitBundle.messagePointer("color.token.symbol.term"), Default.STATIC_FIELD),
+    SYM_VARIANT(WitBundle.messagePointer("color.token.symbol.variant"), Default.STATIC_FIELD),
 //    SYM_ATTRIBUTE(WitBundle.messagePointer("color.token.symbol.attribute"), Default.STATIC_METHOD),
 //    SYM_VARIABLE(WitBundle.messagePointer("color.token.symbol.variable"), Default.REASSIGNED_PARAMETER),
     SYM_FUNCTION(WitBundle.messagePointer("color.token.symbol.function"), Default.FUNCTION_DECLARATION),
