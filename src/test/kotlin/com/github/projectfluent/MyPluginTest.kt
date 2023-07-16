@@ -1,4 +1,4 @@
-package com.github.projectfluent
+package com.github.bytecodealliance
 
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.psi.xml.XmlFile

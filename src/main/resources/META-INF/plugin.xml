@@ -12,89 +12,89 @@
 				name="wit"
 				language="wit"
 				extensions="wit;"
-				implementationClass="com.github.projectfluent.language.file.WitFileType"
+				implementationClass="com.github.bytecodealliance.language.file.WitFileType"
 				fieldName="INSTANCE"
 		/>
 		<lang.parserDefinition
 				language="wit"
-				implementationClass="com.github.projectfluent.language.psi.WitParserDefinition"
+				implementationClass="com.github.bytecodealliance.language.psi.WitParserDefinition"
 		/>
 		<!-- StructureView -->
-		<!--iconProvider implementation="com.github.projectfluent.ide.file.FluentIconProvider"-->
+		<!--iconProvider implementation="com.github.bytecodealliance.ide.file.FluentIconProvider"-->
 		<lang.psiStructureViewFactory language="wit"
-		                              implementationClass="com.github.projectfluent.ide.view.WitStructureViewFactory"/>
-		<projectViewNestingRulesProvider implementation="com.github.projectfluent.language.file.FluentFileGroup"/>
+		                              implementationClass="com.github.bytecodealliance.ide.view.WitStructureViewFactory"/>
+		<projectViewNestingRulesProvider implementation="com.github.bytecodealliance.language.file.FluentFileGroup"/>
 		<!-- Highlight -->
 		<additionalTextAttributes scheme="Default" file="colors/FluentDefault.xml"/>
 		<additionalTextAttributes scheme="Darcula" file="colors/FluentDarcula.xml"/>
-		<colorSettingsPage implementation="com.github.projectfluent.ide.highlight.WitHighlightSetting"/>
-		<highlightVisitor implementation="com.github.projectfluent.ide.highlight.WitHighlightVisitor"/>
+		<colorSettingsPage implementation="com.github.bytecodealliance.ide.highlight.WitHighlightSetting"/>
+		<highlightVisitor implementation="com.github.bytecodealliance.ide.highlight.WitHighlightVisitor"/>
 		<lang.syntaxHighlighter
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.highlight.WitSyntaxHighlighter"
+				implementationClass="com.github.bytecodealliance.ide.highlight.WitSyntaxHighlighter"
 		/>
 		<!-- Formatter -->
 		<lang.formatter
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.formatter.WitFormatBuilder"
+				implementationClass="com.github.bytecodealliance.ide.formatter.WitFormatBuilder"
 		/>
 		<lang.commenter
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.formatter.JssCommenter"
+				implementationClass="com.github.bytecodealliance.ide.formatter.JssCommenter"
 		/>
 		<lang.smartEnterProcessor
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.formatter.JssSmartEnter"
+				implementationClass="com.github.bytecodealliance.ide.formatter.JssSmartEnter"
 		/>
 		<!-- Document -->
 
-		<!--documentationProvider implementation="com.github.projectfluent.ide.doc.JssDocumentationExtender"-->
-		<!--		<psi.referenceContributor implementation="com.github.projectfluent.ide.doc.JssUrlReferenceContributor"/>-->
+		<!--documentationProvider implementation="com.github.bytecodealliance.ide.doc.JssDocumentationExtender"-->
+		<!--		<psi.referenceContributor implementation="com.github.bytecodealliance.ide.doc.JssUrlReferenceContributor"/>-->
 		<lang.documentationProvider
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.doc.WitDocumentationProvider"
+				implementationClass="com.github.bytecodealliance.ide.doc.WitDocumentationProvider"
 		/>
 		<lang.braceMatcher
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.matcher.FluentBraceMatcher"
+				implementationClass="com.github.bytecodealliance.ide.matcher.FluentBraceMatcher"
 		/>
 
 		<!--		<lang.quoteHandler-->
 		<!--				language="Fluent"-->
-		<!--				implementationClass="com.github.projectfluent.ide.matcher.JssQuoteHandler"-->
+		<!--				implementationClass="com.github.bytecodealliance.ide.matcher.JssQuoteHandler"-->
 		<!--		/>-->
 		<lang.foldingBuilder
 				language="wit"
-				implementationClass="com.github.projectfluent.ide.matcher.FluentFoldingBuilder"
+				implementationClass="com.github.bytecodealliance.ide.matcher.FluentFoldingBuilder"
 		/>
 		<!--		<indexPatternBuilder-->
-		<!--				implementation="com.github.projectfluent.ide.todo.VomlTodoIndexPatternBuilder"-->
+		<!--				implementation="com.github.bytecodealliance.ide.todo.VomlTodoIndexPatternBuilder"-->
 		<!--		/>-->
 		<!--		<todoIndexer-->
 		<!--				filetype="Fluent"-->
-		<!--				implementationClass="com.github.projectfluent.ide.todo.VomlTodoIndexer"-->
+		<!--				implementationClass="com.github.bytecodealliance.ide.todo.VomlTodoIndexer"-->
 		<!--		/>-->
 		<!--		<completion.contributor-->
 		<!--				language="Fluent"-->
-		<!--				implementationClass="com.github.projectfluent.ide.completion.VomlOptionCompletionContributor"-->
+		<!--				implementationClass="com.github.bytecodealliance.ide.completion.VomlOptionCompletionContributor"-->
 		<!--		/>-->
 
-		<annotator language="wit" implementationClass="com.github.projectfluent.ide.annotator.LiteralChecker"/>
+		<annotator language="wit" implementationClass="com.github.bytecodealliance.ide.annotator.LiteralChecker"/>
 
 		<langCodeStyleSettingsProvider
-				implementation="com.github.projectfluent.ide.codeStyle.FluentLanguageCodeStyleSettingsProvider"
+				implementation="com.github.bytecodealliance.ide.codeStyle.FluentLanguageCodeStyleSettingsProvider"
 		/>
 		<!--		<languageInjectionContributor-->
 		<!--			language="Fluent"-->
-		<!--			implementationClass="com.github.projectfluent.ide.highlight.InjectMarkdown"-->
+		<!--			implementationClass="com.github.bytecodealliance.ide.highlight.InjectMarkdown"-->
 		<!--		/>-->
 
 	</extensions>
 	<actions>
-		<action id="NewFluentFile" class="com.github.projectfluent.ide.actions.FluentCreateFile">
+		<action id="NewFluentFile" class="com.github.bytecodealliance.ide.actions.FluentCreateFile">
 			<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewHtmlFile"/>
 		</action>
-		<!--		<action id="jss.JssConvertJson" class="com.github.projectfluent.ide.actions.FluentConvertMo"/>-->
+		<!--		<action id="jss.JssConvertJson" class="com.github.bytecodealliance.ide.actions.FluentConvertMo"/>-->
 		<group id="jss.JssGenerator" popup="true" text="JssGenerator">
 			<reference ref="NewFluentFile"/>
 			<!--			<reference ref="jss.JssConvertJson"/>-->
