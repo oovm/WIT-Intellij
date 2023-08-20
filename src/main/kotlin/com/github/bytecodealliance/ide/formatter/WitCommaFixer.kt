@@ -11,8 +11,8 @@ import com.intellij.psi.PsiErrorElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 
-class JssCommaFixer : SmartEnterProcessorWithFixers.Fixer<JssSmartEnter>() {
-    override fun apply(editor: Editor, processor: JssSmartEnter, element: PsiElement) {
+class WitCommaFixer : SmartEnterProcessorWithFixers.Fixer<WitSmartEnter>() {
+    override fun apply(editor: Editor, processor: WitSmartEnter, element: PsiElement) {
         element.isValid
         val current = if (element is LeafPsiElement && element.parent !is PsiFile) {
             element.parent
@@ -23,7 +23,7 @@ class JssCommaFixer : SmartEnterProcessorWithFixers.Fixer<JssSmartEnter>() {
         if (errorElement != null) {
             val description = errorElement.errorDescription
             val expectedId = description.indexOf("expected")
-            val commaExpectationId = description.indexOf("VomlTokenType.,")
+            val commaExpectationId = description.indexOf("WitTokenType.,")
             val commaIsExpected = expectedId >= 0 && commaExpectationId in 0 until expectedId
 
             val siblingOnLeft = errorElement.getPrevNonCommentSibling()
