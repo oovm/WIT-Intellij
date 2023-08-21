@@ -29,21 +29,22 @@
         STRING_ESCAPE = "String Escaped"
         SELECTION_LINE = "SELECTION_LINE"
 
-		KW_PACKAGE    = "package"
-		KW_WORLD      = "world"
-		KW_INTERFACE  = "interface"
-		KW_INCLUDE    = "include"
-		KW_EXPORT     = "export"
-		KW_IMPORT     = "import"
-		KW_USE        = "use"
-		KW_AS         = "as"
-		KW_TYPE       = "type"
-		KW_RESOURCE   = "resource"
-		KW_RECORD     = "record"
-		KW_ENUM       = "enum"
-		KW_FLAGS      = "flags"
-		KW_VARIANT    = "variant"
-		KW_FUNCTION   = "func"
+		KW_PACKAGE     = "package"
+		KW_WORLD       = "world"
+		KW_INTERFACE   = "interface"
+		KW_INCLUDE     = "include"
+		KW_EXPORT      = "export"
+		KW_IMPORT      = "import"
+		KW_USE         = "use"
+		KW_AS          = "as"
+		KW_TYPE        = "type"
+		KW_RESOURCE    = "resource"
+		KW_RECORD      = "record"
+		KW_ENUM        = "enum"
+		KW_FLAGS       = "flags"
+		KW_VARIANT     = "variant"
+		KW_FUNCTION    = "func"
+		KW_CONSTRUCTOR = "constructor"
 
 		VERSION = "<<semver>>"
         PARENTHESIS_L = '('
@@ -143,12 +144,16 @@ private interface-element ::=
   | function
   | SEMICOLON
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
-function ::= identifier COLON function-signature {
-	mixin = "com.github.bytecodealliance.language.mixin.MixinFunction"
-}
 method ::= identifier COLON function-signature {
 	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
 }
+constructor ::= KW_CONSTRUCTOR function-parameters {
+	pin = 1
+}
+function ::= identifier COLON function-signature {
+	mixin = "com.github.bytecodealliance.language.mixin.MixinFunction"
+}
+
 function-signature ::= identifier? KW_FUNCTION function-parameters (TO type-hint)? {
 	pin = 2
 }
@@ -169,6 +174,7 @@ resource  ::= KW_RESOURCE identifier (BRACE_L resource-element* BRACE_R)? {
 }
 private resource-element ::=
     method
+  | constructor
   | SEMICOLON
 // record type-name { field: type-hint, key: value };
 record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {

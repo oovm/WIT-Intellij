@@ -39,23 +39,22 @@ DECIMAL=([0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 CRLF      = \r\n | \n | \r
 HEX = [0-9a-fA-F]
 
-KW_PACKAGE    = "package"
-KW_WORLD      = "world"
-KW_INTERFACE  = "interface"
-KW_INCLUDE    = "include"
-KW_EXPORT     = "export"
-KW_IMPORT     = "import"
-KW_USE        = "use"
-KW_AS         = "as"
-KW_TYPE       = "type"
-KW_RESOURCE   = "resource"
-KW_RECORD     = "record"
-KW_ENUM       = "enum"
-KW_FLAGS      = "flags"
-KW_VARIANT    = "variant"
-KW_FUNCTION   = "func"
-
-
+KW_PACKAGE     = "package"
+KW_WORLD       = "world"
+KW_INTERFACE   = "interface"
+KW_INCLUDE     = "include"
+KW_EXPORT      = "export"
+KW_IMPORT      = "import"
+KW_USE         = "use"
+KW_AS          = "as"
+KW_TYPE        = "type"
+KW_RESOURCE    = "resource"
+KW_RECORD      = "record"
+KW_ENUM        = "enum"
+KW_FLAGS       = "flags"
+KW_VARIANT     = "variant"
+KW_FUNCTION    = "func"
+KW_CONSTRUCTOR = "constructor"
 
 %%
 
@@ -91,24 +90,25 @@ KW_FUNCTION   = "func"
 	{KW_WORLD}     { return KW_WORLD; }
 	{KW_INTERFACE} { return KW_INTERFACE; }
 
-	{KW_INCLUDE}   { return KW_INCLUDE; }
-	{KW_USE}       { return KW_USE; }
-	{KW_AS}        { return KW_AS; }
-	{KW_IMPORT}    { return KW_IMPORT; }
-	{KW_EXPORT}    { return KW_EXPORT; }
+	{KW_INCLUDE} { return KW_INCLUDE; }
+	{KW_USE}     { return KW_USE; }
+	{KW_AS}      { return KW_AS; }
+	{KW_IMPORT}  { return KW_IMPORT; }
+	{KW_EXPORT}  { return KW_EXPORT; }
 
-	{KW_TYPE}      { return KW_TYPE; }
-	{KW_RESOURCE}  { return KW_RESOURCE; }
-	{KW_RECORD}    { return KW_RECORD; }
-	{KW_ENUM}      { return KW_ENUM; }
-	{KW_FLAGS}     { return KW_FLAGS; }
-	{KW_VARIANT}   { return KW_VARIANT; }
+	{KW_TYPE}     { return KW_TYPE; }
+	{KW_RESOURCE} { return KW_RESOURCE; }
+	{KW_RECORD}   { return KW_RECORD; }
+	{KW_ENUM}     { return KW_ENUM; }
+	{KW_FLAGS}    { return KW_FLAGS; }
+	{KW_VARIANT}  { return KW_VARIANT; }
 
-	{KW_FUNCTION}  { return KW_FUNCTION; }
+	{KW_FUNCTION}    { return KW_FUNCTION; }
+    {KW_CONSTRUCTOR} { return KW_CONSTRUCTOR; }
 
-	{VERSION}      { return VERSION; }
-    {ESCAPED}      { return ESCAPED; }
-	{SYMBOL}       { return SYMBOL; }
+	{VERSION} { return VERSION; }
+    {ESCAPED} { return ESCAPED; }
+	{SYMBOL}  { return SYMBOL; }
 }
 // =====================================================================================================================
 [^] { return BAD_CHARACTER; }
