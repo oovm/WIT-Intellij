@@ -29,14 +29,14 @@ public class WitFunctionSignatureNode extends WitElement implements WitFunctionS
 
   @Override
   @Nullable
-  public WitIdentifier getIdentifier() {
-    return findChildByClass(WitIdentifier.class);
+  public WitFunctionParameters getFunctionParameters() {
+    return findChildByClass(WitFunctionParameters.class);
   }
 
   @Override
-  @NotNull
-  public List<WitParameter> getParameterList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitParameter.class);
+  @Nullable
+  public WitIdentifier getIdentifier() {
+    return findChildByClass(WitIdentifier.class);
   }
 
   @Override

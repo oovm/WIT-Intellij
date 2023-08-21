@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class WitVisitor extends PsiElementVisitor {
 
+  public void visitAliasName(@NotNull WitAliasName o) {
+    visitPsiElement(o);
+  }
+
   public void visitEnum(@NotNull WitEnum o) {
     visitPsiElement(o);
   }
@@ -20,6 +24,10 @@ public class WitVisitor extends PsiElementVisitor {
   }
 
   public void visitFunction(@NotNull WitFunction o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionParameters(@NotNull WitFunctionParameters o) {
     visitPsiElement(o);
   }
 
@@ -104,6 +112,10 @@ public class WitVisitor extends PsiElementVisitor {
   }
 
   public void visitUse(@NotNull WitUse o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUseAlias(@NotNull WitUseAlias o) {
     visitPsiElement(o);
   }
 
