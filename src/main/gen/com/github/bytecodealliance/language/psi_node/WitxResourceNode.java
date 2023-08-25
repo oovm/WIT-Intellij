@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.bytecodealliance.language.psi.WitxTypes.*;
-import com.github.bytecodealliance.language.mixin.MixinResource;
+import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitxResourceNode extends MixinResource implements WitxResource {
+public class WitxResourceNode extends WitElement implements WitxResource {
 
   public WitxResourceNode(@NotNull ASTNode node) {
     super(node);

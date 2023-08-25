@@ -207,7 +207,9 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier COLON function-signature
+  // identifier COLON function-signature {
+  // //	mixin = "com.github.bytecodealliance.language.mixin.MixinFunction"
+  // }
   public static boolean function(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function")) return false;
     if (!nextTokenIs(b, "<function>", ESCAPED, SYMBOL)) return false;
@@ -216,8 +218,16 @@ public class WitxParser implements PsiParser, LightPsiParser {
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && function_signature(b, l + 1);
+    r = r && function_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // {
+  // //	mixin = "com.github.bytecodealliance.language.mixin.MixinFunction"
+  // }
+  private static boolean function_3(PsiBuilder b, int l) {
+    return true;
   }
 
   /* ********************************************************** */
@@ -551,7 +561,9 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier COLON function-signature
+  // identifier COLON function-signature {
+  // //	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
+  // }
   public static boolean method(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method")) return false;
     if (!nextTokenIs(b, "<method>", ESCAPED, SYMBOL)) return false;
@@ -560,8 +572,16 @@ public class WitxParser implements PsiParser, LightPsiParser {
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && function_signature(b, l + 1);
+    r = r && method_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // {
+  // //	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
+  // }
+  private static boolean method_3(PsiBuilder b, int l) {
+    return true;
   }
 
   /* ********************************************************** */
@@ -713,7 +733,9 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier COLON type-hint
+  // identifier COLON type-hint {
+  // //    mixin = "com.github.bytecodealliance.language.mixin.MixinField"
+  // }
   public static boolean record_field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "record_field")) return false;
     if (!nextTokenIs(b, "<record field>", ESCAPED, SYMBOL)) return false;
@@ -722,8 +744,16 @@ public class WitxParser implements PsiParser, LightPsiParser {
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && type_hint(b, l + 1);
+    r = r && record_field_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // {
+  // //    mixin = "com.github.bytecodealliance.language.mixin.MixinField"
+  // }
+  private static boolean record_field_3(PsiBuilder b, int l) {
+    return true;
   }
 
   /* ********************************************************** */
@@ -1040,7 +1070,9 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier (PARENTHESIS_L type-hint PARENTHESIS_R)?
+  // identifier (PARENTHESIS_L type-hint PARENTHESIS_R)? {
+  // //    mixin = "com.github.bytecodealliance.language.mixin.MixinVariantItem"
+  // }
   public static boolean variant_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variant_item")) return false;
     if (!nextTokenIs(b, "<variant item>", ESCAPED, SYMBOL)) return false;
@@ -1048,6 +1080,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, VARIANT_ITEM, "<variant item>");
     r = identifier(b, l + 1);
     r = r && variant_item_1(b, l + 1);
+    r = r && variant_item_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1069,6 +1102,13 @@ public class WitxParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, PARENTHESIS_R);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // {
+  // //    mixin = "com.github.bytecodealliance.language.mixin.MixinVariantItem"
+  // }
+  private static boolean variant_item_2(PsiBuilder b, int l) {
+    return true;
   }
 
   /* ********************************************************** */
