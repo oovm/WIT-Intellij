@@ -33,7 +33,7 @@ public interface WitxTypes {
   IElementType RECORD_FIELD = new WitElementType("RECORD_FIELD");
   IElementType RESOURCE = new WitElementType("RESOURCE");
   IElementType SEMANTIC_NUMBER = new WitElementType("SEMANTIC_NUMBER");
-  IElementType TYPE = new WitElementType("TYPE");
+  IElementType TYPENAME = new WitElementType("TYPENAME");
   IElementType TYPE_HINT = new WitElementType("TYPE_HINT");
   IElementType USE = new WitElementType("USE");
   IElementType USE_ALIAS = new WitElementType("USE_ALIAS");
@@ -170,8 +170,8 @@ public interface WitxTypes {
       else if (type == SEMANTIC_NUMBER) {
         return new WitxSemanticNumberNode(node);
       }
-      else if (type == TYPE) {
-        return new WitxTypeNode(node);
+      else if (type == TYPENAME) {
+        return new WitxTypenameNode(node);
       }
       else if (type == TYPE_HINT) {
         return new WitxTypeHintNode(node);

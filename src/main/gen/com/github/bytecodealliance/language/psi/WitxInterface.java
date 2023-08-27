@@ -26,7 +26,7 @@ public interface WitxInterface extends PsiElement {
   List<WitxResource> getResourceList();
 
   @NotNull
-  List<WitxType> getTypeList();
+  List<WitxTypename> getTypenameList();
 
   @NotNull
   List<WitxUse> getUseList();

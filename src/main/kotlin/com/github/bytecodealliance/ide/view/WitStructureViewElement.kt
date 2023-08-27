@@ -1,6 +1,6 @@
 package com.github.bytecodealliance.ide.view
 
-import com.github.bytecodealliance.language.file.FluentFile
+import com.github.bytecodealliance.language.file.WitFile
 import com.github.bytecodealliance.language.psi.WitEnum
 import com.github.bytecodealliance.language.psi.WitFlags
 import com.github.bytecodealliance.language.psi.WitInterface
@@ -12,7 +12,6 @@ import com.github.bytecodealliance.language.psi_node.WitEnumNode
 import com.github.bytecodealliance.language.psi_node.WitExportNode
 import com.github.bytecodealliance.language.psi_node.WitFlagsNode
 import com.github.bytecodealliance.language.psi_node.WitFunctionNode
-import com.github.bytecodealliance.language.psi_node.WitIncludeNode
 import com.github.bytecodealliance.language.psi_node.WitInterfaceNode
 import com.github.bytecodealliance.language.psi_node.WitMethodNode
 import com.github.bytecodealliance.language.psi_node.WitRecordFieldNode
@@ -60,7 +59,7 @@ class WitStructureViewElement(private val node: NavigatablePsiElement) :
     }
 
     override fun getChildren(): Array<out TreeElement> = when (node) {
-        is FluentFile -> getChildOfType(
+        is WitFile -> getChildOfType(
             WitWorldNode::class.java,
             WitInterfaceNode::class.java,
         )

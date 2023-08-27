@@ -1,6 +1,6 @@
 package com.github.bytecodealliance.ide.formatter
 
-import com.github.bytecodealliance.language.file.FluentFile
+import com.github.bytecodealliance.language.file.WitFile
 import com.intellij.lang.SmartEnterProcessorWithFixers
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
@@ -27,7 +27,7 @@ class WitSmartEnter : SmartEnterProcessorWithFixers() {
 
     private class PlainEnterProcessor : FixEnterProcessor() {
         override fun doEnter(atCaret: PsiElement, file: PsiFile, editor: Editor, modified: Boolean): Boolean {
-            if (file !is FluentFile) return false
+            if (file !is WitFile) return false
             plainEnter(editor)
             return true
         }

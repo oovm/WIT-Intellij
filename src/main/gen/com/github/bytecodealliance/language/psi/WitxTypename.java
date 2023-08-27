@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitxType extends PsiElement {
+public interface WitxTypename extends PsiElement {
 
   @Nullable
   WitxEnum getEnum();

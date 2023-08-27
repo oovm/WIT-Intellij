@@ -2,7 +2,7 @@ package com.github.bytecodealliance.ide.highlight
 
 
 import com.github.bytecodealliance.ide.highlight.WitHighlightColor.*
-import com.github.bytecodealliance.language.file.FluentFile
+import com.github.bytecodealliance.language.file.WitFile
 import com.github.bytecodealliance.language.psi.*
 import com.intellij.codeInsight.daemon.impl.HighlightInfo
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType
@@ -139,7 +139,7 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
 
     override fun clone(): HighlightVisitor = WitHighlightVisitor()
 
-    override fun suitableForFile(file: PsiFile): Boolean = file is FluentFile
+    override fun suitableForFile(file: PsiFile): Boolean = file is WitFile
 
     override fun visit(element: PsiElement) = element.accept(this)
 }

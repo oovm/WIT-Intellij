@@ -5,13 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitxType extends PsiElement {
+public interface WitxTypeItem extends PsiElement {
 
   @Nullable
   WitxEnum getEnum();
 
-  @NotNull
-  List<WitxIdentifier> getIdentifierList();
+  @Nullable
+  WitxIdentifier getIdentifier();
 
   @Nullable
   WitxRecord getRecord();

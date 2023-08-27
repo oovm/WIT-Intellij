@@ -11,14 +11,14 @@ import static com.github.bytecodealliance.language.psi.WitxTypes.*;
 import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitxTypeNode extends WitElement implements WitxType {
+public class WitxTypeItemNode extends WitElement implements WitxTypeItem {
 
-  public WitxTypeNode(@NotNull ASTNode node) {
+  public WitxTypeItemNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitxVisitor visitor) {
-    visitor.visitType(this);
+    visitor.visitTypeItem(this);
   }
 
   @Override
@@ -34,9 +34,9 @@ public class WitxTypeNode extends WitElement implements WitxType {
   }
 
   @Override
-  @NotNull
-  public List<WitxIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxIdentifier.class);
+  @Nullable
+  public WitxIdentifier getIdentifier() {
+    return findChildByClass(WitxIdentifier.class);
   }
 
   @Override

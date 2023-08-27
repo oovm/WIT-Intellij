@@ -76,7 +76,7 @@
 // https://github.com/bytecodealliance/fluent/blob/master/spec/fluent.ebnf
 witx ::= statements*
 private statements ::=
-    package
+    typename
   | world
   | include
   | interface
@@ -135,7 +135,7 @@ interface ::= KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R {
 }
 private interface-element ::=
 	use
-  | type
+  | typename
   | resource
   | record
   | flags
@@ -161,10 +161,15 @@ function-parameters ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PAR
 parameter ::= identifier COLON type-hint {
 
 }
-// type type-name = type-hint;
-type ::= KW_TYPE identifier EQ type-hint {
+// (typename $size u32)
+typename ::= PARENTHESIS_L KW_TYPE identifier type-element PARENTHESIS_R {
 	pin = 1
 }
+private type-element ::=
+	identifier
+  | record
+  | enum;
+
 type-hint ::= identifier generic?;
 generic   ::= ANGLE_L (type-hint (COMMA type-hint)* COMMA?)? ANGLE_R;
 // resource type-name { method: func() };

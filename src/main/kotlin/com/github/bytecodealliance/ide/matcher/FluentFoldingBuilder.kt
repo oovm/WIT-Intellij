@@ -1,7 +1,7 @@
 package com.github.bytecodealliance.ide.matcher
 
 
-import com.github.bytecodealliance.language.file.FluentFile
+import com.github.bytecodealliance.language.file.WitFile
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.CustomFoldingBuilder
 import com.intellij.lang.folding.FoldingDescriptor
@@ -18,7 +18,7 @@ class FluentFoldingBuilder : CustomFoldingBuilder(), DumbAware {
         document: Document,
         quick: Boolean
     ) {
-        if (root !is FluentFile) return
+        if (root !is WitFile) return
         val visitor = WitFoldingVisitor(descriptors)
         PsiTreeUtil.processElements(root) {
             it.accept(visitor);

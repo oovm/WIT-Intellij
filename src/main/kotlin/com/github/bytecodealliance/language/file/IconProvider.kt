@@ -1,11 +1,10 @@
 package com.github.bytecodealliance.language.file
 
-import com.intellij.ide.IconProvider
 import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiElement
 import javax.swing.Icon
 
-class WitIcons : IconProvider() {
+class IconProvider : com.intellij.ide.IconProvider() {
     override fun getIcon(psiElement: PsiElement, flags: Int): Icon? {
         val fileName = psiElement.containingFile.name
 
@@ -16,6 +15,6 @@ class WitIcons : IconProvider() {
     }
 
     companion object {
-        val FILE = IconLoader.getIcon("/icons/wit.svg", WitIcons::class.java)
+        val FILE = IconLoader.getIcon("/icons/wit.svg", IconProvider::class.java)
     }
 }

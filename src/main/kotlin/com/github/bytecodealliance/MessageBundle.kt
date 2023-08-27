@@ -1,12 +1,12 @@
 package com.github.bytecodealliance
 
-import com.github.bytecodealliance.WitLanguage.BUNDLE
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.PropertyKey
 import java.util.function.Supplier
 
+private const val BUNDLE = "messages.WitBundle"
 
-object WitBundle : DynamicBundle(BUNDLE) {
+object MessageBundle : DynamicBundle(BUNDLE) {
 
     @Suppress("SpreadOperator")
     @JvmStatic

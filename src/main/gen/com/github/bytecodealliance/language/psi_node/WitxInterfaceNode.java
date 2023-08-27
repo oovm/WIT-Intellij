@@ -65,8 +65,8 @@ public class WitxInterfaceNode extends WitElement implements WitxInterface {
 
   @Override
   @NotNull
-  public List<WitxType> getTypeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxType.class);
+  public List<WitxTypename> getTypenameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxTypename.class);
   }
 
   @Override
