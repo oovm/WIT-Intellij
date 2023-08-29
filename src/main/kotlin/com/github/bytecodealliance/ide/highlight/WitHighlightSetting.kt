@@ -6,11 +6,11 @@ import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
 class WitHighlightSetting : ColorSettingsPage {
-    private val annotatorTags = WitHighlightColor
+    private val annotatorTags = HighlightColor
         .values()
         .associateBy({ it.name }, { it.textAttributesKey })
 
-    override fun getAttributeDescriptors() = WitHighlightColor
+    override fun getAttributeDescriptors() = HighlightColor
         .values()
         .map { it.attributesDescriptor }
         .toTypedArray()

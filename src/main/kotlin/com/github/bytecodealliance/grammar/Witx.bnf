@@ -11,7 +11,7 @@
 
     elementTypeHolderClass = "com.github.bytecodealliance.language.psi.WitxTypes"
     elementTypeClass = "com.github.bytecodealliance.language.psi.WitElementType"
-    tokenTypeClass = "com.github.bytecodealliance.language.psi.WitTokenType"
+    tokenTypeClass = "com.github.bytecodealliance.language.psi.WitxTokenType"
 
     psiImplUtilClass = "com.github.bytecodealliance.language.psi_node.FluentPsiExtension"
 

@@ -1,7 +1,7 @@
 package com.github.bytecodealliance.ide.highlight
 
 
-import com.github.bytecodealliance.ide.highlight.WitHighlightColor.*
+import com.github.bytecodealliance.ide.highlight.HighlightColor.*
 import com.github.bytecodealliance.language.file.WitFile
 import com.github.bytecodealliance.language.psi.*
 import com.intellij.codeInsight.daemon.impl.HighlightInfo
@@ -117,7 +117,7 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
 //    }
 
 
-    private fun highlight(element: PsiElement, color: WitHighlightColor) {
+    private fun highlight(element: PsiElement, color: HighlightColor) {
         val builder = HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION)
         builder.textAttributes(color.textAttributesKey)
         builder.range(element)

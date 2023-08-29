@@ -7,3 +7,7 @@ class WitTokenType(debugName: String) : IElementType(debugName, WitLanguage) {
     override fun toString(): String = "WitToken.${super.toString()}"
 }
 
+class WitxTokenType(debugName: String) : IElementType(debugName, WitLanguage) {
+    override fun toString(): String = "WitxToken.${super.toString()}"
+}
+
