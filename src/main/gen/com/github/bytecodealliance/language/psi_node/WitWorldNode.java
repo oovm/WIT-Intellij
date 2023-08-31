@@ -53,8 +53,20 @@ public class WitWorldNode extends MixinWorld implements WitWorld {
 
   @Override
   @NotNull
+  public List<WitRecord> getRecordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitRecord.class);
+  }
+
+  @Override
+  @NotNull
   public List<WitUse> getUseList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, WitUse.class);
+  }
+
+  @Override
+  @NotNull
+  public List<WitVariant> getVariantList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitVariant.class);
   }
 
 }

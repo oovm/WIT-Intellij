@@ -23,6 +23,10 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitExportTerm(@NotNull WitExportTerm o) {
+    visitPsiElement(o);
+  }
+
   public void visitFlags(@NotNull WitFlags o) {
     visitPsiElement(o);
   }
@@ -84,6 +88,10 @@ public class WitVisitor extends PsiElementVisitor {
   }
 
   public void visitPackageName(@NotNull WitPackageName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPackageVersion(@NotNull WitPackageVersion o) {
     visitPsiElement(o);
   }
 

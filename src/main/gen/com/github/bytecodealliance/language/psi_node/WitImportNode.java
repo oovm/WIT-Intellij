@@ -29,8 +29,8 @@ public class WitImportNode extends WitElement implements WitImport {
 
   @Override
   @Nullable
-  public WitIncludeName getIncludeName() {
-    return findChildByClass(WitIncludeName.class);
+  public WitExportTerm getExportTerm() {
+    return findChildByClass(WitExportTerm.class);
   }
 
 }

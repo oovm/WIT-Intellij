@@ -20,6 +20,12 @@ public interface WitWorld extends PsiElement {
   List<WitInclude> getIncludeList();
 
   @NotNull
+  List<WitRecord> getRecordList();
+
+  @NotNull
   List<WitUse> getUseList();
+
+  @NotNull
+  List<WitVariant> getVariantList();
 
 }

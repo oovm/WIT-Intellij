@@ -13,4 +13,7 @@ public interface WitPackageName extends PsiElement {
   @Nullable
   WitOrganizationName getOrganizationName();
 
+  @Nullable
+  WitPackageVersion getPackageVersion();
+
 }

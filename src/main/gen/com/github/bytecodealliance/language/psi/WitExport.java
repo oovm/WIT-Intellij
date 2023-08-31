@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface WitExport extends PsiElement {
 
   @Nullable
-  WitInterfaceName getInterfaceName();
+  WitExportTerm getExportTerm();
 
 }

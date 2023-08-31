@@ -128,7 +128,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_EXPORT interface-name
+  // KW_EXPORT export-term
   public static boolean export(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "export")) return false;
     if (!nextTokenIs(b, KW_EXPORT)) return false;
@@ -136,9 +136,23 @@ public class WitParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, EXPORT, null);
     r = consumeToken(b, KW_EXPORT);
     p = r; // pin = 1
-    r = r && interface_name(b, l + 1);
+    r = r && export_term(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // function
+  //   | include-name
+  public static boolean export_term(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "export_term")) return false;
+    if (!nextTokenIs(b, "<export term>", ESCAPED, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, EXPORT_TERM, "<export term>");
+    r = function(b, l + 1);
+    if (!r) r = include_name(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -398,7 +412,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_IMPORT include-name
+  // KW_IMPORT export-term
   public static boolean import_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_$")) return false;
     if (!nextTokenIs(b, KW_IMPORT)) return false;
@@ -406,7 +420,7 @@ public class WitParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, IMPORT, null);
     r = consumeToken(b, KW_IMPORT);
     p = r; // pin = 1
-    r = r && include_name(b, l + 1);
+    r = r && export_term(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
@@ -426,7 +440,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier (COLON identifier) (SLASH interface-name) (AT VERSION)
+  // identifier (COLON identifier) (SLASH interface-name) package-version?
   //   | interface-name
   public static boolean include_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "include_name")) return false;
@@ -439,7 +453,7 @@ public class WitParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // identifier (COLON identifier) (SLASH interface-name) (AT VERSION)
+  // identifier (COLON identifier) (SLASH interface-name) package-version?
   private static boolean include_name_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "include_name_0")) return false;
     boolean r;
@@ -474,14 +488,11 @@ public class WitParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // AT VERSION
+  // package-version?
   private static boolean include_name_0_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "include_name_0_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, AT, VERSION);
-    exit_section_(b, m, null, r);
-    return r;
+    package_version(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -605,20 +616,20 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // organization-name (COLON module-name) (AT VERSION)
-  //   | module-name
+  // organization-name (COLON module-name) package-version?
+  //   | module-name package-version?
   public static boolean package_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_name")) return false;
     if (!nextTokenIs(b, "<package name>", ESCAPED, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PACKAGE_NAME, "<package name>");
     r = package_name_0(b, l + 1);
-    if (!r) r = module_name(b, l + 1);
+    if (!r) r = package_name_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // organization-name (COLON module-name) (AT VERSION)
+  // organization-name (COLON module-name) package-version?
   private static boolean package_name_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_name_0")) return false;
     boolean r;
@@ -641,13 +652,40 @@ public class WitParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // AT VERSION
+  // package-version?
   private static boolean package_name_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_name_0_2")) return false;
+    package_version(b, l + 1);
+    return true;
+  }
+
+  // module-name package-version?
+  private static boolean package_name_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_name_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = module_name(b, l + 1);
+    r = r && package_name_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // package-version?
+  private static boolean package_name_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_name_1_1")) return false;
+    package_version(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // AT VERSION
+  public static boolean package_version(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_version")) return false;
+    if (!nextTokenIs(b, AT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, AT, VERSION);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, PACKAGE_VERSION, r);
     return r;
   }
 
@@ -1116,6 +1154,8 @@ public class WitParser implements PsiParser, LightPsiParser {
   //   | import
   //   | export
   //   | use
+  //   | variant
+  //   | record
   //   | SEMICOLON
   //   | COMMENT_LINE
   static boolean world_element(PsiBuilder b, int l) {
@@ -1125,6 +1165,8 @@ public class WitParser implements PsiParser, LightPsiParser {
     if (!r) r = import_$(b, l + 1);
     if (!r) r = export(b, l + 1);
     if (!r) r = use(b, l + 1);
+    if (!r) r = variant(b, l + 1);
+    if (!r) r = record(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
