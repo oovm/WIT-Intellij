@@ -7,10 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public class WitxVisitor extends PsiElementVisitor {
 
-  public void visitAliasName(@NotNull WitxAliasName o) {
-    visitPsiElement(o);
-  }
-
   public void visitConstructor(@NotNull WitxConstructor o) {
     visitPsiElement(o);
   }
@@ -63,19 +59,7 @@ public class WitxVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitInterfaceName(@NotNull WitxInterfaceName o) {
-    visitPsiElement(o);
-  }
-
   public void visitMethod(@NotNull WitxMethod o) {
-    visitPsiElement(o);
-  }
-
-  public void visitModuleName(@NotNull WitxModuleName o) {
-    visitPsiElement(o);
-  }
-
-  public void visitOrganizationName(@NotNull WitxOrganizationName o) {
     visitPsiElement(o);
   }
 
@@ -96,6 +80,10 @@ public class WitxVisitor extends PsiElementVisitor {
   }
 
   public void visitRecordField(@NotNull WitxRecordField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitReferenceName(@NotNull WitxReferenceName o) {
     visitPsiElement(o);
   }
 

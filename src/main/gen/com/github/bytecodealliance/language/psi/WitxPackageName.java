@@ -7,10 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface WitxPackageName extends PsiElement {
 
-  @NotNull
-  WitxModuleName getModuleName();
-
-  @Nullable
-  WitxOrganizationName getOrganizationName();
-
 }

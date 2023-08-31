@@ -1,8 +1,13 @@
 package com.github.bytecodealliance.language.psi
 
+
+import com.github.bytecodealliance.WitLanguage
 import com.github.bytecodealliance.WitxLanguage
+import com.github.bytecodealliance.language._WitLexer
 import com.github.bytecodealliance.language._WitxLexer
+import com.github.bytecodealliance.language.file.WitFile
 import com.github.bytecodealliance.language.file.WitFileX
+import com.github.bytecodealliance.language.parser.WitParser
 import com.github.bytecodealliance.language.parser.WitxParser
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
@@ -17,15 +22,13 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
-
 object WitParserDefinitionX : ParserDefinition {
     fun createLexer(): Lexer = FlexAdapter(_WitxLexer(null))
     override fun createLexer(project: Project): Lexer = FlexAdapter(_WitxLexer(null))
     override fun createParser(project: Project): PsiParser = WitxParser()
     override fun getFileNodeType(): IFileElementType = IFileElementType(WitxLanguage)
-    override fun getCommentTokens(): TokenSet = TokenSet.create(
-        WitxTypes.COMMENT_LINE, WitxTypes.COMMENT_BLOCK
-    )
+    override fun getCommentTokens(): TokenSet =
+        TokenSet.create(WitxTypes.COMMENT_LINE, WitxTypes.COMMENT_BLOCK)
 
     override fun getStringLiteralElements(): TokenSet = TokenSet.create()
     override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
@@ -35,3 +38,7 @@ object WitParserDefinitionX : ParserDefinition {
         return ParserDefinition.SpaceRequirements.MAY
     }
 }
+
+
+
+

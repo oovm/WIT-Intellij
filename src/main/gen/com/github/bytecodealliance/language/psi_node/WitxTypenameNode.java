@@ -34,15 +34,21 @@ public class WitxTypenameNode extends WitElement implements WitxTypename {
   }
 
   @Override
-  @NotNull
-  public List<WitxIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxIdentifier.class);
+  @Nullable
+  public WitxIdentifier getIdentifier() {
+    return findChildByClass(WitxIdentifier.class);
   }
 
   @Override
   @Nullable
   public WitxRecord getRecord() {
     return findChildByClass(WitxRecord.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxReferenceName getReferenceName() {
+    return findChildByClass(WitxReferenceName.class);
   }
 
 }

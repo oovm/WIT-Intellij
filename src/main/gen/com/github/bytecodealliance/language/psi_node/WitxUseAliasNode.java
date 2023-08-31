@@ -28,12 +28,6 @@ public class WitxUseAliasNode extends WitElement implements WitxUseAlias {
   }
 
   @Override
-  @Nullable
-  public WitxAliasName getAliasName() {
-    return findChildByClass(WitxAliasName.class);
-  }
-
-  @Override
   @NotNull
   public WitxIdentifier getIdentifier() {
     return findNotNullChildByClass(WitxIdentifier.class);

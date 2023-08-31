@@ -16,9 +16,6 @@ public interface WitxInterface extends PsiElement {
   @NotNull
   List<WitxFunction> getFunctionList();
 
-  @Nullable
-  WitxInterfaceName getInterfaceName();
-
   @NotNull
   List<WitxRecord> getRecordList();
 

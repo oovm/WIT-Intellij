@@ -33,10 +33,4 @@ public class WitxIncludeNameNode extends WitElement implements WitxIncludeName {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxIdentifier.class);
   }
 
-  @Override
-  @NotNull
-  public WitxInterfaceName getInterfaceName() {
-    return findNotNullChildByClass(WitxInterfaceName.class);
-  }
-
 }

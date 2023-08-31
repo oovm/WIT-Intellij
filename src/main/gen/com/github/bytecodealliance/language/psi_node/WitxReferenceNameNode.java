@@ -11,14 +11,14 @@ import static com.github.bytecodealliance.language.psi.WitxTypes.*;
 import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitxOrganizationNameNode extends WitElement implements WitxOrganizationName {
+public class WitxReferenceNameNode extends WitElement implements WitxReferenceName {
 
-  public WitxOrganizationNameNode(@NotNull ASTNode node) {
+  public WitxReferenceNameNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitxVisitor visitor) {
-    visitor.visitOrganizationName(this);
+    visitor.visitReferenceName(this);
   }
 
   @Override
