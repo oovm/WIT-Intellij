@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitxRecord extends PsiElement {
+public interface WitxUnion extends PsiElement {
 
   @NotNull
-  List<WitxRecordField> getRecordFieldList();
+  List<WitxEnumItems> getEnumItemsList();
+
+  @Nullable
+  WitxTag getTag();
 
 }

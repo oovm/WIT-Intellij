@@ -11,14 +11,14 @@ import static com.github.bytecodealliance.language.psi.WitxTypes.*;
 import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitxRecordNode extends WitElement implements WitxRecord {
+public class WitxListNode extends WitElement implements WitxList {
 
-  public WitxRecordNode(@NotNull ASTNode node) {
+  public WitxListNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitxVisitor visitor) {
-    visitor.visitRecord(this);
+    visitor.visitList(this);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class WitxRecordNode extends WitElement implements WitxRecord {
 
   @Override
   @NotNull
-  public List<WitxRecordField> getRecordFieldList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxRecordField.class);
+  public WitxTypeHint getTypeHint() {
+    return findNotNullChildByClass(WitxTypeHint.class);
   }
 
 }

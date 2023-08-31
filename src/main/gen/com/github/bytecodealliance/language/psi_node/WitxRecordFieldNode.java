@@ -28,15 +28,15 @@ public class WitxRecordFieldNode extends WitElement implements WitxRecordField {
   }
 
   @Override
-  @NotNull
-  public WitxIdentifier getIdentifier() {
-    return findNotNullChildByClass(WitxIdentifier.class);
+  @Nullable
+  public WitxReferenceName getReferenceName() {
+    return findChildByClass(WitxReferenceName.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public WitxTypeHint getTypeHint() {
-    return findNotNullChildByClass(WitxTypeHint.class);
+    return findChildByClass(WitxTypeHint.class);
   }
 
 }

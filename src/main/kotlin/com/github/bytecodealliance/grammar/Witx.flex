@@ -26,9 +26,9 @@ import static com.github.bytecodealliance.language.psi.WitxTypes.*;
 
 WHITE_SPACE      = [\s\t]
 COMMENT_LINE     = ;{2}[^\r\n]*
-REFERENCE = \${WORD}
-SYMBOL    = {WORD}
-WORD = [a-zA-Z][a-zA-Z0-9]*
+
+REFERENCE = \$[a-zA-Z0-9_]*
+SYMBOL    = [a-zA-Z][a-zA-Z0-9_]*
 //STRING=\"([^\"\\]|\\.)*\"
 INTEGER=(0|[1-9][0-9_]*)
 DECIMAL=([0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
@@ -36,6 +36,7 @@ DECIMAL=([0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 CRLF      = \r\n | \n | \r
 HEX = [0-9a-fA-F]
 
+KW_WITX        = "@witx"
 KW_PACKAGE     = "package"
 KW_WORLD       = "world"
 KW_INTERFACE   = "interface"
@@ -45,13 +46,15 @@ KW_IMPORT      = "import"
 KW_USE         = "use"
 KW_AS          = "as"
 KW_TYPE        = "typename"
-KW_RESOURCE    = "resource"
+KW_HANDLE      = "handle"
 KW_RECORD      = "record"
+KW_FIELD	   = "field"
 KW_ENUM        = "enum"
 KW_FLAGS       = "flags"
-KW_VARIANT     = "variant"
+KW_UNION       = "union"
 KW_FUNCTION    = "func"
 KW_CONSTRUCTOR = "constructor"
+KW_LIST		   = "list"
 
 %%
 
@@ -81,6 +84,7 @@ KW_CONSTRUCTOR = "constructor"
 	"=" { return EQ; }
 }
 <YYINITIAL> {
+	{KW_WITX}      { return KW_WITX; }
 	{KW_PACKAGE}   { return KW_PACKAGE; }
 	{KW_WORLD}     { return KW_WORLD; }
 	{KW_INTERFACE} { return KW_INTERFACE; }
@@ -92,11 +96,13 @@ KW_CONSTRUCTOR = "constructor"
 	{KW_EXPORT}  { return KW_EXPORT; }
 
 	{KW_TYPE}     { return KW_TYPE; }
-	{KW_RESOURCE} { return KW_RESOURCE; }
+	{KW_HANDLE}   { return KW_HANDLE; }
+	{KW_LIST}     { return KW_LIST; }
 	{KW_RECORD}   { return KW_RECORD; }
+	{KW_FIELD}    { return KW_FIELD; }
 	{KW_ENUM}     { return KW_ENUM; }
 	{KW_FLAGS}    { return KW_FLAGS; }
-	{KW_VARIANT}  { return KW_VARIANT; }
+	{KW_UNION}    { return KW_UNION; }
 
 	{KW_FUNCTION}    { return KW_FUNCTION; }
     {KW_CONSTRUCTOR} { return KW_CONSTRUCTOR; }

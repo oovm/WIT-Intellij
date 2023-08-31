@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitxRecord extends PsiElement {
+public interface WitxEnumItems extends PsiElement {
 
   @NotNull
-  List<WitxRecordField> getRecordFieldList();
+  WitxReferenceName getReferenceName();
 
 }

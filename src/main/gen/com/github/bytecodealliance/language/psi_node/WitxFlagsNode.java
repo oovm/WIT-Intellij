@@ -28,15 +28,15 @@ public class WitxFlagsNode extends WitElement implements WitxFlags {
   }
 
   @Override
-  @Nullable
-  public WitxIdentifier getIdentifier() {
-    return findChildByClass(WitxIdentifier.class);
+  @NotNull
+  public List<WitxEnumItems> getEnumItemsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxEnumItems.class);
   }
 
   @Override
-  @NotNull
-  public List<WitxSemanticNumber> getSemanticNumberList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitxSemanticNumber.class);
+  @Nullable
+  public WitxTag getTag() {
+    return findChildByClass(WitxTag.class);
   }
 
 }

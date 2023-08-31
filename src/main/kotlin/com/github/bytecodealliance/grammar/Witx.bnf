@@ -30,6 +30,7 @@
         STRING_ESCAPE = "String Escaped"
         SELECTION_LINE = "SELECTION_LINE"
 
+		KW_WITX        = "@witx"
 		KW_PACKAGE     = "package"
 		KW_WORLD       = "world"
 		KW_INTERFACE   = "interface"
@@ -38,16 +39,17 @@
 		KW_IMPORT      = "import"
 		KW_USE         = "use"
 		KW_AS          = "as"
-		KW_TYPE        = "type"
-		KW_RESOURCE    = "resource"
+		KW_TYPE        = "typename"
+		KW_HANDLE      = "handle"
 		KW_RECORD      = "record"
+		KW_FIELD	   = "field"
 		KW_ENUM        = "enum"
 		KW_FLAGS       = "flags"
-		KW_VARIANT     = "variant"
+		KW_UNION       = "union"
 		KW_FUNCTION    = "func"
 		KW_CONSTRUCTOR = "constructor"
+		KW_LIST		   = "list"
 
-		VERSION = "<<semver>>"
         PARENTHESIS_L = '('
         PARENTHESIS_R = ')'
         BRACKET_L = '['
@@ -125,20 +127,6 @@ use-items ::= DOT BRACE_L (use-alias (COMMA use-alias)* COMMA?)? BRACE_R {
 use-alias ::= identifier (KW_AS alias-name)? {
 
 }
-// interface name { }
-interface ::= KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R {
-	pin = 1
-//    mixin = "com.github.bytecodealliance.language.mixin.MixinInterface"
-}
-private interface-element ::=
-	use
-  | typename
-  | resource
-  | record
-  | flags
-  | enum
-  | variant
-  | function
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
 method ::= identifier COLON function-signature {
 //	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
@@ -158,40 +146,40 @@ parameter ::= identifier COLON type-hint {
 
 }
 // (typename $size u32)
-typename ::= PARENTHESIS_L KW_TYPE reference-name type-element PARENTHESIS_R {
+typename ::= PARENTHESIS_L KW_TYPE reference-name type-hint PARENTHESIS_R {
 	pin = 2
 }
-private type-element ::=
+type-hint ::=
 	identifier
+  | reference-name
+  | tag
+  | handle
   | record
-  | enum;
+  | flags
+  | enum
+  | union
+  | list
 
-type-hint ::= identifier generic?;
-generic   ::= ANGLE_L (type-hint (COMMA type-hint)* COMMA?)? ANGLE_R;
-// resource type-name { method: func() };
-resource  ::= KW_RESOURCE identifier (BRACE_L resource-element* BRACE_R)? {
-	pin = 1
-//    mixin = "com.github.bytecodealliance.language.mixin.MixinResource"
-}
-private resource-element ::=
-    method
-  | constructor
+
+handle    ::= PARENTHESIS_L KW_HANDLE PARENTHESIS_R
+list	  ::= PARENTHESIS_L KW_LIST type-hint PARENTHESIS_R
 // record type-name { field: type-hint, key: value };
-record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {
-	pin = 1
+record   ::= PARENTHESIS_L KW_RECORD record-element* PARENTHESIS_R {
+	pin = 2
 //    mixin = "com.github.bytecodealliance.language.mixin.MixinRecord"
 }
 private record-element ::=
     record-field
-  | COMMA
 
-record-field    ::= identifier COLON type-hint {
+// (field $buf (@witx pointer u8))
+record-field    ::= PARENTHESIS_L KW_FIELD reference-name type-hint PARENTHESIS_R {
+	pin = 2
 //    mixin = "com.github.bytecodealliance.language.mixin.MixinField"
 }
 
 
-flags       ::= KW_FLAGS identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
-	pin = 1
+flags       ::= PARENTHESIS_L KW_FLAGS tag enum-items* PARENTHESIS_R {
+	pin = 2
 //    mixin = "com.github.bytecodealliance.language.mixin.MixinFlags"
 }
 //   (enum (@witx tag u32)
@@ -208,13 +196,18 @@ flags       ::= KW_FLAGS identifier BRACE_L (semantic-number (COMMA semantic-num
 //    ;;; The CPU-time clock associated with the current thread.
 //    $thread_cputime_id
 //  )
-enum       ::= KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
-	pin = 1
+enum       ::= PARENTHESIS_L KW_ENUM tag enum-items* PARENTHESIS_R {
+	pin = 2
+}
+enum-items ::= reference-name
+tag  ::= PARENTHESIS_L KW_WITX identifier type-hint PARENTHESIS_R {
+	pin = 2
 }
 
 
-variant          ::= KW_VARIANT identifier BRACE_L (variant-item (COMMA variant-item)* COMMA?)? BRACE_R {
-	pin = 1
+
+union     ::= PARENTHESIS_L KW_UNION tag enum-items* PARENTHESIS_R {
+	pin = 2
 //    mixin = "com.github.bytecodealliance.language.mixin.MixinVariant"
 }
 variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)? {

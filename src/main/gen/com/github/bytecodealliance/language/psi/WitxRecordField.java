@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface WitxRecordField extends PsiElement {
 
-  @NotNull
-  WitxIdentifier getIdentifier();
+  @Nullable
+  WitxReferenceName getReferenceName();
 
-  @NotNull
+  @Nullable
   WitxTypeHint getTypeHint();
 
 }

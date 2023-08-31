@@ -50,68 +50,42 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R
+  // PARENTHESIS_L KW_ENUM tag enum-items* PARENTHESIS_R
   public static boolean enum_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_$")) return false;
-    if (!nextTokenIs(b, KW_ENUM)) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ENUM, null);
-    r = consumeToken(b, KW_ENUM);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
+    r = consumeTokens(b, 2, PARENTHESIS_L, KW_ENUM);
+    p = r; // pin = 2
+    r = r && report_error_(b, tag(b, l + 1));
     r = p && report_error_(b, enum_3(b, l + 1)) && r;
-    r = p && consumeToken(b, BRACE_R) && r;
+    r = p && consumeToken(b, PARENTHESIS_R) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (semantic-number (COMMA semantic-number)* COMMA?)?
+  // enum-items*
   private static boolean enum_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_3")) return false;
-    enum_3_0(b, l + 1);
-    return true;
-  }
-
-  // semantic-number (COMMA semantic-number)* COMMA?
-  private static boolean enum_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = semantic_number(b, l + 1);
-    r = r && enum_3_0_1(b, l + 1);
-    r = r && enum_3_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA semantic-number)*
-  private static boolean enum_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_3_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!enum_3_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "enum_3_0_1", c)) break;
+      if (!enum_items(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "enum_3", c)) break;
     }
     return true;
   }
 
-  // COMMA semantic-number
-  private static boolean enum_3_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_3_0_1_0")) return false;
+  /* ********************************************************** */
+  // reference-name
+  public static boolean enum_items(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_items")) return false;
+    if (!nextTokenIs(b, REFERENCE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && semantic_number(b, l + 1);
-    exit_section_(b, m, null, r);
+    r = reference_name(b, l + 1);
+    exit_section_(b, m, ENUM_ITEMS, r);
     return r;
-  }
-
-  // COMMA?
-  private static boolean enum_3_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_3_0_2")) return false;
-    consumeToken(b, COMMA);
-    return true;
   }
 
   /* ********************************************************** */
@@ -128,67 +102,29 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_FLAGS identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R
+  // PARENTHESIS_L KW_FLAGS tag enum-items* PARENTHESIS_R
   public static boolean flags(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "flags")) return false;
-    if (!nextTokenIs(b, KW_FLAGS)) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, FLAGS, null);
-    r = consumeToken(b, KW_FLAGS);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
+    r = consumeTokens(b, 2, PARENTHESIS_L, KW_FLAGS);
+    p = r; // pin = 2
+    r = r && report_error_(b, tag(b, l + 1));
     r = p && report_error_(b, flags_3(b, l + 1)) && r;
-    r = p && consumeToken(b, BRACE_R) && r;
+    r = p && consumeToken(b, PARENTHESIS_R) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (semantic-number (COMMA semantic-number)* COMMA?)?
+  // enum-items*
   private static boolean flags_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "flags_3")) return false;
-    flags_3_0(b, l + 1);
-    return true;
-  }
-
-  // semantic-number (COMMA semantic-number)* COMMA?
-  private static boolean flags_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flags_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = semantic_number(b, l + 1);
-    r = r && flags_3_0_1(b, l + 1);
-    r = r && flags_3_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA semantic-number)*
-  private static boolean flags_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flags_3_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!flags_3_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "flags_3_0_1", c)) break;
+      if (!enum_items(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "flags_3", c)) break;
     }
-    return true;
-  }
-
-  // COMMA semantic-number
-  private static boolean flags_3_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flags_3_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && semantic_number(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COMMA?
-  private static boolean flags_3_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flags_3_0_2")) return false;
-    consumeToken(b, COMMA);
     return true;
   }
 
@@ -320,65 +256,15 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ANGLE_L (type-hint (COMMA type-hint)* COMMA?)? ANGLE_R
-  public static boolean generic(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic")) return false;
-    if (!nextTokenIs(b, ANGLE_L)) return false;
+  // PARENTHESIS_L KW_HANDLE PARENTHESIS_R
+  public static boolean handle(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "handle")) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, ANGLE_L);
-    r = r && generic_1(b, l + 1);
-    r = r && consumeToken(b, ANGLE_R);
-    exit_section_(b, m, GENERIC, r);
+    r = consumeTokens(b, 0, PARENTHESIS_L, KW_HANDLE, PARENTHESIS_R);
+    exit_section_(b, m, HANDLE, r);
     return r;
-  }
-
-  // (type-hint (COMMA type-hint)* COMMA?)?
-  private static boolean generic_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic_1")) return false;
-    generic_1_0(b, l + 1);
-    return true;
-  }
-
-  // type-hint (COMMA type-hint)* COMMA?
-  private static boolean generic_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = type_hint(b, l + 1);
-    r = r && generic_1_0_1(b, l + 1);
-    r = r && generic_1_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA type-hint)*
-  private static boolean generic_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic_1_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!generic_1_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "generic_1_0_1", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA type-hint
-  private static boolean generic_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic_1_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && type_hint(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COMMA?
-  private static boolean generic_1_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generic_1_0_2")) return false;
-    consumeToken(b, COMMA);
-    return true;
   }
 
   /* ********************************************************** */
@@ -480,51 +366,16 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R
-  public static boolean interface_$(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "interface_$")) return false;
-    if (!nextTokenIs(b, KW_INTERFACE)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, INTERFACE, null);
-    r = consumeTokens(b, 1, KW_INTERFACE, INTERFACE_NAME, BRACE_L);
-    p = r; // pin = 1
-    r = r && report_error_(b, interface_3(b, l + 1));
-    r = p && consumeToken(b, BRACE_R) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  // interface-element*
-  private static boolean interface_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "interface_3")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!interface_element(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "interface_3", c)) break;
-    }
-    return true;
-  }
-
-  /* ********************************************************** */
-  // use
-  //   | typename
-  //   | resource
-  //   | record
-  //   | flags
-  //   | enum
-  //   | variant
-  //   | function
-  static boolean interface_element(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "interface_element")) return false;
+  // PARENTHESIS_L KW_LIST type-hint PARENTHESIS_R
+  public static boolean list(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "list")) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r;
-    r = use(b, l + 1);
-    if (!r) r = typename(b, l + 1);
-    if (!r) r = resource(b, l + 1);
-    if (!r) r = record(b, l + 1);
-    if (!r) r = flags(b, l + 1);
-    if (!r) r = enum_$(b, l + 1);
-    if (!r) r = variant(b, l + 1);
-    if (!r) r = function(b, l + 1);
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, PARENTHESIS_L, KW_LIST);
+    r = r && type_hint(b, l + 1);
+    r = r && consumeToken(b, PARENTHESIS_R);
+    exit_section_(b, m, LIST, r);
     return r;
   }
 
@@ -635,67 +486,51 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_RECORD identifier BRACE_L record-element* BRACE_R
+  // PARENTHESIS_L KW_RECORD record-element* PARENTHESIS_R
   public static boolean record(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "record")) return false;
-    if (!nextTokenIs(b, KW_RECORD)) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, RECORD, null);
-    r = consumeToken(b, KW_RECORD);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
-    r = p && report_error_(b, record_3(b, l + 1)) && r;
-    r = p && consumeToken(b, BRACE_R) && r;
+    r = consumeTokens(b, 2, PARENTHESIS_L, KW_RECORD);
+    p = r; // pin = 2
+    r = r && report_error_(b, record_2(b, l + 1));
+    r = p && consumeToken(b, PARENTHESIS_R) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
   // record-element*
-  private static boolean record_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "record_3")) return false;
+  private static boolean record_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "record_2")) return false;
     while (true) {
       int c = current_position_(b);
       if (!record_element(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "record_3", c)) break;
+      if (!empty_element_parsed_guard_(b, "record_2", c)) break;
     }
     return true;
   }
 
   /* ********************************************************** */
   // record-field
-  //   | COMMA
   static boolean record_element(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "record_element")) return false;
-    if (!nextTokenIs(b, "", COMMA, SYMBOL)) return false;
-    boolean r;
-    r = record_field(b, l + 1);
-    if (!r) r = consumeToken(b, COMMA);
-    return r;
+    return record_field(b, l + 1);
   }
 
   /* ********************************************************** */
-  // identifier COLON type-hint {
-  // //    mixin = "com.github.bytecodealliance.language.mixin.MixinField"
-  // }
+  // PARENTHESIS_L KW_FIELD reference-name type-hint PARENTHESIS_R
   public static boolean record_field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "record_field")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
-    r = r && consumeToken(b, COLON);
-    r = r && type_hint(b, l + 1);
-    r = r && record_field_3(b, l + 1);
-    exit_section_(b, m, RECORD_FIELD, r);
-    return r;
-  }
-
-  // {
-  // //    mixin = "com.github.bytecodealliance.language.mixin.MixinField"
-  // }
-  private static boolean record_field_3(PsiBuilder b, int l) {
-    return true;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, RECORD_FIELD, null);
+    r = consumeTokens(b, 2, PARENTHESIS_L, KW_FIELD);
+    p = r; // pin = 2
+    r = r && report_error_(b, reference_name(b, l + 1));
+    r = p && report_error_(b, type_hint(b, l + 1)) && r;
+    r = p && consumeToken(b, PARENTHESIS_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -707,63 +542,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, REFERENCE);
     exit_section_(b, m, REFERENCE_NAME, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // KW_RESOURCE identifier (BRACE_L resource-element* BRACE_R)?
-  public static boolean resource(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "resource")) return false;
-    if (!nextTokenIs(b, KW_RESOURCE)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, RESOURCE, null);
-    r = consumeToken(b, KW_RESOURCE);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
-    r = p && resource_2(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  // (BRACE_L resource-element* BRACE_R)?
-  private static boolean resource_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "resource_2")) return false;
-    resource_2_0(b, l + 1);
-    return true;
-  }
-
-  // BRACE_L resource-element* BRACE_R
-  private static boolean resource_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "resource_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, BRACE_L);
-    r = r && resource_2_0_1(b, l + 1);
-    r = r && consumeToken(b, BRACE_R);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // resource-element*
-  private static boolean resource_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "resource_2_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!resource_element(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "resource_2_0_1", c)) break;
-    }
-    return true;
-  }
-
-  /* ********************************************************** */
-  // method
-  //   | constructor
-  static boolean resource_element(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "resource_element")) return false;
-    if (!nextTokenIs(b, "", KW_CONSTRUCTOR, SYMBOL)) return false;
-    boolean r;
-    r = method(b, l + 1);
-    if (!r) r = constructor(b, l + 1);
     return r;
   }
 
@@ -787,40 +565,50 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier
-  //   | record
-  //   | enum
-  static boolean type_element(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_element")) return false;
-    boolean r;
-    r = identifier(b, l + 1);
-    if (!r) r = record(b, l + 1);
-    if (!r) r = enum_$(b, l + 1);
-    return r;
+  // PARENTHESIS_L KW_WITX identifier type-hint PARENTHESIS_R
+  public static boolean tag(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tag")) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TAG, null);
+    r = consumeTokens(b, 2, PARENTHESIS_L, KW_WITX);
+    p = r; // pin = 2
+    r = r && report_error_(b, identifier(b, l + 1));
+    r = p && report_error_(b, type_hint(b, l + 1)) && r;
+    r = p && consumeToken(b, PARENTHESIS_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
-  // identifier generic?
+  // identifier
+  //   | reference-name
+  //   | tag
+  //   | handle
+  //   | record
+  //   | flags
+  //   | enum
+  //   | union
+  //   | list
   public static boolean type_hint(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_hint")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, TYPE_HINT, "<type hint>");
     r = identifier(b, l + 1);
-    r = r && type_hint_1(b, l + 1);
-    exit_section_(b, m, TYPE_HINT, r);
+    if (!r) r = reference_name(b, l + 1);
+    if (!r) r = tag(b, l + 1);
+    if (!r) r = handle(b, l + 1);
+    if (!r) r = record(b, l + 1);
+    if (!r) r = flags(b, l + 1);
+    if (!r) r = enum_$(b, l + 1);
+    if (!r) r = union(b, l + 1);
+    if (!r) r = list(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // generic?
-  private static boolean type_hint_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_hint_1")) return false;
-    generic(b, l + 1);
-    return true;
-  }
-
   /* ********************************************************** */
-  // PARENTHESIS_L KW_TYPE reference-name type-element PARENTHESIS_R
+  // PARENTHESIS_L KW_TYPE reference-name type-hint PARENTHESIS_R
   public static boolean typename(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "typename")) return false;
     if (!nextTokenIs(b, PARENTHESIS_L)) return false;
@@ -829,10 +617,37 @@ public class WitxParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 2, PARENTHESIS_L, KW_TYPE);
     p = r; // pin = 2
     r = r && report_error_(b, reference_name(b, l + 1));
-    r = p && report_error_(b, type_element(b, l + 1)) && r;
+    r = p && report_error_(b, type_hint(b, l + 1)) && r;
     r = p && consumeToken(b, PARENTHESIS_R) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // PARENTHESIS_L KW_UNION tag enum-items* PARENTHESIS_R
+  public static boolean union(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "union")) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, UNION, null);
+    r = consumeTokens(b, 2, PARENTHESIS_L, KW_UNION);
+    p = r; // pin = 2
+    r = r && report_error_(b, tag(b, l + 1));
+    r = p && report_error_(b, union_3(b, l + 1)) && r;
+    r = p && consumeToken(b, PARENTHESIS_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // enum-items*
+  private static boolean union_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "union_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!enum_items(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "union_3", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -954,71 +769,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // COMMA?
   private static boolean use_items_2_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_items_2_0_2")) return false;
-    consumeToken(b, COMMA);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // KW_VARIANT identifier BRACE_L (variant-item (COMMA variant-item)* COMMA?)? BRACE_R
-  public static boolean variant(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variant")) return false;
-    if (!nextTokenIs(b, KW_VARIANT)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, VARIANT, null);
-    r = consumeToken(b, KW_VARIANT);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
-    r = p && report_error_(b, variant_3(b, l + 1)) && r;
-    r = p && consumeToken(b, BRACE_R) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  // (variant-item (COMMA variant-item)* COMMA?)?
-  private static boolean variant_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variant_3")) return false;
-    variant_3_0(b, l + 1);
-    return true;
-  }
-
-  // variant-item (COMMA variant-item)* COMMA?
-  private static boolean variant_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variant_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = variant_item(b, l + 1);
-    r = r && variant_3_0_1(b, l + 1);
-    r = r && variant_3_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA variant-item)*
-  private static boolean variant_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variant_3_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!variant_3_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "variant_3_0_1", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA variant-item
-  private static boolean variant_3_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variant_3_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && variant_item(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COMMA?
-  private static boolean variant_3_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variant_3_0_2")) return false;
     consumeToken(b, COMMA);
     return true;
   }
