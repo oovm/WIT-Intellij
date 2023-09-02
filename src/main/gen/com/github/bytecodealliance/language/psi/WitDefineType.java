@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitImportTerms extends PsiElement {
+public interface WitDefineType extends PsiElement {
 
   @Nullable
-  WitFunction getFunction();
+  WitIdentifier getIdentifier();
 
   @Nullable
-  WitIncludeName getIncludeName();
+  WitTypeHint getTypeHint();
 
 }

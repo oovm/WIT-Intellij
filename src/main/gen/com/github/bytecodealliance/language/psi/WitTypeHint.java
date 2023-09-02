@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface WitTypeHint extends PsiElement {
 
   @Nullable
-  WitGeneric getGeneric();
+  WitTypeGeneric getTypeGeneric();
 
-  @NotNull
-  WitIdentifier getIdentifier();
+  @Nullable
+  WitTypeTuple getTypeTuple();
 
 }

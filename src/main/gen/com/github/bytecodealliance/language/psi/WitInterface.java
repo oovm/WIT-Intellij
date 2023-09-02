@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface WitInterface extends PsiElement {
 
   @NotNull
+  List<WitDefineType> getDefineTypeList();
+
+  @NotNull
   List<WitEnum> getEnumList();
 
   @NotNull
@@ -24,9 +27,6 @@ public interface WitInterface extends PsiElement {
 
   @NotNull
   List<WitResource> getResourceList();
-
-  @NotNull
-  List<WitType> getTypeList();
 
   @NotNull
   List<WitUse> getUseList();

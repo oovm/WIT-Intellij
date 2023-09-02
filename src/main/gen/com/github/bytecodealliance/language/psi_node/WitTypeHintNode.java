@@ -29,14 +29,14 @@ public class WitTypeHintNode extends WitElement implements WitTypeHint {
 
   @Override
   @Nullable
-  public WitGeneric getGeneric() {
-    return findChildByClass(WitGeneric.class);
+  public WitTypeGeneric getTypeGeneric() {
+    return findChildByClass(WitTypeGeneric.class);
   }
 
   @Override
-  @NotNull
-  public WitIdentifier getIdentifier() {
-    return findNotNullChildByClass(WitIdentifier.class);
+  @Nullable
+  public WitTypeTuple getTypeTuple() {
+    return findChildByClass(WitTypeTuple.class);
   }
 
 }

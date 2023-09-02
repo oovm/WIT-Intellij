@@ -29,6 +29,12 @@ public class WitInterfaceNode extends MixinInterface implements WitInterface {
 
   @Override
   @NotNull
+  public List<WitDefineType> getDefineTypeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitDefineType.class);
+  }
+
+  @Override
+  @NotNull
   public List<WitEnum> getEnumList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, WitEnum.class);
   }
@@ -61,12 +67,6 @@ public class WitInterfaceNode extends MixinInterface implements WitInterface {
   @NotNull
   public List<WitResource> getResourceList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, WitResource.class);
-  }
-
-  @Override
-  @NotNull
-  public List<WitType> getTypeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitType.class);
   }
 
   @Override

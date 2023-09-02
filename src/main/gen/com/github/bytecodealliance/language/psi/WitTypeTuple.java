@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitxResource extends PsiElement {
+public interface WitTypeTuple extends PsiElement {
 
   @NotNull
-  List<WitxConstructor> getConstructorList();
-
-  @Nullable
-  WitxIdentifier getIdentifier();
-
-  @NotNull
-  List<WitxMethod> getMethodList();
+  List<WitTypeHint> getTypeHintList();
 
 }

@@ -128,6 +128,7 @@ export    ::= KW_EXPORT export-term {
 export-term ::=
     function
   | include-name
+
 //  use wasi:poll/poll.{pollable};
 //  use wasi:io/streams@0.2.0.{input-stream, output-stream};
 use      ::= KW_USE include-name use-items? {
@@ -140,13 +141,13 @@ use-alias ::= identifier (KW_AS alias-name)? {
 
 }
 // interface name { }
-interface ::= KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R {
+interface ::= KW_INTERFACE interface-name? BRACE_L interface-element* BRACE_R {
 	pin = 1
     mixin = "com.github.bytecodealliance.language.mixin.MixinInterface"
 }
 private interface-element ::=
 	use
-  | type
+  | define-type
   | resource
   | record
   | flags
@@ -173,11 +174,12 @@ parameter ::= identifier COLON type-hint {
 
 }
 // type type-name = type-hint;
-type ::= KW_TYPE identifier EQ type-hint {
+define-type ::= KW_TYPE identifier EQ type-hint {
 	pin = 1
 }
-
-type-hint ::= identifier generic?;
+type-hint ::= type-tuple | type-generic;
+type-generic ::= identifier generic?;
+type-tuple ::= PARENTHESIS_L (type-hint (COMMA type-hint)* COMMA?)? PARENTHESIS_R;
 generic   ::= ANGLE_L (type-hint (COMMA type-hint)* COMMA?)? ANGLE_R;
 // resource type-name { method: func() };
 resource  ::= KW_RESOURCE identifier (BRACE_L resource-element* BRACE_R)? {
