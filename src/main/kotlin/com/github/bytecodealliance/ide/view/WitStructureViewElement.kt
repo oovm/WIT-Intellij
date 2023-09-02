@@ -1,6 +1,7 @@
 package com.github.bytecodealliance.ide.view
 
 import com.github.bytecodealliance.language.file.WitFile
+import com.github.bytecodealliance.language.psi.WitDefineInterface
 import com.github.bytecodealliance.language.psi.WitEnum
 import com.github.bytecodealliance.language.psi.WitFlags
 import com.github.bytecodealliance.language.psi.WitInterface
@@ -8,11 +9,11 @@ import com.github.bytecodealliance.language.psi.WitRecord
 import com.github.bytecodealliance.language.psi.WitResource
 import com.github.bytecodealliance.language.psi.WitVariant
 import com.github.bytecodealliance.language.psi.WitWorld
+import com.github.bytecodealliance.language.psi_node.WitDefineInterfaceNode
 import com.github.bytecodealliance.language.psi_node.WitEnumNode
 import com.github.bytecodealliance.language.psi_node.WitExportNode
 import com.github.bytecodealliance.language.psi_node.WitFlagsNode
 import com.github.bytecodealliance.language.psi_node.WitFunctionNode
-import com.github.bytecodealliance.language.psi_node.WitInterfaceNode
 import com.github.bytecodealliance.language.psi_node.WitMethodNode
 import com.github.bytecodealliance.language.psi_node.WitRecordFieldNode
 import com.github.bytecodealliance.language.psi_node.WitRecordNode
@@ -61,7 +62,7 @@ class WitStructureViewElement(private val node: NavigatablePsiElement) :
     override fun getChildren(): Array<out TreeElement> = when (node) {
         is WitFile -> getChildOfType(
             WitWorldNode::class.java,
-            WitInterfaceNode::class.java,
+            WitDefineInterfaceNode::class.java,
         )
         is WitWorld -> getChildOfType(
             WitExportNode::class.java,
