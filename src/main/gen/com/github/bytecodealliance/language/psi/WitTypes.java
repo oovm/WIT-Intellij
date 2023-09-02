@@ -17,7 +17,6 @@ public interface WitTypes {
   IElementType EXPORT_TERM = new WitElementType("EXPORT_TERM");
   IElementType FLAGS = new WitElementType("FLAGS");
   IElementType FUNCTION = new WitElementType("FUNCTION");
-  IElementType FUNCTION_PARAMETERS = new WitElementType("FUNCTION_PARAMETERS");
   IElementType FUNCTION_SIGNATURE = new WitElementType("FUNCTION_SIGNATURE");
   IElementType GENERIC = new WitElementType("GENERIC");
   IElementType IDENTIFIER = new WitElementType("IDENTIFIER");
@@ -28,6 +27,7 @@ public interface WitTypes {
   IElementType INTERFACE_BODY = new WitElementType("INTERFACE_BODY");
   IElementType INTERFACE_NAME = new WitElementType("INTERFACE_NAME");
   IElementType METHOD = new WitElementType("METHOD");
+  IElementType MODIFIER = new WitElementType("MODIFIER");
   IElementType MODULE_NAME = new WitElementType("MODULE_NAME");
   IElementType ORGANIZATION_NAME = new WitElementType("ORGANIZATION_NAME");
   IElementType PACKAGE = new WitElementType("PACKAGE");
@@ -38,9 +38,9 @@ public interface WitTypes {
   IElementType RECORD_FIELD = new WitElementType("RECORD_FIELD");
   IElementType RESOURCE = new WitElementType("RESOURCE");
   IElementType SEMANTIC_NUMBER = new WitElementType("SEMANTIC_NUMBER");
+  IElementType TUPLE = new WitElementType("TUPLE");
   IElementType TYPE_GENERIC = new WitElementType("TYPE_GENERIC");
   IElementType TYPE_HINT = new WitElementType("TYPE_HINT");
-  IElementType TYPE_TUPLE = new WitElementType("TYPE_TUPLE");
   IElementType USE = new WitElementType("USE");
   IElementType USE_ALIAS = new WitElementType("USE_ALIAS");
   IElementType USE_ITEMS = new WitElementType("USE_ITEMS");
@@ -129,9 +129,6 @@ public interface WitTypes {
       else if (type == FUNCTION) {
         return new WitFunctionNode(node);
       }
-      else if (type == FUNCTION_PARAMETERS) {
-        return new WitFunctionParametersNode(node);
-      }
       else if (type == FUNCTION_SIGNATURE) {
         return new WitFunctionSignatureNode(node);
       }
@@ -161,6 +158,9 @@ public interface WitTypes {
       }
       else if (type == METHOD) {
         return new WitMethodNode(node);
+      }
+      else if (type == MODIFIER) {
+        return new WitModifierNode(node);
       }
       else if (type == MODULE_NAME) {
         return new WitModuleNameNode(node);
@@ -192,14 +192,14 @@ public interface WitTypes {
       else if (type == SEMANTIC_NUMBER) {
         return new WitSemanticNumberNode(node);
       }
+      else if (type == TUPLE) {
+        return new WitTupleNode(node);
+      }
       else if (type == TYPE_GENERIC) {
         return new WitTypeGenericNode(node);
       }
       else if (type == TYPE_HINT) {
         return new WitTypeHintNode(node);
-      }
-      else if (type == TYPE_TUPLE) {
-        return new WitTypeTupleNode(node);
       }
       else if (type == USE) {
         return new WitUseNode(node);

@@ -65,8 +65,8 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
         highlight(o.identifier, SYM_FUNCTION)
     }
 
-    override fun visitFunctionSignature(o: WitFunctionSignature) {
-        o.identifier?.let { highlight(it, KEYWORD) }
+    override fun visitModifier(o: WitModifier) {
+        highlight(o, KEYWORD)
     }
 
     override fun visitParameter(o: WitParameter) {

@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface WitFunctionSignature extends PsiElement {
 
   @Nullable
-  WitFunctionParameters getFunctionParameters();
+  WitModifier getModifier();
 
   @Nullable
-  WitIdentifier getIdentifier();
+  WitTuple getTuple();
 
   @Nullable
   WitTypeHint getTypeHint();

@@ -43,10 +43,6 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFunctionParameters(@NotNull WitFunctionParameters o) {
-    visitPsiElement(o);
-  }
-
   public void visitFunctionSignature(@NotNull WitFunctionSignature o) {
     visitPsiElement(o);
   }
@@ -84,6 +80,10 @@ public class WitVisitor extends PsiElementVisitor {
   }
 
   public void visitMethod(@NotNull WitMethod o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModifier(@NotNull WitModifier o) {
     visitPsiElement(o);
   }
 
@@ -127,15 +127,15 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTuple(@NotNull WitTuple o) {
+    visitPsiElement(o);
+  }
+
   public void visitTypeGeneric(@NotNull WitTypeGeneric o) {
     visitPsiElement(o);
   }
 
   public void visitTypeHint(@NotNull WitTypeHint o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTypeTuple(@NotNull WitTypeTuple o) {
     visitPsiElement(o);
   }
 
