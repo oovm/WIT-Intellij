@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface WitWorld extends PsiElement {
 
   @NotNull
+  List<WitDefineType> getDefineTypeList();
+
+  @NotNull
+  List<WitEnum> getEnumList();
+
+  @NotNull
   List<WitExport> getExportList();
 
   @Nullable
@@ -24,6 +30,9 @@ public interface WitWorld extends PsiElement {
 
   @NotNull
   List<WitRecord> getRecordList();
+
+  @NotNull
+  List<WitResource> getResourceList();
 
   @NotNull
   List<WitUse> getUseList();

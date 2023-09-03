@@ -103,8 +103,11 @@ private world-element ::=
   | import
   | export
   | use
+  | define-type
+  | enum
   | variant
   | record
+  | resource
   | SEMICOLON
   | COMMENT_LINE
 // include wasi:keyvalue/imports@0.2.0-draft;

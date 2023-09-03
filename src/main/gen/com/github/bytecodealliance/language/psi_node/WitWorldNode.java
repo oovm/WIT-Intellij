@@ -29,6 +29,18 @@ public class WitWorldNode extends MixinWorld implements WitWorld {
 
   @Override
   @NotNull
+  public List<WitDefineType> getDefineTypeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitDefineType.class);
+  }
+
+  @Override
+  @NotNull
+  public List<WitEnum> getEnumList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitEnum.class);
+  }
+
+  @Override
+  @NotNull
   public List<WitExport> getExportList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, WitExport.class);
   }
@@ -61,6 +73,12 @@ public class WitWorldNode extends MixinWorld implements WitWorld {
   @NotNull
   public List<WitRecord> getRecordList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, WitRecord.class);
+  }
+
+  @Override
+  @NotNull
+  public List<WitResource> getResourceList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitResource.class);
   }
 
   @Override
