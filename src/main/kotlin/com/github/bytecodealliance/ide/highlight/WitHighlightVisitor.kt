@@ -17,6 +17,7 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
 
     override fun visitUseAlias(o: WitUseAlias) {
         highlight(o.identifier, SYM_TYPE)
+        o.aliasName?.let { highlight(it, SYM_TYPE) }
     }
 
 
@@ -80,11 +81,11 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
 
     override fun visitTypeGeneric(o: WitTypeGeneric) {
         when (o.identifier.text) {
-            "_", "bool",
+            "_", "bool", "char",
             "u8", "u16", "u32", "u64",
             "s8", "s16", "s32", "s64",
             "f32", "f64", "float32", "float64",
-            "string",
+            "string"
             -> {
                 highlight(o.identifier, KEYWORD)
             }
