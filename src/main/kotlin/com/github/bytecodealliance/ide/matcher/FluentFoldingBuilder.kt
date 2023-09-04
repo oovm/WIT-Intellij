@@ -16,14 +16,11 @@ class FluentFoldingBuilder : CustomFoldingBuilder(), DumbAware {
         descriptors: MutableList<FoldingDescriptor>,
         root: PsiElement,
         document: Document,
-        quick: Boolean
+        quick: Boolean,
     ) {
         if (root !is WitFile) return
         val visitor = WitFoldingVisitor(descriptors)
-        PsiTreeUtil.processElements(root) {
-            it.accept(visitor);
-            true
-        }
+        PsiTreeUtil.processElements(root) { it.accept(visitor); true }
     }
 
     override fun getLanguagePlaceholderText(node: ASTNode, range: TextRange) =

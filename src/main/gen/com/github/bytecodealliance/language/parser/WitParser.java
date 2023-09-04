@@ -49,7 +49,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_CONSTRUCTOR tuple
+  // KW_CONSTRUCTOR tuple (TO type-hint)?
   public static boolean constructor(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constructor")) return false;
     if (!nextTokenIs(b, KW_CONSTRUCTOR)) return false;
@@ -57,9 +57,28 @@ public class WitParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, CONSTRUCTOR, null);
     r = consumeToken(b, KW_CONSTRUCTOR);
     p = r; // pin = 1
-    r = r && tuple(b, l + 1);
+    r = r && report_error_(b, tuple(b, l + 1));
+    r = p && constructor_2(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // (TO type-hint)?
+  private static boolean constructor_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "constructor_2")) return false;
+    constructor_2_0(b, l + 1);
+    return true;
+  }
+
+  // TO type-hint
+  private static boolean constructor_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "constructor_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, TO);
+    r = r && type_hint(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */

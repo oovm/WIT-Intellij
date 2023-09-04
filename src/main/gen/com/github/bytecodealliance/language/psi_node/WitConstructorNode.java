@@ -33,4 +33,10 @@ public class WitConstructorNode extends WitElement implements WitConstructor {
     return findChildByClass(WitTuple.class);
   }
 
+  @Override
+  @Nullable
+  public WitTypeHint getTypeHint() {
+    return findChildByClass(WitTypeHint.class);
+  }
+
 }

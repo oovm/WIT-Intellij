@@ -170,7 +170,7 @@ private interface-element ::=
 method ::= identifier COLON function-signature {
 	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
 }
-constructor ::= KW_CONSTRUCTOR tuple {
+constructor ::= KW_CONSTRUCTOR tuple (TO type-hint)? {
 	pin = 1
 }
 function ::= identifier COLON function-signature {

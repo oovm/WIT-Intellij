@@ -10,4 +10,7 @@ public interface WitConstructor extends PsiElement {
   @Nullable
   WitTuple getTuple();
 
+  @Nullable
+  WitTypeHint getTypeHint();
+
 }
