@@ -22,7 +22,7 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
-object WitParserDefinitionX : ParserDefinition {
+class WitParserDefinitionX : ParserDefinition {
     fun createLexer(): Lexer = FlexAdapter(_WitxLexer(null))
     override fun createLexer(project: Project): Lexer = FlexAdapter(_WitxLexer(null))
     override fun createParser(project: Project): PsiParser = WitxParser()

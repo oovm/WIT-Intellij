@@ -14,7 +14,7 @@ class WitFileType private constructor() : LanguageFileType(WitLanguage) {
 
     override fun getDefaultExtension(): String = "wit;"
 
-    override fun getIcon(): Icon = IconProvider.FILE
+    override fun getIcon(): Icon = WasmIconProvider.Wit
 
     companion object {
         @JvmStatic
@@ -30,7 +30,7 @@ class WitFileTypeX private constructor() : LanguageFileType(WitxLanguage) {
 
     override fun getDefaultExtension(): String = "witx;"
 
-    override fun getIcon(): Icon = IconProvider.FILE
+    override fun getIcon(): Icon = WasmIconProvider.Wit
 
     companion object {
         @JvmStatic

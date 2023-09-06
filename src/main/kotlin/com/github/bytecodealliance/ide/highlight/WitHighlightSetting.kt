@@ -1,7 +1,7 @@
 package com.github.bytecodealliance.ide.highlight
 
 import com.github.bytecodealliance.MessageBundle
-import com.github.bytecodealliance.language.file.IconProvider
+import com.github.bytecodealliance.language.file.WasmIconProvider
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 
@@ -19,7 +19,7 @@ class WitHighlightSetting : ColorSettingsPage {
 
     override fun getDisplayName() = MessageBundle.message("filetype.name")
 
-    override fun getIcon() = IconProvider.FILE
+    override fun getIcon() = WasmIconProvider.Wit
 
     override fun getHighlighter() = WitSyntaxHighlighter()
 

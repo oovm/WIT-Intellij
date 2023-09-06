@@ -18,7 +18,7 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
-object WitParserDefinition : ParserDefinition {
+class WitParserDefinition : ParserDefinition {
     fun createLexer(): Lexer = FlexAdapter(_WitLexer(null))
     override fun createLexer(project: Project): Lexer = FlexAdapter(_WitLexer(null))
     override fun createParser(project: Project): PsiParser = WitParser()
@@ -33,8 +33,6 @@ object WitParserDefinition : ParserDefinition {
     override fun spaceExistenceTypeBetweenTokens(left: ASTNode, right: ASTNode): ParserDefinition.SpaceRequirements {
         return ParserDefinition.SpaceRequirements.MAY
     }
+
 }
-
-
-
 

@@ -11,7 +11,7 @@ import com.intellij.psi.tree.IElementType
 
 class WitSyntaxHighlighter : SyntaxHighlighterBase() {
     override fun getHighlightingLexer(): Lexer {
-        return WitParserDefinition.createLexer()
+        return WitParserDefinition().createLexer()
     }
 
     override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> {
@@ -50,5 +50,6 @@ class WitSyntaxHighlighter : SyntaxHighlighterBase() {
             else -> null
         }
     }
+
 }
 
