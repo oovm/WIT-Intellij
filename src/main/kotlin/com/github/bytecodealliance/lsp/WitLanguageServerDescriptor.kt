@@ -7,10 +7,12 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.platform.lsp.api.ProjectWideLspServerDescriptor
 
 class WitLanguageServerDescriptor : ProjectWideLspServerDescriptor {
+    override val lspServerListener = WitLanguageServerListener()
+
     constructor(project: Project) : super(project, "wit-lsp")
 
     override fun isSupportedFile(file: VirtualFile): Boolean {
-       return file.fileType is WitFileType
+        return file.fileType is WitFileType
     }
 
     override fun createCommandLine(): GeneralCommandLine {

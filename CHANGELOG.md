@@ -2,6 +2,10 @@
 
 # Wit-Intellij Changelog
 
+## [0.1.0]
+### Added
+- Support wit language server protocol
+
 ## [0.0.5]
 ### Update
 - support default `world`
