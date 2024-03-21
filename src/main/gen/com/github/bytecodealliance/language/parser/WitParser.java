@@ -49,6 +49,20 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // KW_CONSTRUCTOR function-parameters
+  public static boolean constructor(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "constructor")) return false;
+    if (!nextTokenIs(b, KW_CONSTRUCTOR)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, CONSTRUCTOR, null);
+    r = consumeToken(b, KW_CONSTRUCTOR);
+    p = r; // pin = 1
+    r = r && function_parameters(b, l + 1);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
   // KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R
   public static boolean enum_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_$")) return false;
@@ -759,11 +773,13 @@ public class WitParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // method
+  //   | constructor
   //   | SEMICOLON
   static boolean resource_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "resource_element")) return false;
     boolean r;
     r = method(b, l + 1);
+    if (!r) r = constructor(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     return r;
   }
