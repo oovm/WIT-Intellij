@@ -9,6 +9,7 @@ import com.github.bytecodealliance.language.psi_node.*;
 public interface WitTypes {
 
   IElementType ALIAS_NAME = new WitElementType("ALIAS_NAME");
+  IElementType CONSTRUCTOR = new WitElementType("CONSTRUCTOR");
   IElementType ENUM = new WitElementType("ENUM");
   IElementType EXPORT = new WitElementType("EXPORT");
   IElementType FLAGS = new WitElementType("FLAGS");
@@ -61,6 +62,7 @@ public interface WitTypes {
   IElementType ESCAPED = new WitTokenType("ESCAPED");
   IElementType HYPHEN = new WitTokenType("-");
   IElementType KW_AS = new WitTokenType("as");
+  IElementType KW_CONSTRUCTOR = new WitTokenType("constructor");
   IElementType KW_ENUM = new WitTokenType("enum");
   IElementType KW_EXPORT = new WitTokenType("export");
   IElementType KW_FLAGS = new WitTokenType("flags");
@@ -95,6 +97,9 @@ public interface WitTypes {
       IElementType type = node.getElementType();
       if (type == ALIAS_NAME) {
         return new WitAliasNameNode(node);
+      }
+      else if (type == CONSTRUCTOR) {
+        return new WitConstructorNode(node);
       }
       else if (type == ENUM) {
         return new WitEnumNode(node);
