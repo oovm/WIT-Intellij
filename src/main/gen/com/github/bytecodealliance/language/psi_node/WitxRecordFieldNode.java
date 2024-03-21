@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.bytecodealliance.language.psi.WitxTypes.*;
-import com.github.bytecodealliance.language.mixin.MixinField;
+import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitxRecordFieldNode extends MixinField implements WitxRecordField {
+public class WitxRecordFieldNode extends WitElement implements WitxRecordField {
 
   public WitxRecordFieldNode(@NotNull ASTNode node) {
     super(node);

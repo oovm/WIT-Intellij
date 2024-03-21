@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.bytecodealliance.language.psi.WitxTypes.*;
-import com.github.bytecodealliance.language.mixin.MixinInterface;
+import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitxInterfaceNode extends MixinInterface implements WitxInterface {
+public class WitxInterfaceNode extends WitElement implements WitxInterface {
 
   public WitxInterfaceNode(@NotNull ASTNode node) {
     super(node);
