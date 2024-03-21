@@ -40,11 +40,11 @@
 		/>
 		<lang.commenter
 				language="wit"
-				implementationClass="com.github.bytecodealliance.ide.formatter.JssCommenter"
+				implementationClass="com.github.bytecodealliance.ide.formatter.WitCommenter"
 		/>
 		<lang.smartEnterProcessor
 				language="wit"
-				implementationClass="com.github.bytecodealliance.ide.formatter.JssSmartEnter"
+				implementationClass="com.github.bytecodealliance.ide.formatter.WitSmartEnter"
 		/>
 		<!-- Document -->
 
