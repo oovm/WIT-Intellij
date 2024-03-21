@@ -36,6 +36,19 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // SYMBOL | ESCAPED
+  public static boolean alias_name(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "alias_name")) return false;
+    if (!nextTokenIs(b, "<alias name>", ESCAPED, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ALIAS_NAME, "<alias name>");
+    r = consumeToken(b, SYMBOL);
+    if (!r) r = consumeToken(b, ESCAPED);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R
   public static boolean enum_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_$")) return false;
@@ -195,51 +208,51 @@ public class WitParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R
-  static boolean function_items(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_items")) return false;
+  public static boolean function_parameters(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_parameters")) return false;
     if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, PARENTHESIS_L);
-    r = r && function_items_1(b, l + 1);
+    r = r && function_parameters_1(b, l + 1);
     r = r && consumeToken(b, PARENTHESIS_R);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, FUNCTION_PARAMETERS, r);
     return r;
   }
 
   // (parameter (COMMA parameter)* COMMA?)?
-  private static boolean function_items_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_items_1")) return false;
-    function_items_1_0(b, l + 1);
+  private static boolean function_parameters_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_parameters_1")) return false;
+    function_parameters_1_0(b, l + 1);
     return true;
   }
 
   // parameter (COMMA parameter)* COMMA?
-  private static boolean function_items_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_items_1_0")) return false;
+  private static boolean function_parameters_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_parameters_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = parameter(b, l + 1);
-    r = r && function_items_1_0_1(b, l + 1);
-    r = r && function_items_1_0_2(b, l + 1);
+    r = r && function_parameters_1_0_1(b, l + 1);
+    r = r && function_parameters_1_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (COMMA parameter)*
-  private static boolean function_items_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_items_1_0_1")) return false;
+  private static boolean function_parameters_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_parameters_1_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!function_items_1_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "function_items_1_0_1", c)) break;
+      if (!function_parameters_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "function_parameters_1_0_1", c)) break;
     }
     return true;
   }
 
   // COMMA parameter
-  private static boolean function_items_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_items_1_0_1_0")) return false;
+  private static boolean function_parameters_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_parameters_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
@@ -249,14 +262,14 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   // COMMA?
-  private static boolean function_items_1_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "function_items_1_0_2")) return false;
+  private static boolean function_parameters_1_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function_parameters_1_0_2")) return false;
     consumeToken(b, COMMA);
     return true;
   }
 
   /* ********************************************************** */
-  // identifier? KW_FUNCTION function-items (TO type-hint)?
+  // identifier? KW_FUNCTION function-parameters (TO type-hint)?
   public static boolean function_signature(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_signature")) return false;
     boolean r, p;
@@ -264,7 +277,7 @@ public class WitParser implements PsiParser, LightPsiParser {
     r = function_signature_0(b, l + 1);
     r = r && consumeToken(b, KW_FUNCTION);
     p = r; // pin = 2
-    r = r && report_error_(b, function_items(b, l + 1));
+    r = r && report_error_(b, function_parameters(b, l + 1));
     r = p && function_signature_3(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -844,7 +857,46 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOT BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R
+  // identifier (KW_AS alias-name)? {
+  // }
+  public static boolean use_alias(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "use_alias")) return false;
+    if (!nextTokenIs(b, "<use alias>", ESCAPED, SYMBOL)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, USE_ALIAS, "<use alias>");
+    r = identifier(b, l + 1);
+    r = r && use_alias_1(b, l + 1);
+    r = r && use_alias_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // (KW_AS alias-name)?
+  private static boolean use_alias_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "use_alias_1")) return false;
+    use_alias_1_0(b, l + 1);
+    return true;
+  }
+
+  // KW_AS alias-name
+  private static boolean use_alias_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "use_alias_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, KW_AS);
+    r = r && alias_name(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // {
+  // }
+  private static boolean use_alias_2(PsiBuilder b, int l) {
+    return true;
+  }
+
+  /* ********************************************************** */
+  // DOT BRACE_L (use-alias (COMMA use-alias)* COMMA?)? BRACE_R
   public static boolean use_items(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_items")) return false;
     if (!nextTokenIs(b, DOT)) return false;
@@ -858,26 +910,26 @@ public class WitParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // (identifier (COMMA identifier)* COMMA?)?
+  // (use-alias (COMMA use-alias)* COMMA?)?
   private static boolean use_items_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_items_2")) return false;
     use_items_2_0(b, l + 1);
     return true;
   }
 
-  // identifier (COMMA identifier)* COMMA?
+  // use-alias (COMMA use-alias)* COMMA?
   private static boolean use_items_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_items_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
+    r = use_alias(b, l + 1);
     r = r && use_items_2_0_1(b, l + 1);
     r = r && use_items_2_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (COMMA identifier)*
+  // (COMMA use-alias)*
   private static boolean use_items_2_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_items_2_0_1")) return false;
     while (true) {
@@ -888,13 +940,13 @@ public class WitParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // COMMA identifier
+  // COMMA use-alias
   private static boolean use_items_2_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_items_2_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
-    r = r && identifier(b, l + 1);
+    r = r && use_alias(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }

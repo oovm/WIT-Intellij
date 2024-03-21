@@ -8,10 +8,12 @@ import com.github.bytecodealliance.language.psi_node.*;
 
 public interface WitTypes {
 
+  IElementType ALIAS_NAME = new WitElementType("ALIAS_NAME");
   IElementType ENUM = new WitElementType("ENUM");
   IElementType EXPORT = new WitElementType("EXPORT");
   IElementType FLAGS = new WitElementType("FLAGS");
   IElementType FUNCTION = new WitElementType("FUNCTION");
+  IElementType FUNCTION_PARAMETERS = new WitElementType("FUNCTION_PARAMETERS");
   IElementType FUNCTION_SIGNATURE = new WitElementType("FUNCTION_SIGNATURE");
   IElementType GENERIC = new WitElementType("GENERIC");
   IElementType IDENTIFIER = new WitElementType("IDENTIFIER");
@@ -33,6 +35,7 @@ public interface WitTypes {
   IElementType TYPE = new WitElementType("TYPE");
   IElementType TYPE_HINT = new WitElementType("TYPE_HINT");
   IElementType USE = new WitElementType("USE");
+  IElementType USE_ALIAS = new WitElementType("USE_ALIAS");
   IElementType USE_ITEMS = new WitElementType("USE_ITEMS");
   IElementType VARIANT = new WitElementType("VARIANT");
   IElementType VARIANT_ITEM = new WitElementType("VARIANT_ITEM");
@@ -57,6 +60,7 @@ public interface WitTypes {
   IElementType EQ = new WitTokenType("=");
   IElementType ESCAPED = new WitTokenType("ESCAPED");
   IElementType HYPHEN = new WitTokenType("-");
+  IElementType KW_AS = new WitTokenType("as");
   IElementType KW_ENUM = new WitTokenType("enum");
   IElementType KW_EXPORT = new WitTokenType("export");
   IElementType KW_FLAGS = new WitTokenType("flags");
@@ -89,7 +93,10 @@ public interface WitTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ENUM) {
+      if (type == ALIAS_NAME) {
+        return new WitAliasNameNode(node);
+      }
+      else if (type == ENUM) {
         return new WitEnumNode(node);
       }
       else if (type == EXPORT) {
@@ -100,6 +107,9 @@ public interface WitTypes {
       }
       else if (type == FUNCTION) {
         return new WitFunctionNode(node);
+      }
+      else if (type == FUNCTION_PARAMETERS) {
+        return new WitFunctionParametersNode(node);
       }
       else if (type == FUNCTION_SIGNATURE) {
         return new WitFunctionSignatureNode(node);
@@ -163,6 +173,9 @@ public interface WitTypes {
       }
       else if (type == USE) {
         return new WitUseNode(node);
+      }
+      else if (type == USE_ALIAS) {
+        return new WitUseAliasNode(node);
       }
       else if (type == USE_ITEMS) {
         return new WitUseItemsNode(node);

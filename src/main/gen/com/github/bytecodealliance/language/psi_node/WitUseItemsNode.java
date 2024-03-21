@@ -29,8 +29,8 @@ public class WitUseItemsNode extends WitElement implements WitUseItems {
 
   @Override
   @NotNull
-  public List<WitIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitIdentifier.class);
+  public List<WitUseAlias> getUseAliasList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WitUseAlias.class);
   }
 
 }
