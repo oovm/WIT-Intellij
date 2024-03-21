@@ -524,7 +524,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // use
-  //   | type
+  //   | typename
   //   | resource
   //   | record
   //   | flags
@@ -536,7 +536,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "interface_element")) return false;
     boolean r;
     r = use(b, l + 1);
-    if (!r) r = type(b, l + 1);
+    if (!r) r = typename(b, l + 1);
     if (!r) r = resource(b, l + 1);
     if (!r) r = record(b, l + 1);
     if (!r) r = flags(b, l + 1);
@@ -828,7 +828,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // package
+  // typename
   //   | world
   //   | include
   //   | interface
@@ -836,7 +836,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
   static boolean statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statements")) return false;
     boolean r;
-    r = package_$(b, l + 1);
+    r = typename(b, l + 1);
     if (!r) r = world(b, l + 1);
     if (!r) r = include(b, l + 1);
     if (!r) r = interface_$(b, l + 1);
@@ -845,19 +845,16 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_TYPE identifier EQ type-hint
-  public static boolean type(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type")) return false;
-    if (!nextTokenIs(b, KW_TYPE)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, TYPE, null);
-    r = consumeToken(b, KW_TYPE);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, EQ)) && r;
-    r = p && type_hint(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+  // identifier
+  //   | record
+  //   | enum
+  static boolean type_element(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_element")) return false;
+    boolean r;
+    r = identifier(b, l + 1);
+    if (!r) r = record(b, l + 1);
+    if (!r) r = enum_$(b, l + 1);
+    return r;
   }
 
   /* ********************************************************** */
@@ -878,6 +875,22 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "type_hint_1")) return false;
     generic(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // PARENTHESIS_L KW_TYPE identifier type-element PARENTHESIS_R
+  public static boolean typename(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "typename")) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TYPENAME, null);
+    r = consumeTokens(b, 1, PARENTHESIS_L, KW_TYPE);
+    p = r; // pin = 1
+    r = r && report_error_(b, identifier(b, l + 1));
+    r = p && report_error_(b, type_element(b, l + 1)) && r;
+    r = p && consumeToken(b, PARENTHESIS_R) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */

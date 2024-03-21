@@ -2,7 +2,7 @@ package com.github.bytecodealliance.language.psi
 
 
 import com.github.bytecodealliance.WitLanguage
-import com.github.bytecodealliance.language.file.FluentFile
+import com.github.bytecodealliance.language.file.WitFile
 import com.github.bytecodealliance.language.parser.WitParser
 
 import com.intellij.lang.ASTNode
@@ -26,7 +26,7 @@ object WitParserDefinition : ParserDefinition {
     override fun getStringLiteralElements(): TokenSet = TokenSet.create()
     override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
     override fun createElement(node: ASTNode): PsiElement = WitTypes.Factory.createElement(node)
-    override fun createFile(viewProvider: FileViewProvider): PsiFile = FluentFile(viewProvider)
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = WitFile(viewProvider)
     override fun spaceExistenceTypeBetweenTokens(left: ASTNode, right: ASTNode): ParserDefinition.SpaceRequirements {
         return ParserDefinition.SpaceRequirements.MAY
     }

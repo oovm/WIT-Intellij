@@ -107,11 +107,11 @@ public class WitxVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitType(@NotNull WitxType o) {
+  public void visitTypeHint(@NotNull WitxTypeHint o) {
     visitPsiElement(o);
   }
 
-  public void visitTypeHint(@NotNull WitxTypeHint o) {
+  public void visitTypename(@NotNull WitxTypename o) {
     visitPsiElement(o);
   }
 

@@ -25,12 +25,12 @@ import static com.github.bytecodealliance.language.psi.WitxTypes.*;
 //%state TextContextIndent
 
 WHITE_SPACE      = [\s\t]
-COMMENT_LINE     = [/]{2}[^\r\n]*
+COMMENT_LINE     = ;{2}[^\r\n]*
 COMMENT_BLOCK    = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
 VERSION = ([0-9]+)(\.[0-9]+)(\.[0-9]+)(-[a-zA-Z0-9\-]+)?
 ESCAPED = %[a-zA-Z0-9]+
-SYMBOL = _|{WORD}([-]{WORD})*
+SYMBOL = \$[a-zA-Z0-9]+
 WORD = [a-zA-Z][a-zA-Z0-9]*
 //STRING=\"([^\"\\]|\\.)*\"
 INTEGER=(0|[1-9][0-9_]*)
@@ -47,7 +47,7 @@ KW_EXPORT      = "export"
 KW_IMPORT      = "import"
 KW_USE         = "use"
 KW_AS          = "as"
-KW_TYPE        = "type"
+KW_TYPE        = "typename"
 KW_RESOURCE    = "resource"
 KW_RECORD      = "record"
 KW_ENUM        = "enum"
@@ -61,7 +61,6 @@ KW_CONSTRUCTOR = "constructor"
 <YYINITIAL> {
     {WHITE_SPACE}+     { return WHITE_SPACE; }
 	{COMMENT_LINE}     { return COMMENT_LINE; }
-	{COMMENT_BLOCK}    { return COMMENT_BLOCK; }
 }
 
 <YYINITIAL> {
