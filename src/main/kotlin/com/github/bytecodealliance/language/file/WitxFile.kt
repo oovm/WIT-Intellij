@@ -7,7 +7,7 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
 
 class WitxFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, WitxLanguage) {
-    override fun getFileType(): FileType = WitxFileType.INSTANCE
+    override fun getFileType(): FileType = WitFileTypeX.INSTANCE
 
     override fun toString(): String = MessageBundle.message("action.create_file")
 }

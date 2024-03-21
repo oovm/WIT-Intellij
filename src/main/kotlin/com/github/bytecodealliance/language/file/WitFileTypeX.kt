@@ -5,7 +5,7 @@ import com.github.bytecodealliance.WitxLanguage
 import com.intellij.openapi.fileTypes.LanguageFileType
 import javax.swing.Icon
 
-class WitxFileType private constructor() : LanguageFileType(WitxLanguage) {
+class WitFileTypeX private constructor() : LanguageFileType(WitxLanguage) {
 
     override fun getName(): String = WitxLanguage.id
 
@@ -17,6 +17,6 @@ class WitxFileType private constructor() : LanguageFileType(WitxLanguage) {
 
     companion object {
         @JvmStatic
-        val INSTANCE = WitxFileType()
+        val INSTANCE = WitFileTypeX()
     }
 }

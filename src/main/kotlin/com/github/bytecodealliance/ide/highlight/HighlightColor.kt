@@ -10,7 +10,7 @@ import com.intellij.openapi.util.NlsContexts.AttributeDescriptor
 import java.util.function.Supplier
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as Default
 
-enum class WitHighlightColor(humanName: Supplier<@AttributeDescriptor String>, default: TextAttributesKey? = null) {
+enum class HighlightColor(humanName: Supplier<@AttributeDescriptor String>, default: TextAttributesKey? = null) {
     // 特殊关键词
     KEYWORD(OptionsBundle.messagePointer("options.language.defaults.keyword"), Default.KEYWORD),
     // 字面量

@@ -1,10 +1,11 @@
 package com.github.bytecodealliance.language.psi
 
-
-import com.github.bytecodealliance.WitLanguage
-import com.github.bytecodealliance.language._WitLexer
+import com.github.bytecodealliance.WitxLanguage
+import com.github.bytecodealliance.language._WitxLexer
 import com.github.bytecodealliance.language.file.WitFile
+import com.github.bytecodealliance.language.file.WitxFile
 import com.github.bytecodealliance.language.parser.WitParser
+import com.github.bytecodealliance.language.parser.WitxParser
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.lang.PsiParser
@@ -18,25 +19,21 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
-private class Adapter : FlexAdapter(_WitLexer(null))
 
-object WitParserDefinition : ParserDefinition {
-    fun createLexer(): Lexer = Adapter()
-    override fun createLexer(project: Project): Lexer = Adapter()
-    override fun createParser(project: Project): PsiParser = WitParser()
-    override fun getFileNodeType(): IFileElementType = IFileElementType(WitLanguage)
-    override fun getCommentTokens(): TokenSet =
-        TokenSet.create(WitTypes.COMMENT_LINE, WitTypes.COMMENT_DOCUMENT, WitTypes.COMMENT_BLOCK)
+object WitParserDefinitionX : ParserDefinition {
+    fun createLexer(): Lexer = FlexAdapter(_WitxLexer(null))
+    override fun createLexer(project: Project): Lexer = FlexAdapter(_WitxLexer(null))
+    override fun createParser(project: Project): PsiParser = WitxParser()
+    override fun getFileNodeType(): IFileElementType = IFileElementType(WitxLanguage)
+    override fun getCommentTokens(): TokenSet = TokenSet.create(
+        WitxTypes.COMMENT_LINE, WitxTypes.COMMENT_DOCUMENT, WitxTypes.COMMENT_BLOCK
+    )
 
     override fun getStringLiteralElements(): TokenSet = TokenSet.create()
     override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
-    override fun createElement(node: ASTNode): PsiElement = WitTypes.Factory.createElement(node)
-    override fun createFile(viewProvider: FileViewProvider): PsiFile = WitFile(viewProvider)
+    override fun createElement(node: ASTNode): PsiElement = WitxTypes.Factory.createElement(node)
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = WitxFile(viewProvider)
     override fun spaceExistenceTypeBetweenTokens(left: ASTNode, right: ASTNode): ParserDefinition.SpaceRequirements {
         return ParserDefinition.SpaceRequirements.MAY
     }
 }
-
-
-
-

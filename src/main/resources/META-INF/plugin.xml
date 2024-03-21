@@ -5,7 +5,7 @@
 	<!-- Product and plugin compatibility requirements -->
 	<!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
-<!--	<depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
+	<!--	<depends optional="true" config-file="plugin-with-rust.xml">org.rust.lang</depends>-->
 	<resource-bundle>messages.WitBundle</resource-bundle>
 	<extensions defaultExtensionNs="com.intellij">
 		<fileType
@@ -15,9 +15,20 @@
 				implementationClass="com.github.bytecodealliance.language.file.WitFileType"
 				fieldName="INSTANCE"
 		/>
+		<fileType
+				name="witx"
+				language="witx"
+				extensions="witx;"
+				implementationClass="com.github.bytecodealliance.language.file.WitFileTypeX"
+				fieldName="INSTANCE"
+		/>
 		<lang.parserDefinition
 				language="wit"
 				implementationClass="com.github.bytecodealliance.language.psi.WitParserDefinition"
+		/>
+		<lang.parserDefinition
+				language="witx"
+				implementationClass="com.github.bytecodealliance.language.psi.WitParserDefinitionX"
 		/>
 		<!-- StructureView -->
 		<!--iconProvider implementation="com.github.bytecodealliance.ide.file.FluentIconProvider"-->
@@ -32,6 +43,10 @@
 		<lang.syntaxHighlighter
 				language="wit"
 				implementationClass="com.github.bytecodealliance.ide.highlight.WitSyntaxHighlighter"
+		/>
+		<lang.syntaxHighlighter
+				language="witx"
+				implementationClass="com.github.bytecodealliance.ide.highlight.WitSyntaxHighlighterX"
 		/>
 		<!-- Formatter -->
 		<lang.formatter
