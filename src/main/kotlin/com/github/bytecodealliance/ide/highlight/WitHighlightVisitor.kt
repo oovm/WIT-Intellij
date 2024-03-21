@@ -15,8 +15,8 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
 
 
-    override fun visitUseItems(o: WitUseItems) {
-        o.identifierList.forEach { highlight(it, SYM_TYPE) }
+    override fun visitUseAlias(o: WitUseAlias) {
+        highlight(o.identifier, SYM_TYPE)
     }
 
 

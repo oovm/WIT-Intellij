@@ -36,12 +36,7 @@ WORD = [a-zA-Z][a-zA-Z0-9]*
 INTEGER=(0|[1-9][0-9_]*)
 DECIMAL=([0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 
-TEXT_LINE_HEAD = [^\r\n\s\t{}][^\r\n{}]*
-TEXT_LINE = [^\r\n{}]+
 CRLF      = \r\n | \n | \r
-
-ESCAPE_SPECIAL= \\[^]
-ESCAPE_UNICODE= \\(u{HEX}{4}|U{HEX}{6})
 HEX = [0-9a-fA-F]
 
 KW_PACKAGE    = "package"
@@ -51,6 +46,7 @@ KW_INCLUDE    = "include"
 KW_EXPORT     = "export"
 KW_IMPORT     = "import"
 KW_USE        = "use"
+KW_AS         = "as"
 KW_TYPE       = "type"
 KW_RESOURCE   = "resource"
 KW_RECORD     = "record"
@@ -65,7 +61,6 @@ KW_FUNCTION   = "func"
 
 <YYINITIAL> {
     {WHITE_SPACE}+     { return WHITE_SPACE; }
-	{COMMENT_DOCUMENT} { return COMMENT_DOCUMENT; }
 	{COMMENT_LINE}     { return COMMENT_LINE; }
 	{COMMENT_BLOCK}    { return COMMENT_BLOCK; }
 }
@@ -98,18 +93,18 @@ KW_FUNCTION   = "func"
 
 	{KW_INCLUDE}   { return KW_INCLUDE; }
 	{KW_USE}       { return KW_USE; }
+	{KW_AS}        { return KW_AS; }
+	{KW_IMPORT}    { return KW_IMPORT; }
+	{KW_EXPORT}    { return KW_EXPORT; }
 
-	{KW_IMPORT}   { return KW_IMPORT; }
-	{KW_EXPORT}   { return KW_EXPORT; }
+	{KW_TYPE}      { return KW_TYPE; }
+	{KW_RESOURCE}  { return KW_RESOURCE; }
+	{KW_RECORD}    { return KW_RECORD; }
+	{KW_ENUM}      { return KW_ENUM; }
+	{KW_FLAGS}     { return KW_FLAGS; }
+	{KW_VARIANT}   { return KW_VARIANT; }
 
-	{KW_TYPE}     { return KW_TYPE; }
-	{KW_RESOURCE} { return KW_RESOURCE; }
-	{KW_RECORD}   { return KW_RECORD; }
-	{KW_ENUM}     { return KW_ENUM; }
-	{KW_FLAGS}    { return KW_FLAGS; }
-	{KW_VARIANT}  { return KW_VARIANT; }
-
-	{KW_FUNCTION} { return KW_FUNCTION; }
+	{KW_FUNCTION}  { return KW_FUNCTION; }
 
 	{VERSION}      { return VERSION; }
     {ESCAPED}      { return ESCAPED; }

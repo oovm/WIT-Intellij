@@ -4,6 +4,8 @@ import com.github.bytecodealliance.language.ast.computeSpacing
 import com.github.bytecodealliance.language.ast.isWhitespaceOrEmpty
 import com.github.bytecodealliance.language.psi.WitEnum
 import com.github.bytecodealliance.language.psi.WitFlags
+import com.github.bytecodealliance.language.psi.WitFunctionParameters
+import com.github.bytecodealliance.language.psi.WitFunctionSignature
 import com.github.bytecodealliance.language.psi.WitInterface
 import com.github.bytecodealliance.language.psi.WitRecord
 import com.github.bytecodealliance.language.psi.WitResource
@@ -79,6 +81,7 @@ class FormatBlock(
             is WitFlags -> node.indentInRange(child, 1, 1)
             is WitEnum -> node.indentInRange(child, 1, 1)
             is WitVariant -> node.indentInRange(child, 1, 1)
+            is WitFunctionParameters -> node.indentInRange(child, 1, 1)
             else -> Indent.getNoneIndent()
         }
     }

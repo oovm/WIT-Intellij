@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface WitUseItems extends PsiElement {
 
   @NotNull
-  List<WitIdentifier> getIdentifierList();
+  List<WitUseAlias> getUseAliasList();
 
 }

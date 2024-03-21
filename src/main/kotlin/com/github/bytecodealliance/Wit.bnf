@@ -36,6 +36,7 @@
 		KW_EXPORT     = "export"
 		KW_IMPORT     = "import"
 		KW_USE        = "use"
+		KW_AS         = "as"
 		KW_TYPE       = "type"
 		KW_RESOURCE   = "resource"
 		KW_RECORD     = "record"
@@ -120,8 +121,11 @@ export    ::= KW_EXPORT interface-name {
 use      ::= KW_USE include-name use-items? {
 	pin = 1
 }
-use-items ::= DOT BRACE_L (identifier (COMMA identifier)* COMMA?)? BRACE_R {
+use-items ::= DOT BRACE_L (use-alias (COMMA use-alias)* COMMA?)? BRACE_R {
 	pin = 1
+}
+use-alias ::= identifier (KW_AS alias-name)? {
+
 }
 // interface name { }
 interface ::= KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R {
@@ -145,10 +149,10 @@ function ::= identifier COLON function-signature {
 method ::= identifier COLON function-signature {
 	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
 }
-function-signature ::= identifier? KW_FUNCTION function-items (TO type-hint)? {
+function-signature ::= identifier? KW_FUNCTION function-parameters (TO type-hint)? {
 	pin = 2
 }
-private function-items ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R;
+function-parameters ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R;
 parameter ::= identifier COLON type-hint {
 
 }
@@ -204,5 +208,6 @@ variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)? {
 organization-name   ::= SYMBOL | ESCAPED;
 module-name         ::= SYMBOL | ESCAPED;
 interface-name      ::= SYMBOL | ESCAPED;
+alias-name          ::= SYMBOL | ESCAPED;
 semantic-number     ::= SYMBOL | ESCAPED;
 identifier          ::= SYMBOL | ESCAPED;
