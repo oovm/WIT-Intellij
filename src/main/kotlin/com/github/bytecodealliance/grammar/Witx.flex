@@ -75,7 +75,6 @@ KW_CONSTRUCTOR = "constructor"
     "->" { return TO; }
 	"^" { return ACCENT; }
 	":" { return COLON; }
-	";" { return SEMICOLON; }
 	"$" { return DOLLAR; }
 	"@" { return AT; }
 	"/" { return SLASH; }

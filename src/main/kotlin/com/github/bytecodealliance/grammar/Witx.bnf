@@ -10,14 +10,14 @@
     psiImplPackage = "com.github.bytecodealliance.language.psi_node"
 
     elementTypeHolderClass = "com.github.bytecodealliance.language.psi.WitxTypes"
-    elementTypeClass = "com.github.bytecodealliance.language.psi.WitElementType"
+    elementTypeClass = "com.github.bytecodealliance.language.psi.WitxElementType"
     tokenTypeClass = "com.github.bytecodealliance.language.psi.WitxTokenType"
 
     psiImplUtilClass = "com.github.bytecodealliance.language.psi_node.FluentPsiExtension"
 
     tokens = [
         // comment
-        COMMENT_DOCUMENT = "Comment Document"
+        COMMENT_LINE = "Comment Line"
         COMMENT = "Comment"
         COMMENT_BLOCK = "Comment Block"
 
@@ -58,7 +58,6 @@
         ACCENT = '^'
         EQ = '='
         COLON = ':'
-        SEMICOLON = ';'
         COMMA = ','
         DOLLAR = '$'
         DOT = '.'
@@ -80,7 +79,7 @@ private statements ::=
   | world
   | include
   | interface
-  | SEMICOLON
+
 
 // package wasi:blobstore@0.2.0-draft;
 package ::= KW_PACKAGE package-name {
@@ -100,8 +99,6 @@ private world-element ::=
   | import
   | export
   | use
-  | SEMICOLON
-  | COMMENT_LINE
 // include wasi:keyvalue/imports@0.2.0-draft;
 include ::= KW_INCLUDE include-name {
 	pin = 1
@@ -142,7 +139,6 @@ private interface-element ::=
   | enum
   | variant
   | function
-  | SEMICOLON
 // get-insecure-random-bytes: func(len: u64) -> list<u8>;
 method ::= identifier COLON function-signature {
 //	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
@@ -180,7 +176,6 @@ resource  ::= KW_RESOURCE identifier (BRACE_L resource-element* BRACE_R)? {
 private resource-element ::=
     method
   | constructor
-  | SEMICOLON
 // record type-name { field: type-hint, key: value };
 record   ::= KW_RECORD identifier BRACE_L record-element* BRACE_R {
 	pin = 1

@@ -18,11 +18,9 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
-private class Adapter : FlexAdapter(_WitLexer(null))
-
 object WitParserDefinition : ParserDefinition {
-    fun createLexer(): Lexer = Adapter()
-    override fun createLexer(project: Project): Lexer = Adapter()
+    fun createLexer(): Lexer = FlexAdapter(_WitLexer(null))
+    override fun createLexer(project: Project): Lexer = FlexAdapter(_WitLexer(null))
     override fun createParser(project: Project): PsiParser = WitParser()
     override fun getFileNodeType(): IFileElementType = IFileElementType(WitLanguage)
     override fun getCommentTokens(): TokenSet =

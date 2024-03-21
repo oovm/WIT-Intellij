@@ -531,7 +531,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
   //   | enum
   //   | variant
   //   | function
-  //   | SEMICOLON
   static boolean interface_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "interface_element")) return false;
     boolean r;
@@ -543,7 +542,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!r) r = enum_$(b, l + 1);
     if (!r) r = variant(b, l + 1);
     if (!r) r = function(b, l + 1);
-    if (!r) r = consumeToken(b, SEMICOLON);
     return r;
   }
 
@@ -804,13 +802,11 @@ public class WitxParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // method
   //   | constructor
-  //   | SEMICOLON
   static boolean resource_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "resource_element")) return false;
     boolean r;
     r = method(b, l + 1);
     if (!r) r = constructor(b, l + 1);
-    if (!r) r = consumeToken(b, SEMICOLON);
     return r;
   }
 
@@ -832,7 +828,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
   //   | world
   //   | include
   //   | interface
-  //   | SEMICOLON
   static boolean statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statements")) return false;
     boolean r;
@@ -840,7 +835,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!r) r = world(b, l + 1);
     if (!r) r = include(b, l + 1);
     if (!r) r = interface_$(b, l + 1);
-    if (!r) r = consumeToken(b, SEMICOLON);
     return r;
   }
 
@@ -1169,8 +1163,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
   //   | import
   //   | export
   //   | use
-  //   | SEMICOLON
-  //   | COMMENT_LINE
   static boolean world_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "world_element")) return false;
     boolean r;
@@ -1178,8 +1170,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!r) r = import_$(b, l + 1);
     if (!r) r = export(b, l + 1);
     if (!r) r = use(b, l + 1);
-    if (!r) r = consumeToken(b, SEMICOLON);
-    if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
   }
 
