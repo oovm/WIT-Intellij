@@ -700,7 +700,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_RESOURCE identifier BRACE_L resource-element* BRACE_R
+  // KW_RESOURCE identifier (BRACE_L resource-element* BRACE_R)?
   public static boolean resource(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "resource")) return false;
     if (!nextTokenIs(b, KW_RESOURCE)) return false;
@@ -709,20 +709,37 @@ public class WitParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, KW_RESOURCE);
     p = r; // pin = 1
     r = r && report_error_(b, identifier(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
-    r = p && report_error_(b, resource_3(b, l + 1)) && r;
-    r = p && consumeToken(b, BRACE_R) && r;
+    r = p && resource_2(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
+  // (BRACE_L resource-element* BRACE_R)?
+  private static boolean resource_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resource_2")) return false;
+    resource_2_0(b, l + 1);
+    return true;
+  }
+
+  // BRACE_L resource-element* BRACE_R
+  private static boolean resource_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resource_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, BRACE_L);
+    r = r && resource_2_0_1(b, l + 1);
+    r = r && consumeToken(b, BRACE_R);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // resource-element*
-  private static boolean resource_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "resource_3")) return false;
+  private static boolean resource_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resource_2_0_1")) return false;
     while (true) {
       int c = current_position_(b);
       if (!resource_element(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "resource_3", c)) break;
+      if (!empty_element_parsed_guard_(b, "resource_2_0_1", c)) break;
     }
     return true;
   }
