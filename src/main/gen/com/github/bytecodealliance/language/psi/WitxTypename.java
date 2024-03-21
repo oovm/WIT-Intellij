@@ -10,10 +10,13 @@ public interface WitxTypename extends PsiElement {
   @Nullable
   WitxEnum getEnum();
 
-  @NotNull
-  List<WitxIdentifier> getIdentifierList();
+  @Nullable
+  WitxIdentifier getIdentifier();
 
   @Nullable
   WitxRecord getRecord();
+
+  @Nullable
+  WitxReferenceName getReferenceName();
 
 }

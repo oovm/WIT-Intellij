@@ -8,7 +8,6 @@ import com.github.bytecodealliance.language.psi_node.*;
 
 public interface WitxTypes {
 
-  IElementType ALIAS_NAME = new WitxElementType("ALIAS_NAME");
   IElementType CONSTRUCTOR = new WitxElementType("CONSTRUCTOR");
   IElementType ENUM = new WitxElementType("ENUM");
   IElementType EXPORT = new WitxElementType("EXPORT");
@@ -22,15 +21,13 @@ public interface WitxTypes {
   IElementType INCLUDE = new WitxElementType("INCLUDE");
   IElementType INCLUDE_NAME = new WitxElementType("INCLUDE_NAME");
   IElementType INTERFACE = new WitxElementType("INTERFACE");
-  IElementType INTERFACE_NAME = new WitxElementType("INTERFACE_NAME");
   IElementType METHOD = new WitxElementType("METHOD");
-  IElementType MODULE_NAME = new WitxElementType("MODULE_NAME");
-  IElementType ORGANIZATION_NAME = new WitxElementType("ORGANIZATION_NAME");
   IElementType PACKAGE = new WitxElementType("PACKAGE");
   IElementType PACKAGE_NAME = new WitxElementType("PACKAGE_NAME");
   IElementType PARAMETER = new WitxElementType("PARAMETER");
   IElementType RECORD = new WitxElementType("RECORD");
   IElementType RECORD_FIELD = new WitxElementType("RECORD_FIELD");
+  IElementType REFERENCE_NAME = new WitxElementType("REFERENCE_NAME");
   IElementType RESOURCE = new WitxElementType("RESOURCE");
   IElementType SEMANTIC_NUMBER = new WitxElementType("SEMANTIC_NUMBER");
   IElementType TYPENAME = new WitxElementType("TYPENAME");
@@ -42,61 +39,64 @@ public interface WitxTypes {
   IElementType VARIANT_ITEM = new WitxElementType("VARIANT_ITEM");
   IElementType WORLD = new WitxElementType("WORLD");
 
-  IElementType ACCENT = new WitxTokenType("^");
-  IElementType ANGLE_L = new WitxTokenType("<");
-  IElementType ANGLE_R = new WitxTokenType(">");
-  IElementType AT = new WitxTokenType("@");
-  IElementType BRACE_L = new WitxTokenType("{");
-  IElementType BRACE_R = new WitxTokenType("}");
-  IElementType BRACKET_L = new WitxTokenType("[");
-  IElementType BRACKET_R = new WitxTokenType("]");
-  IElementType COLON = new WitxTokenType(":");
-  IElementType COMMA = new WitxTokenType(",");
-  IElementType COMMENT = new WitxTokenType("Comment");
-  IElementType COMMENT_BLOCK = new WitxTokenType("Comment Block");
-  IElementType COMMENT_LINE = new WitxTokenType("Comment Line");
-  IElementType DOLLAR = new WitxTokenType("$");
-  IElementType DOT = new WitxTokenType(".");
-  IElementType EQ = new WitxTokenType("=");
-  IElementType ESCAPED = new WitxTokenType("ESCAPED");
-  IElementType HYPHEN = new WitxTokenType("-");
-  IElementType KW_AS = new WitxTokenType("as");
-  IElementType KW_CONSTRUCTOR = new WitxTokenType("constructor");
-  IElementType KW_ENUM = new WitxTokenType("enum");
-  IElementType KW_EXPORT = new WitxTokenType("export");
-  IElementType KW_FLAGS = new WitxTokenType("flags");
-  IElementType KW_FUNCTION = new WitxTokenType("func");
-  IElementType KW_IMPORT = new WitxTokenType("import");
-  IElementType KW_INCLUDE = new WitxTokenType("include");
-  IElementType KW_INTERFACE = new WitxTokenType("interface");
-  IElementType KW_PACKAGE = new WitxTokenType("package");
-  IElementType KW_RECORD = new WitxTokenType("record");
-  IElementType KW_RESOURCE = new WitxTokenType("resource");
-  IElementType KW_TYPE = new WitxTokenType("type");
-  IElementType KW_USE = new WitxTokenType("use");
-  IElementType KW_VARIANT = new WitxTokenType("variant");
-  IElementType KW_WORLD = new WitxTokenType("world");
-  IElementType PARENTHESIS_L = new WitxTokenType("(");
-  IElementType PARENTHESIS_R = new WitxTokenType(")");
-  IElementType PLACE_HOLDER = new WitxTokenType("_");
-  IElementType SELECTION_LINE = new WitxTokenType("SELECTION_LINE");
-  IElementType SLASH = new WitxTokenType("/");
-  IElementType STAR = new WitxTokenType("*");
-  IElementType STRING_CHAR = new WitxTokenType("String Character");
-  IElementType STRING_ESCAPE = new WitxTokenType("String Escaped");
-  IElementType STRING_QUOTE = new WitxTokenType("String Quote");
-  IElementType SYMBOL = new WitxTokenType("Symbol");
-  IElementType TO = new WitxTokenType("->");
-  IElementType URL = new WitxTokenType("Url");
-  IElementType VERSION = new WitxTokenType("<<semver>>");
+  IElementType ACCENT = new WitTokenType("^");
+  IElementType ALIAS_NAME = new WitTokenType("alias-name");
+  IElementType ANGLE_L = new WitTokenType("<");
+  IElementType ANGLE_R = new WitTokenType(">");
+  IElementType AT = new WitTokenType("@");
+  IElementType BRACE_L = new WitTokenType("{");
+  IElementType BRACE_R = new WitTokenType("}");
+  IElementType BRACKET_L = new WitTokenType("[");
+  IElementType BRACKET_R = new WitTokenType("]");
+  IElementType COLON = new WitTokenType(":");
+  IElementType COMMA = new WitTokenType(",");
+  IElementType COMMENT_BLOCK = new WitTokenType("Comment Block");
+  IElementType COMMENT_DOCUMENT = new WitTokenType("Comment Document");
+  IElementType COMMENT_LINE = new WitTokenType("Comment Line");
+  IElementType DOLLAR = new WitTokenType("$");
+  IElementType DOT = new WitTokenType(".");
+  IElementType EQ = new WitTokenType("=");
+  IElementType ESCAPED = new WitTokenType("ESCAPED");
+  IElementType HYPHEN = new WitTokenType("-");
+  IElementType INTERFACE_NAME = new WitTokenType("interface-name");
+  IElementType KW_AS = new WitTokenType("as");
+  IElementType KW_CONSTRUCTOR = new WitTokenType("constructor");
+  IElementType KW_ENUM = new WitTokenType("enum");
+  IElementType KW_EXPORT = new WitTokenType("export");
+  IElementType KW_FLAGS = new WitTokenType("flags");
+  IElementType KW_FUNCTION = new WitTokenType("func");
+  IElementType KW_IMPORT = new WitTokenType("import");
+  IElementType KW_INCLUDE = new WitTokenType("include");
+  IElementType KW_INTERFACE = new WitTokenType("interface");
+  IElementType KW_PACKAGE = new WitTokenType("package");
+  IElementType KW_RECORD = new WitTokenType("record");
+  IElementType KW_RESOURCE = new WitTokenType("resource");
+  IElementType KW_TYPE = new WitTokenType("type");
+  IElementType KW_USE = new WitTokenType("use");
+  IElementType KW_VARIANT = new WitTokenType("variant");
+  IElementType KW_WORLD = new WitTokenType("world");
+  IElementType MODULE_NAME = new WitTokenType("module-name");
+  IElementType ORGANIZATION_NAME = new WitTokenType("organization-name");
+  IElementType PARENTHESIS_L = new WitTokenType("(");
+  IElementType PARENTHESIS_R = new WitTokenType(")");
+  IElementType PLACE_HOLDER = new WitTokenType("_");
+  IElementType REFERENCE = new WitTokenType("$Symbol");
+  IElementType SELECTION_LINE = new WitTokenType("SELECTION_LINE");
+  IElementType SEMICOLON = new WitTokenType(";");
+  IElementType SLASH = new WitTokenType("/");
+  IElementType STAR = new WitTokenType("*");
+  IElementType STRING_CHAR = new WitTokenType("String Character");
+  IElementType STRING_ESCAPE = new WitTokenType("String Escaped");
+  IElementType STRING_QUOTE = new WitTokenType("String Quote");
+  IElementType SYMBOL = new WitTokenType("Symbol");
+  IElementType TO = new WitTokenType("->");
+  IElementType URL = new WitTokenType("Url");
+  IElementType VERSION = new WitTokenType("<<semver>>");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ALIAS_NAME) {
-        return new WitxAliasNameNode(node);
-      }
-      else if (type == CONSTRUCTOR) {
+      if (type == CONSTRUCTOR) {
         return new WitxConstructorNode(node);
       }
       else if (type == ENUM) {
@@ -135,17 +135,8 @@ public interface WitxTypes {
       else if (type == INTERFACE) {
         return new WitxInterfaceNode(node);
       }
-      else if (type == INTERFACE_NAME) {
-        return new WitxInterfaceNameNode(node);
-      }
       else if (type == METHOD) {
         return new WitxMethodNode(node);
-      }
-      else if (type == MODULE_NAME) {
-        return new WitxModuleNameNode(node);
-      }
-      else if (type == ORGANIZATION_NAME) {
-        return new WitxOrganizationNameNode(node);
       }
       else if (type == PACKAGE) {
         return new WitxPackageNode(node);
@@ -161,6 +152,9 @@ public interface WitxTypes {
       }
       else if (type == RECORD_FIELD) {
         return new WitxRecordFieldNode(node);
+      }
+      else if (type == REFERENCE_NAME) {
+        return new WitxReferenceNameNode(node);
       }
       else if (type == RESOURCE) {
         return new WitxResourceNode(node);

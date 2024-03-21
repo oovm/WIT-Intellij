@@ -4,7 +4,7 @@ package com.github.bytecodealliance.language.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import static com.github.bytecodealliance.language.psi.WitxTypes.*;
-import static com.github.bytecodealliance.language.psi.WitParserExtension.*;
+import static com.github.bytecodealliance.language.psi.ParserExtension.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
@@ -33,19 +33,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
 
   static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
     return witx(b, l + 1);
-  }
-
-  /* ********************************************************** */
-  // SYMBOL | ESCAPED
-  public static boolean alias_name(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "alias_name")) return false;
-    if (!nextTokenIs(b, "<alias name>", ESCAPED, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ALIAS_NAME, "<alias name>");
-    r = consumeToken(b, SYMBOL);
-    if (!r) r = consumeToken(b, ESCAPED);
-    exit_section_(b, l, m, r, false, null);
-    return r;
   }
 
   /* ********************************************************** */
@@ -134,9 +121,8 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!nextTokenIs(b, KW_EXPORT)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, EXPORT, null);
-    r = consumeToken(b, KW_EXPORT);
+    r = consumeTokens(b, 1, KW_EXPORT, INTERFACE_NAME);
     p = r; // pin = 1
-    r = r && interface_name(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
@@ -212,14 +198,14 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // }
   public static boolean function(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function")) return false;
-    if (!nextTokenIs(b, "<function>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FUNCTION, "<function>");
+    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && function_signature(b, l + 1);
     r = r && function_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, FUNCTION, r);
     return r;
   }
 
@@ -296,6 +282,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // identifier? KW_FUNCTION function-parameters (TO type-hint)?
   public static boolean function_signature(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_signature")) return false;
+    if (!nextTokenIs(b, "<function signature>", KW_FUNCTION, SYMBOL)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, FUNCTION_SIGNATURE, "<function signature>");
     r = function_signature_0(b, l + 1);
@@ -395,15 +382,14 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SYMBOL | ESCAPED
+  // SYMBOL
   public static boolean identifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier")) return false;
-    if (!nextTokenIs(b, "<identifier>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, IDENTIFIER, "<identifier>");
+    Marker m = enter_section_(b);
     r = consumeToken(b, SYMBOL);
-    if (!r) r = consumeToken(b, ESCAPED);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, IDENTIFIER, r);
     return r;
   }
 
@@ -440,11 +426,11 @@ public class WitxParser implements PsiParser, LightPsiParser {
   //   | interface-name
   public static boolean include_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "include_name")) return false;
-    if (!nextTokenIs(b, "<include name>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, "<include name>", INTERFACE_NAME, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, INCLUDE_NAME, "<include name>");
     r = include_name_0(b, l + 1);
-    if (!r) r = interface_name(b, l + 1);
+    if (!r) r = consumeToken(b, INTERFACE_NAME);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -478,8 +464,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "include_name_0_2")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, SLASH);
-    r = r && interface_name(b, l + 1);
+    r = consumeTokens(b, 0, SLASH, INTERFACE_NAME);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -501,11 +486,9 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!nextTokenIs(b, KW_INTERFACE)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, INTERFACE, null);
-    r = consumeToken(b, KW_INTERFACE);
+    r = consumeTokens(b, 1, KW_INTERFACE, INTERFACE_NAME, BRACE_L);
     p = r; // pin = 1
-    r = r && report_error_(b, interface_name(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
-    r = p && report_error_(b, interface_3(b, l + 1)) && r;
+    r = r && report_error_(b, interface_3(b, l + 1));
     r = p && consumeToken(b, BRACE_R) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -546,32 +529,19 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SYMBOL | ESCAPED
-  public static boolean interface_name(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "interface_name")) return false;
-    if (!nextTokenIs(b, "<interface name>", ESCAPED, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, INTERFACE_NAME, "<interface name>");
-    r = consumeToken(b, SYMBOL);
-    if (!r) r = consumeToken(b, ESCAPED);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
   // identifier COLON function-signature {
   // //	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
   // }
   public static boolean method(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method")) return false;
-    if (!nextTokenIs(b, "<method>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, METHOD, "<method>");
+    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && function_signature(b, l + 1);
     r = r && method_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, METHOD, r);
     return r;
   }
 
@@ -580,32 +550,6 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // }
   private static boolean method_3(PsiBuilder b, int l) {
     return true;
-  }
-
-  /* ********************************************************** */
-  // SYMBOL | ESCAPED
-  public static boolean module_name(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "module_name")) return false;
-    if (!nextTokenIs(b, "<module name>", ESCAPED, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, MODULE_NAME, "<module name>");
-    r = consumeToken(b, SYMBOL);
-    if (!r) r = consumeToken(b, ESCAPED);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // SYMBOL | ESCAPED
-  public static boolean organization_name(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "organization_name")) return false;
-    if (!nextTokenIs(b, "<organization name>", ESCAPED, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ORGANIZATION_NAME, "<organization name>");
-    r = consumeToken(b, SYMBOL);
-    if (!r) r = consumeToken(b, ESCAPED);
-    exit_section_(b, l, m, r, false, null);
-    return r;
   }
 
   /* ********************************************************** */
@@ -627,11 +571,11 @@ public class WitxParser implements PsiParser, LightPsiParser {
   //   | module-name
   public static boolean package_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_name")) return false;
-    if (!nextTokenIs(b, "<package name>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, "<package name>", MODULE_NAME, ORGANIZATION_NAME)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PACKAGE_NAME, "<package name>");
     r = package_name_0(b, l + 1);
-    if (!r) r = module_name(b, l + 1);
+    if (!r) r = consumeToken(b, MODULE_NAME);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -641,7 +585,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "package_name_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = organization_name(b, l + 1);
+    r = consumeToken(b, ORGANIZATION_NAME);
     r = r && package_name_0_1(b, l + 1);
     r = r && package_name_0_2(b, l + 1);
     exit_section_(b, m, null, r);
@@ -653,8 +597,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "package_name_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, COLON);
-    r = r && module_name(b, l + 1);
+    r = consumeTokens(b, 0, COLON, MODULE_NAME);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -674,14 +617,14 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // }
   public static boolean parameter(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameter")) return false;
-    if (!nextTokenIs(b, "<parameter>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, PARAMETER, "<parameter>");
+    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && type_hint(b, l + 1);
     r = r && parameter_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, PARAMETER, r);
     return r;
   }
 
@@ -724,6 +667,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
   //   | COMMA
   static boolean record_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "record_element")) return false;
+    if (!nextTokenIs(b, "", COMMA, SYMBOL)) return false;
     boolean r;
     r = record_field(b, l + 1);
     if (!r) r = consumeToken(b, COMMA);
@@ -736,14 +680,14 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // }
   public static boolean record_field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "record_field")) return false;
-    if (!nextTokenIs(b, "<record field>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, RECORD_FIELD, "<record field>");
+    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && type_hint(b, l + 1);
     r = r && record_field_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, RECORD_FIELD, r);
     return r;
   }
 
@@ -752,6 +696,18 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // }
   private static boolean record_field_3(PsiBuilder b, int l) {
     return true;
+  }
+
+  /* ********************************************************** */
+  // REFERENCE
+  public static boolean reference_name(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "reference_name")) return false;
+    if (!nextTokenIs(b, REFERENCE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, REFERENCE);
+    exit_section_(b, m, REFERENCE_NAME, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -804,6 +760,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
   //   | constructor
   static boolean resource_element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "resource_element")) return false;
+    if (!nextTokenIs(b, "", KW_CONSTRUCTOR, SYMBOL)) return false;
     boolean r;
     r = method(b, l + 1);
     if (!r) r = constructor(b, l + 1);
@@ -825,17 +782,8 @@ public class WitxParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // typename
-  //   | world
-  //   | include
-  //   | interface
   static boolean statements(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statements")) return false;
-    boolean r;
-    r = typename(b, l + 1);
-    if (!r) r = world(b, l + 1);
-    if (!r) r = include(b, l + 1);
-    if (!r) r = interface_$(b, l + 1);
-    return r;
+    return typename(b, l + 1);
   }
 
   /* ********************************************************** */
@@ -855,12 +803,12 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // identifier generic?
   public static boolean type_hint(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_hint")) return false;
-    if (!nextTokenIs(b, "<type hint>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TYPE_HINT, "<type hint>");
+    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
     r = r && type_hint_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, TYPE_HINT, r);
     return r;
   }
 
@@ -872,15 +820,15 @@ public class WitxParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PARENTHESIS_L KW_TYPE identifier type-element PARENTHESIS_R
+  // PARENTHESIS_L KW_TYPE reference-name type-element PARENTHESIS_R
   public static boolean typename(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "typename")) return false;
     if (!nextTokenIs(b, PARENTHESIS_L)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, TYPENAME, null);
-    r = consumeTokens(b, 1, PARENTHESIS_L, KW_TYPE);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
+    r = consumeTokens(b, 2, PARENTHESIS_L, KW_TYPE);
+    p = r; // pin = 2
+    r = r && report_error_(b, reference_name(b, l + 1));
     r = p && report_error_(b, type_element(b, l + 1)) && r;
     r = p && consumeToken(b, PARENTHESIS_R) && r;
     exit_section_(b, l, m, r, p, null);
@@ -914,13 +862,13 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // }
   public static boolean use_alias(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_alias")) return false;
-    if (!nextTokenIs(b, "<use alias>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, USE_ALIAS, "<use alias>");
+    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
     r = r && use_alias_1(b, l + 1);
     r = r && use_alias_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, USE_ALIAS, r);
     return r;
   }
 
@@ -936,8 +884,7 @@ public class WitxParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "use_alias_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, KW_AS);
-    r = r && alias_name(b, l + 1);
+    r = consumeTokens(b, 0, KW_AS, ALIAS_NAME);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1082,13 +1029,13 @@ public class WitxParser implements PsiParser, LightPsiParser {
   // }
   public static boolean variant_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variant_item")) return false;
-    if (!nextTokenIs(b, "<variant item>", ESCAPED, SYMBOL)) return false;
+    if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, VARIANT_ITEM, "<variant item>");
+    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
     r = r && variant_item_1(b, l + 1);
     r = r && variant_item_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, VARIANT_ITEM, r);
     return r;
   }
 

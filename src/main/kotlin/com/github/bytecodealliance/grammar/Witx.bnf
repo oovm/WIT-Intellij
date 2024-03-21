@@ -1,6 +1,6 @@
 {
     parserClass = "com.github.bytecodealliance.language.parser.WitxParser"
-    parserUtilClass = "com.github.bytecodealliance.language.psi.WitParserExtension"
+    parserUtilClass = "com.github.bytecodealliance.language.psi.ParserExtension"
 
     extends = "com.github.bytecodealliance.language.psi.WitElement"
 
@@ -11,19 +11,20 @@
 
     elementTypeHolderClass = "com.github.bytecodealliance.language.psi.WitxTypes"
     elementTypeClass = "com.github.bytecodealliance.language.psi.WitxElementType"
-    tokenTypeClass = "com.github.bytecodealliance.language.psi.WitxTokenType"
+    tokenTypeClass = "com.github.bytecodealliance.language.psi.WitTokenType"
 
     psiImplUtilClass = "com.github.bytecodealliance.language.psi_node.FluentPsiExtension"
 
     tokens = [
         // comment
+        COMMENT_DOCUMENT = "Comment Document"
         COMMENT_LINE = "Comment Line"
-        COMMENT = "Comment"
         COMMENT_BLOCK = "Comment Block"
 
         // literal
         URL = "Url"
-        SYMBOL = "Symbol"
+        SYMBOL    = "Symbol"
+        REFERENCE = "$Symbol"
         STRING_QUOTE = "String Quote"
         STRING_CHAR = "String Character"
         STRING_ESCAPE = "String Escaped"
@@ -58,6 +59,7 @@
         ACCENT = '^'
         EQ = '='
         COLON = ':'
+        SEMICOLON = ';'
         COMMA = ','
         DOLLAR = '$'
         DOT = '.'
@@ -69,6 +71,7 @@
         PLACE_HOLDER = "_"
 //      SPACE='regexp:\s+'
 //      ANY = 'regexp:.'
+
     ]
 }
 
@@ -76,9 +79,6 @@
 witx ::= statements*
 private statements ::=
     typename
-  | world
-  | include
-  | interface
 
 
 // package wasi:blobstore@0.2.0-draft;
@@ -158,8 +158,8 @@ parameter ::= identifier COLON type-hint {
 
 }
 // (typename $size u32)
-typename ::= PARENTHESIS_L KW_TYPE identifier type-element PARENTHESIS_R {
-	pin = 1
+typename ::= PARENTHESIS_L KW_TYPE reference-name type-element PARENTHESIS_R {
+	pin = 2
 }
 private type-element ::=
 	identifier
@@ -194,6 +194,20 @@ flags       ::= KW_FLAGS identifier BRACE_L (semantic-number (COMMA semantic-num
 	pin = 1
 //    mixin = "com.github.bytecodealliance.language.mixin.MixinFlags"
 }
+//   (enum (@witx tag u32)
+//    ;;; The clock measuring real time. Time value zero corresponds with
+//    ;;; 1970-01-01T00:00:00Z.
+//    $realtime
+//    ;;; The store-wide monotonic clock, which is defined as a clock measuring
+//    ;;; real time, whose value cannot be adjusted and which cannot have negative
+//    ;;; clock jumps. The epoch of this clock is undefined. The absolute time
+//    ;;; value of this clock therefore has no meaning.
+//    $monotonic
+//    ;;; The CPU-time clock associated with the current process.
+//    $process_cputime_id
+//    ;;; The CPU-time clock associated with the current thread.
+//    $thread_cputime_id
+//  )
 enum       ::= KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R {
 	pin = 1
 }
@@ -211,9 +225,7 @@ variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)? {
 /* Literals */
 
 /* Identifier */
-organization-name   ::= SYMBOL | ESCAPED;
-module-name         ::= SYMBOL | ESCAPED;
-interface-name      ::= SYMBOL | ESCAPED;
-alias-name          ::= SYMBOL | ESCAPED;
+reference-name      ::= REFERENCE;
 semantic-number     ::= SYMBOL | ESCAPED;
-identifier          ::= SYMBOL | ESCAPED;
+identifier          ::= SYMBOL;
+

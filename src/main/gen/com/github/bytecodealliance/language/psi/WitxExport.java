@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface WitxExport extends PsiElement {
 
-  @Nullable
-  WitxInterfaceName getInterfaceName();
-
 }

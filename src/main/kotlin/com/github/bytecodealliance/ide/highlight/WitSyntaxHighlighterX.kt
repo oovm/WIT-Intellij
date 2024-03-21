@@ -1,5 +1,6 @@
 package com.github.bytecodealliance.ide.highlight
 
+import com.github.bytecodealliance.language.psi.WitParserDefinition
 import com.github.bytecodealliance.language.psi.WitParserDefinitionX
 import com.github.bytecodealliance.language.psi.WitTypes
 import com.intellij.lexer.Lexer

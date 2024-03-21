@@ -10,7 +10,4 @@ public interface WitxIncludeName extends PsiElement {
   @NotNull
   List<WitxIdentifier> getIdentifierList();
 
-  @NotNull
-  WitxInterfaceName getInterfaceName();
-
 }

@@ -4,7 +4,7 @@ package com.github.bytecodealliance.language.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import static com.github.bytecodealliance.language.psi.WitTypes.*;
-import static com.github.bytecodealliance.language.psi.WitParserExtension.*;
+import static com.github.bytecodealliance.language.psi.ParserExtension.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;

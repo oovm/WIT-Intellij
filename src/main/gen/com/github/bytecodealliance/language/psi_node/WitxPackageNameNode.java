@@ -27,16 +27,4 @@ public class WitxPackageNameNode extends WitElement implements WitxPackageName {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public WitxModuleName getModuleName() {
-    return findNotNullChildByClass(WitxModuleName.class);
-  }
-
-  @Override
-  @Nullable
-  public WitxOrganizationName getOrganizationName() {
-    return findChildByClass(WitxOrganizationName.class);
-  }
-
 }

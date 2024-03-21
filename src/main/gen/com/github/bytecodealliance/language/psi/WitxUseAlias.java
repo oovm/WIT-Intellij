@@ -7,9 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface WitxUseAlias extends PsiElement {
 
-  @Nullable
-  WitxAliasName getAliasName();
-
   @NotNull
   WitxIdentifier getIdentifier();
 

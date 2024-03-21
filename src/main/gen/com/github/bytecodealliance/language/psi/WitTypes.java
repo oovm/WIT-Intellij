@@ -80,6 +80,7 @@ public interface WitTypes {
   IElementType PARENTHESIS_L = new WitTokenType("(");
   IElementType PARENTHESIS_R = new WitTokenType(")");
   IElementType PLACE_HOLDER = new WitTokenType("_");
+  IElementType REFERENCE = new WitTokenType("$Symbol");
   IElementType SELECTION_LINE = new WitTokenType("SELECTION_LINE");
   IElementType SEMICOLON = new WitTokenType(";");
   IElementType SLASH = new WitTokenType("/");

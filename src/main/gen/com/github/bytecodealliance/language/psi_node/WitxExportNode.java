@@ -27,10 +27,4 @@ public class WitxExportNode extends WitElement implements WitxExport {
     else super.accept(visitor);
   }
 
-  @Override
-  @Nullable
-  public WitxInterfaceName getInterfaceName() {
-    return findChildByClass(WitxInterfaceName.class);
-  }
-
 }
