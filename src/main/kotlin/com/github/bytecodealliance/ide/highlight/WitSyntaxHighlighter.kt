@@ -21,9 +21,9 @@ class WitSyntaxHighlighter : SyntaxHighlighterBase() {
     private fun getTokenColor(tokenType: IElementType): WitHighlightColor? {
         return when (tokenType) {
             KW_PACKAGE, KW_WORLD, KW_INTERFACE,
-            KW_INCLUDE, KW_USE, KW_IMPORT, KW_EXPORT,
+            KW_INCLUDE, KW_USE, KW_IMPORT, KW_EXPORT, KW_AS,
             KW_TYPE, KW_RESOURCE, KW_RECORD, KW_VARIANT, KW_FLAGS, KW_ENUM,
-            KW_FUNCTION,
+            KW_FUNCTION, KW_CONSTRUCTOR,
             -> WitHighlightColor.KEYWORD
 
             PARENTHESIS_L, PARENTHESIS_R -> WitHighlightColor.PARENTHESES
