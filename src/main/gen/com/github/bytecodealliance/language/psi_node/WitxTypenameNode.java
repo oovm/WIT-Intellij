@@ -29,26 +29,14 @@ public class WitxTypenameNode extends WitElement implements WitxTypename {
 
   @Override
   @Nullable
-  public WitxEnum getEnum() {
-    return findChildByClass(WitxEnum.class);
-  }
-
-  @Override
-  @Nullable
-  public WitxIdentifier getIdentifier() {
-    return findChildByClass(WitxIdentifier.class);
-  }
-
-  @Override
-  @Nullable
-  public WitxRecord getRecord() {
-    return findChildByClass(WitxRecord.class);
-  }
-
-  @Override
-  @Nullable
   public WitxReferenceName getReferenceName() {
     return findChildByClass(WitxReferenceName.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxTypeHint getTypeHint() {
+    return findChildByClass(WitxTypeHint.class);
   }
 
 }

@@ -5,7 +5,6 @@ import com.github.bytecodealliance.language.ast.isWhitespaceOrEmpty
 import com.github.bytecodealliance.language.psi.WitEnum
 import com.github.bytecodealliance.language.psi.WitFlags
 import com.github.bytecodealliance.language.psi.WitFunctionParameters
-import com.github.bytecodealliance.language.psi.WitFunctionSignature
 import com.github.bytecodealliance.language.psi.WitInterface
 import com.github.bytecodealliance.language.psi.WitRecord
 import com.github.bytecodealliance.language.psi.WitResource
@@ -38,7 +37,7 @@ class FormatBlock(
                 FormatBlock(
                     node = childNode,
                     alignment = null,
-                    indent = computeIndent(childNode),
+                    indent = WitFormatBuilder.computeIndent(node, childNode),
                     wrap = null,
                     space
                 )
@@ -71,29 +70,5 @@ class FormatBlock(
         return ChildAttributes(indent, null)
     }
 
-    private fun computeIndent(child: ASTNode): Indent? {
-        return when (node.psi) {
-            is WitWorld -> node.indentInRange(child, 1, 1)
-            is WitInterface -> node.indentInRange(child, 3, 1)
-            is WitUseItems -> node.indentInRange(child, 2, 1)
-            is WitResource -> node.indentInRange(child, 1, 1)
-            is WitRecord -> node.indentInRange(child, 1, 1)
-            is WitFlags -> node.indentInRange(child, 1, 1)
-            is WitEnum -> node.indentInRange(child, 1, 1)
-            is WitVariant -> node.indentInRange(child, 1, 1)
-            is WitFunctionParameters -> node.indentInRange(child, 1, 1)
-            else -> Indent.getNoneIndent()
-        }
-    }
 }
 
-private fun ASTNode.indentInRange(child: ASTNode, head: Int, tail: Int): Indent {
-    val children = this.getChildren(null);
-    val index = children.indexOf(child)
-    val last = children.size - tail
-    return when {
-        index <= head -> Indent.getNoneIndent()
-        index >= last -> Indent.getNoneIndent()
-        else -> Indent.getNormalIndent()
-    }
-}

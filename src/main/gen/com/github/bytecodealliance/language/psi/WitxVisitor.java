@@ -15,6 +15,10 @@ public class WitxVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEnumItems(@NotNull WitxEnumItems o) {
+    visitPsiElement(o);
+  }
+
   public void visitExport(@NotNull WitxExport o) {
     visitPsiElement(o);
   }
@@ -35,7 +39,7 @@ public class WitxVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitGeneric(@NotNull WitxGeneric o) {
+  public void visitHandle(@NotNull WitxHandle o) {
     visitPsiElement(o);
   }
 
@@ -55,7 +59,7 @@ public class WitxVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitInterface(@NotNull WitxInterface o) {
+  public void visitList(@NotNull WitxList o) {
     visitPsiElement(o);
   }
 
@@ -87,11 +91,11 @@ public class WitxVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitResource(@NotNull WitxResource o) {
+  public void visitSemanticNumber(@NotNull WitxSemanticNumber o) {
     visitPsiElement(o);
   }
 
-  public void visitSemanticNumber(@NotNull WitxSemanticNumber o) {
+  public void visitTag(@NotNull WitxTag o) {
     visitPsiElement(o);
   }
 
@@ -100,6 +104,10 @@ public class WitxVisitor extends PsiElementVisitor {
   }
 
   public void visitTypename(@NotNull WitxTypename o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUnion(@NotNull WitxUnion o) {
     visitPsiElement(o);
   }
 
@@ -112,10 +120,6 @@ public class WitxVisitor extends PsiElementVisitor {
   }
 
   public void visitUseItems(@NotNull WitxUseItems o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariant(@NotNull WitxVariant o) {
     visitPsiElement(o);
   }
 

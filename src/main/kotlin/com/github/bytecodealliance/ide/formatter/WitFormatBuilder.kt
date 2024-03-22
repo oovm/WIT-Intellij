@@ -1,5 +1,6 @@
 package com.github.bytecodealliance.ide.formatter
 
+import com.github.bytecodealliance.language.psi.*
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
@@ -23,6 +24,32 @@ class WitFormatBuilder : FormattingModelBuilder {
                 else -> Indent.getNoneIndent()
             }
             return ChildAttributes(indent, null)
+        }
+
+        fun computeIndent(parent: ASTNode, child: ASTNode): Indent? {
+            return when (parent.psi) {
+                is WitWorld -> parent.indentInRange(child, 1, 1)
+                is WitInterface -> parent.indentInRange(child, 3, 1)
+                is WitUseItems -> parent.indentInRange(child, 2, 1)
+                is WitResource -> parent.indentInRange(child, 1, 1)
+                is WitRecord -> parent.indentInRange(child, 1, 1)
+                is WitFlags -> parent.indentInRange(child, 1, 1)
+                is WitEnum -> parent.indentInRange(child, 1, 1)
+                is WitVariant -> parent.indentInRange(child, 1, 1)
+                is WitFunctionParameters -> parent.indentInRange(child, 1, 1)
+                else -> Indent.getNoneIndent()
+            }
+        }
+
+        private fun ASTNode.indentInRange(child: ASTNode, head: Int, tail: Int): Indent {
+            val children = this.getChildren(null);
+            val index = children.indexOf(child)
+            val last = children.size - tail
+            return when {
+                index <= head -> Indent.getNoneIndent()
+                index >= last -> Indent.getNoneIndent()
+                else -> Indent.getNormalIndent()
+            }
         }
     }
 }

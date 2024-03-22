@@ -29,14 +29,56 @@ public class WitxTypeHintNode extends WitElement implements WitxTypeHint {
 
   @Override
   @Nullable
-  public WitxGeneric getGeneric() {
-    return findChildByClass(WitxGeneric.class);
+  public WitxEnum getEnum() {
+    return findChildByClass(WitxEnum.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public WitxFlags getFlags() {
+    return findChildByClass(WitxFlags.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxHandle getHandle() {
+    return findChildByClass(WitxHandle.class);
+  }
+
+  @Override
+  @Nullable
   public WitxIdentifier getIdentifier() {
-    return findNotNullChildByClass(WitxIdentifier.class);
+    return findChildByClass(WitxIdentifier.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxList getList() {
+    return findChildByClass(WitxList.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxRecord getRecord() {
+    return findChildByClass(WitxRecord.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxReferenceName getReferenceName() {
+    return findChildByClass(WitxReferenceName.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxTag getTag() {
+    return findChildByClass(WitxTag.class);
+  }
+
+  @Override
+  @Nullable
+  public WitxUnion getUnion() {
+    return findChildByClass(WitxUnion.class);
   }
 
 }

@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface WitxFlags extends PsiElement {
 
-  @Nullable
-  WitxIdentifier getIdentifier();
-
   @NotNull
-  List<WitxSemanticNumber> getSemanticNumberList();
+  List<WitxEnumItems> getEnumItemsList();
+
+  @Nullable
+  WitxTag getTag();
 
 }
