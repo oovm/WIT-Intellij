@@ -1,14 +1,13 @@
 package com.github.bytecodealliance.ide.doc
 
 import com.github.bytecodealliance.language.psi.WitElement
-import com.github.bytecodealliance.language.psi.WitFunction
-import com.github.bytecodealliance.language.psi.WitRecord
-import com.github.bytecodealliance.language.psi.WitResource
 import com.intellij.lang.documentation.DocumentationProvider
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.*
+import com.intellij.psi.PsiComment
+import com.intellij.psi.PsiDocCommentBase
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
-import com.intellij.psi.util.siblings
 import java.util.function.Consumer
 
 
@@ -36,12 +35,6 @@ class WitDocumentationProvider : DocumentationProvider {
         return comment.text.trimStart('/', ' ')
     }
 
-    override fun getDocumentationParts(
-        element: PsiElement,
-        originalElement: PsiElement?,
-    ): DocumentationProvider.DocumentationParts? {
-        return super.getDocumentationParts(element, originalElement)
-    }
 }
 
 private class DocumentWrapper(psi: PsiComment) : WitElement(psi.node), PsiDocCommentBase {
