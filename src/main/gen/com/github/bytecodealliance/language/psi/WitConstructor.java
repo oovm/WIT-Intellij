@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface WitConstructor extends PsiElement {
 
   @Nullable
-  WitFunctionParameters getFunctionParameters();
+  WitTuple getTuple();
 
 }

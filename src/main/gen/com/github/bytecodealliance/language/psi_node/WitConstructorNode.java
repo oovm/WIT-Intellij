@@ -29,8 +29,8 @@ public class WitConstructorNode extends WitElement implements WitConstructor {
 
   @Override
   @Nullable
-  public WitFunctionParameters getFunctionParameters() {
-    return findChildByClass(WitFunctionParameters.class);
+  public WitTuple getTuple() {
+    return findChildByClass(WitTuple.class);
   }
 
 }

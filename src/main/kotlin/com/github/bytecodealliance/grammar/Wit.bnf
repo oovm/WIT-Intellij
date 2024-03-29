@@ -94,8 +94,8 @@ package-name ::=
   | module-name package-version?
 package-version ::= AT VERSION;
 // world name { }
-world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
-	pin = 1
+world ::= modifier? KW_WORLD identifier BRACE_L world-element* BRACE_R {
+	pin = 2
     mixin = "com.github.bytecodealliance.language.mixin.MixinWorld"
 }
 private world-element ::=
@@ -167,27 +167,26 @@ private interface-element ::=
 method ::= identifier COLON function-signature {
 	mixin = "com.github.bytecodealliance.language.mixin.MixinMethod"
 }
-constructor ::= KW_CONSTRUCTOR function-parameters {
+constructor ::= KW_CONSTRUCTOR tuple {
 	pin = 1
 }
 function ::= identifier COLON function-signature {
 	mixin = "com.github.bytecodealliance.language.mixin.MixinFunction"
 }
-
-function-signature ::= identifier? KW_FUNCTION function-parameters (TO type-hint)? {
+function-signature ::= modifier? KW_FUNCTION tuple (TO type-hint)? {
 	pin = 2
 }
-function-parameters ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R;
-parameter ::= identifier COLON type-hint {
 
-}
 // type type-name = type-hint;
 define-type ::= KW_TYPE identifier EQ type-hint {
 	pin = 1
 }
-type-hint ::= type-tuple | type-generic;
+type-hint ::= tuple | type-generic;
 type-generic ::= identifier generic?;
-type-tuple ::= PARENTHESIS_L (type-hint (COMMA type-hint)* COMMA?)? PARENTHESIS_R;
+tuple ::= PARENTHESIS_L (parameter (COMMA parameter)* COMMA?)? PARENTHESIS_R;
+parameter ::= identifier COLON type-hint {
+
+}
 generic   ::= ANGLE_L (type-hint (COMMA type-hint)* COMMA?)? ANGLE_R;
 // resource type-name { method: func() };
 resource  ::= KW_RESOURCE identifier (BRACE_L resource-element* BRACE_R)? {
@@ -233,6 +232,7 @@ variant-item 	 ::= identifier (PARENTHESIS_L type-hint PARENTHESIS_R)? {
 /* Literals */
 
 /* Identifier */
+modifier            ::= SYMBOL;
 organization-name   ::= SYMBOL | ESCAPED;
 module-name         ::= SYMBOL | ESCAPED;
 interface-name      ::= SYMBOL | ESCAPED;
