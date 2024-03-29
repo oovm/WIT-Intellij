@@ -15,6 +15,10 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDefineInterface(@NotNull WitDefineInterface o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefineType(@NotNull WitDefineType o) {
     visitPsiElement(o);
   }
@@ -67,7 +71,11 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitInterface(@NotNull WitInterface o) {
+  public void visitInlineInterface(@NotNull WitInlineInterface o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInterfaceBody(@NotNull WitInterfaceBody o) {
     visitPsiElement(o);
   }
 

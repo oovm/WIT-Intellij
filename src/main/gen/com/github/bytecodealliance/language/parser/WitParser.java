@@ -63,6 +63,21 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // KW_INTERFACE interface-name interface-body
+  public static boolean define_interface(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "define_interface")) return false;
+    if (!nextTokenIs(b, KW_INTERFACE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, DEFINE_INTERFACE, null);
+    r = consumeToken(b, KW_INTERFACE);
+    p = r; // pin = 1
+    r = r && report_error_(b, interface_name(b, l + 1));
+    r = p && interface_body(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
   // KW_TYPE identifier EQ type-hint
   public static boolean define_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "define_type")) return false;
@@ -159,15 +174,16 @@ public class WitParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // function
+  //   | inline-interface
   //   | include-name
-  //   | interface
   public static boolean export_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "export_term")) return false;
+    if (!nextTokenIs(b, "<export term>", ESCAPED, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPORT_TERM, "<export term>");
     r = function(b, l + 1);
+    if (!r) r = inline_interface(b, l + 1);
     if (!r) r = include_name(b, l + 1);
-    if (!r) r = interface_$(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -513,36 +529,41 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_INTERFACE interface-name? BRACE_L interface-element* BRACE_R
-  public static boolean interface_$(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "interface_$")) return false;
-    if (!nextTokenIs(b, KW_INTERFACE)) return false;
+  // interface-name COLON KW_INTERFACE interface-body
+  public static boolean inline_interface(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "inline_interface")) return false;
+    if (!nextTokenIs(b, "<inline interface>", ESCAPED, SYMBOL)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, INTERFACE, null);
-    r = consumeToken(b, KW_INTERFACE);
-    p = r; // pin = 1
-    r = r && report_error_(b, interface_1(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
-    r = p && report_error_(b, interface_3(b, l + 1)) && r;
-    r = p && consumeToken(b, BRACE_R) && r;
+    Marker m = enter_section_(b, l, _NONE_, INLINE_INTERFACE, "<inline interface>");
+    r = interface_name(b, l + 1);
+    r = r && consumeTokens(b, 2, COLON, KW_INTERFACE);
+    p = r; // pin = 3
+    r = r && interface_body(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // interface-name?
-  private static boolean interface_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "interface_1")) return false;
-    interface_name(b, l + 1);
-    return true;
+  /* ********************************************************** */
+  // BRACE_L interface-element* BRACE_R
+  public static boolean interface_body(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "interface_body")) return false;
+    if (!nextTokenIs(b, BRACE_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, BRACE_L);
+    r = r && interface_body_1(b, l + 1);
+    r = r && consumeToken(b, BRACE_R);
+    exit_section_(b, m, INTERFACE_BODY, r);
+    return r;
   }
 
   // interface-element*
-  private static boolean interface_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "interface_3")) return false;
+  private static boolean interface_body_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "interface_body_1")) return false;
     while (true) {
       int c = current_position_(b);
       if (!interface_element(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "interface_3", c)) break;
+      if (!empty_element_parsed_guard_(b, "interface_body_1", c)) break;
     }
     return true;
   }
@@ -863,7 +884,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   // package
   //   | world
   //   | include
-  //   | interface
+  //   | define-interface
   //   | SEMICOLON
   static boolean statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statements")) return false;
@@ -871,7 +892,7 @@ public class WitParser implements PsiParser, LightPsiParser {
     r = package_$(b, l + 1);
     if (!r) r = world(b, l + 1);
     if (!r) r = include(b, l + 1);
-    if (!r) r = interface_$(b, l + 1);
+    if (!r) r = define_interface(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     return r;
   }

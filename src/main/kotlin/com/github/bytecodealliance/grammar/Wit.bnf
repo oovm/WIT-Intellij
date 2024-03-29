@@ -81,7 +81,7 @@ private statements ::=
     package
   | world
   | include
-  | interface
+  | define-interface
   | SEMICOLON
 
 // package wasi:blobstore@0.2.0-draft;
@@ -127,8 +127,8 @@ export    ::= KW_EXPORT export-term {
 }
 export-term ::=
     function
+  | inline-interface
   | include-name
-
 //  use wasi:poll/poll.{pollable};
 //  use wasi:io/streams@0.2.0.{input-stream, output-stream};
 use      ::= KW_USE include-name use-items? {
@@ -140,11 +140,19 @@ use-items ::= DOT BRACE_L (use-alias (COMMA use-alias)* COMMA?)? BRACE_R {
 use-alias ::= identifier (KW_AS alias-name)? {
 
 }
+
 // interface name { }
-interface ::= KW_INTERFACE interface-name? BRACE_L interface-element* BRACE_R {
+define-interface ::= KW_INTERFACE interface-name interface-body {
 	pin = 1
     mixin = "com.github.bytecodealliance.language.mixin.MixinInterface"
 }
+// exports: interface
+inline-interface ::= interface-name COLON KW_INTERFACE interface-body {
+	pin = 3
+//	extends = interface
+//	mixin = "com.github.bytecodealliance.language.mixin.MixinInterface"
+}
+interface-body ::= BRACE_L interface-element* BRACE_R;
 private interface-element ::=
 	use
   | define-type

@@ -7,31 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface WitInterface extends PsiElement {
 
-  @NotNull
-  List<WitDefineType> getDefineTypeList();
-
-  @NotNull
-  List<WitEnum> getEnumList();
-
-  @NotNull
-  List<WitFlags> getFlagsList();
-
-  @NotNull
-  List<WitFunction> getFunctionList();
+  @Nullable
+  WitInterfaceBody getInterfaceBody();
 
   @Nullable
   WitInterfaceName getInterfaceName();
-
-  @NotNull
-  List<WitRecord> getRecordList();
-
-  @NotNull
-  List<WitResource> getResourceList();
-
-  @NotNull
-  List<WitUse> getUseList();
-
-  @NotNull
-  List<WitVariant> getVariantList();
 
 }

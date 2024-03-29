@@ -3,12 +3,11 @@
 # Wit-Intellij Changelog
 
 ## [0.0.4]
-### Update Grammar
-- `import` and `export` statements can contain version numbers
-- `import` and `export` statement support functions
+### Update
+- support default `world`
 - support `tuple` literal type
-
-
+- support import/export inline `interface`
+- support folding interface body and inline interface body
 
 ## [0.0.3]
 ### Update Grammar

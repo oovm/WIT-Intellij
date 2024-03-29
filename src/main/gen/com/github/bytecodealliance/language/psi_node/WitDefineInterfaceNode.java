@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.bytecodealliance.language.psi.WitTypes.*;
-import com.github.bytecodealliance.language.psi.WitElement;
+import com.github.bytecodealliance.language.mixin.MixinInterface;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitExportTermNode extends WitElement implements WitExportTerm {
+public class WitDefineInterfaceNode extends MixinInterface implements WitDefineInterface {
 
-  public WitExportTermNode(@NotNull ASTNode node) {
+  public WitDefineInterfaceNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitVisitor visitor) {
-    visitor.visitExportTerm(this);
+    visitor.visitDefineInterface(this);
   }
 
   @Override
@@ -29,20 +29,14 @@ public class WitExportTermNode extends WitElement implements WitExportTerm {
 
   @Override
   @Nullable
-  public WitFunction getFunction() {
-    return findChildByClass(WitFunction.class);
+  public WitInterfaceBody getInterfaceBody() {
+    return findChildByClass(WitInterfaceBody.class);
   }
 
   @Override
   @Nullable
-  public WitIncludeName getIncludeName() {
-    return findChildByClass(WitIncludeName.class);
-  }
-
-  @Override
-  @Nullable
-  public WitInlineInterface getInlineInterface() {
-    return findChildByClass(WitInlineInterface.class);
+  public WitInterfaceName getInterfaceName() {
+    return findChildByClass(WitInterfaceName.class);
   }
 
 }

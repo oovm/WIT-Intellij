@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitExportTerm extends PsiElement {
+public interface WitInterfaceInline extends PsiElement {
 
   @Nullable
-  WitFunction getFunction();
+  WitInterfaceBody getInterfaceBody();
 
-  @Nullable
-  WitIncludeName getIncludeName();
-
-  @Nullable
-  WitInlineInterface getInlineInterface();
+  @NotNull
+  WitInterfaceName getInterfaceName();
 
 }

@@ -10,6 +10,7 @@ public interface WitTypes {
 
   IElementType ALIAS_NAME = new WitElementType("ALIAS_NAME");
   IElementType CONSTRUCTOR = new WitElementType("CONSTRUCTOR");
+  IElementType DEFINE_INTERFACE = new WitElementType("DEFINE_INTERFACE");
   IElementType DEFINE_TYPE = new WitElementType("DEFINE_TYPE");
   IElementType ENUM = new WitElementType("ENUM");
   IElementType EXPORT = new WitElementType("EXPORT");
@@ -23,7 +24,8 @@ public interface WitTypes {
   IElementType IMPORT = new WitElementType("IMPORT");
   IElementType INCLUDE = new WitElementType("INCLUDE");
   IElementType INCLUDE_NAME = new WitElementType("INCLUDE_NAME");
-  IElementType INTERFACE = new WitElementType("INTERFACE");
+  IElementType INLINE_INTERFACE = new WitElementType("INLINE_INTERFACE");
+  IElementType INTERFACE_BODY = new WitElementType("INTERFACE_BODY");
   IElementType INTERFACE_NAME = new WitElementType("INTERFACE_NAME");
   IElementType METHOD = new WitElementType("METHOD");
   IElementType MODULE_NAME = new WitElementType("MODULE_NAME");
@@ -106,6 +108,9 @@ public interface WitTypes {
       else if (type == CONSTRUCTOR) {
         return new WitConstructorNode(node);
       }
+      else if (type == DEFINE_INTERFACE) {
+        return new WitDefineInterfaceNode(node);
+      }
       else if (type == DEFINE_TYPE) {
         return new WitDefineTypeNode(node);
       }
@@ -145,8 +150,11 @@ public interface WitTypes {
       else if (type == INCLUDE_NAME) {
         return new WitIncludeNameNode(node);
       }
-      else if (type == INTERFACE) {
-        return new WitInterfaceNode(node);
+      else if (type == INLINE_INTERFACE) {
+        return new WitInlineInterfaceNode(node);
+      }
+      else if (type == INTERFACE_BODY) {
+        return new WitInterfaceBodyNode(node);
       }
       else if (type == INTERFACE_NAME) {
         return new WitInterfaceNameNode(node);
