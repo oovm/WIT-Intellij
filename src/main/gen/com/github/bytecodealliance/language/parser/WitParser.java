@@ -1216,8 +1216,11 @@ public class WitParser implements PsiParser, LightPsiParser {
   //   | import
   //   | export
   //   | use
+  //   | define-type
+  //   | enum
   //   | variant
   //   | record
+  //   | resource
   //   | SEMICOLON
   //   | COMMENT_LINE
   static boolean world_element(PsiBuilder b, int l) {
@@ -1227,8 +1230,11 @@ public class WitParser implements PsiParser, LightPsiParser {
     if (!r) r = import_$(b, l + 1);
     if (!r) r = export(b, l + 1);
     if (!r) r = use(b, l + 1);
+    if (!r) r = define_type(b, l + 1);
+    if (!r) r = enum_$(b, l + 1);
     if (!r) r = variant(b, l + 1);
     if (!r) r = record(b, l + 1);
+    if (!r) r = resource(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     if (!r) r = consumeToken(b, COMMENT_LINE);
     return r;
