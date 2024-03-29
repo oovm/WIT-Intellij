@@ -12,6 +12,7 @@ public interface WitTypes {
   IElementType CONSTRUCTOR = new WitElementType("CONSTRUCTOR");
   IElementType ENUM = new WitElementType("ENUM");
   IElementType EXPORT = new WitElementType("EXPORT");
+  IElementType EXPORT_TERM = new WitElementType("EXPORT_TERM");
   IElementType FLAGS = new WitElementType("FLAGS");
   IElementType FUNCTION = new WitElementType("FUNCTION");
   IElementType FUNCTION_PARAMETERS = new WitElementType("FUNCTION_PARAMETERS");
@@ -28,6 +29,7 @@ public interface WitTypes {
   IElementType ORGANIZATION_NAME = new WitElementType("ORGANIZATION_NAME");
   IElementType PACKAGE = new WitElementType("PACKAGE");
   IElementType PACKAGE_NAME = new WitElementType("PACKAGE_NAME");
+  IElementType PACKAGE_VERSION = new WitElementType("PACKAGE_VERSION");
   IElementType PARAMETER = new WitElementType("PARAMETER");
   IElementType RECORD = new WitElementType("RECORD");
   IElementType RECORD_FIELD = new WitElementType("RECORD_FIELD");
@@ -108,6 +110,9 @@ public interface WitTypes {
       else if (type == EXPORT) {
         return new WitExportNode(node);
       }
+      else if (type == EXPORT_TERM) {
+        return new WitExportTermNode(node);
+      }
       else if (type == FLAGS) {
         return new WitFlagsNode(node);
       }
@@ -155,6 +160,9 @@ public interface WitTypes {
       }
       else if (type == PACKAGE_NAME) {
         return new WitPackageNameNode(node);
+      }
+      else if (type == PACKAGE_VERSION) {
+        return new WitPackageVersionNode(node);
       }
       else if (type == PARAMETER) {
         return new WitParameterNode(node);

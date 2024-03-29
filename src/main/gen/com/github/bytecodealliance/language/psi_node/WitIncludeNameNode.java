@@ -39,4 +39,10 @@ public class WitIncludeNameNode extends WitElement implements WitIncludeName {
     return findNotNullChildByClass(WitInterfaceName.class);
   }
 
+  @Override
+  @Nullable
+  public WitPackageVersion getPackageVersion() {
+    return findChildByClass(WitPackageVersion.class);
+  }
+
 }

@@ -13,4 +13,7 @@ public interface WitIncludeName extends PsiElement {
   @NotNull
   WitInterfaceName getInterfaceName();
 
+  @Nullable
+  WitPackageVersion getPackageVersion();
+
 }

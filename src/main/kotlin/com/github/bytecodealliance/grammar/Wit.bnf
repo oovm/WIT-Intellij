@@ -90,8 +90,9 @@ package ::= KW_PACKAGE package-name {
     mixin = "com.github.bytecodealliance.language.mixin.MixinPackage"
 }
 package-name ::=
-	organization-name (COLON module-name) (AT VERSION)
-  | module-name
+	organization-name (COLON module-name) package-version?
+  | module-name package-version?
+package-version ::= AT VERSION;
 // world name { }
 world ::= KW_WORLD identifier BRACE_L world-element* BRACE_R {
 	pin = 1
@@ -102,6 +103,8 @@ private world-element ::=
   | import
   | export
   | use
+  | variant
+  | record
   | SEMICOLON
   | COMMENT_LINE
 // include wasi:keyvalue/imports@0.2.0-draft;
@@ -110,16 +113,22 @@ include ::= KW_INCLUDE include-name {
     mixin = "com.github.bytecodealliance.language.mixin.MixinInclude"
 }
 include-name ::=
-    identifier (COLON identifier) (SLASH interface-name) (AT VERSION)
+    identifier (COLON identifier) (SLASH interface-name) package-version?
   | interface-name
 // import imports;
-import    ::= KW_IMPORT include-name {
+// import error-code: func(err: u32) -> option<u32>;
+// export imports;
+// export my:dep/a@0.2.0;
+import    ::= KW_IMPORT export-term {
 	pin = 1
 }
-// import imports;
-export    ::= KW_EXPORT interface-name {
+export    ::= KW_EXPORT export-term {
 	pin = 1
 }
+export-term ::=
+    function
+  | include-name
+//  use wasi:poll/poll.{pollable};
 //  use wasi:io/streams@0.2.0.{input-stream, output-stream};
 use      ::= KW_USE include-name use-items? {
 	pin = 1

@@ -11,14 +11,14 @@ import static com.github.bytecodealliance.language.psi.WitTypes.*;
 import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitPackageNameNode extends WitElement implements WitPackageName {
+public class WitExportTermNode extends WitElement implements WitExportTerm {
 
-  public WitPackageNameNode(@NotNull ASTNode node) {
+  public WitExportTermNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitVisitor visitor) {
-    visitor.visitPackageName(this);
+    visitor.visitExportTerm(this);
   }
 
   @Override
@@ -28,21 +28,15 @@ public class WitPackageNameNode extends WitElement implements WitPackageName {
   }
 
   @Override
-  @NotNull
-  public WitModuleName getModuleName() {
-    return findNotNullChildByClass(WitModuleName.class);
+  @Nullable
+  public WitFunction getFunction() {
+    return findChildByClass(WitFunction.class);
   }
 
   @Override
   @Nullable
-  public WitOrganizationName getOrganizationName() {
-    return findChildByClass(WitOrganizationName.class);
-  }
-
-  @Override
-  @Nullable
-  public WitPackageVersion getPackageVersion() {
-    return findChildByClass(WitPackageVersion.class);
+  public WitIncludeName getIncludeName() {
+    return findChildByClass(WitIncludeName.class);
   }
 
 }

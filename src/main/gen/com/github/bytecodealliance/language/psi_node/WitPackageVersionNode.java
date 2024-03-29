@@ -11,38 +11,20 @@ import static com.github.bytecodealliance.language.psi.WitTypes.*;
 import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitPackageNameNode extends WitElement implements WitPackageName {
+public class WitPackageVersionNode extends WitElement implements WitPackageVersion {
 
-  public WitPackageNameNode(@NotNull ASTNode node) {
+  public WitPackageVersionNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitVisitor visitor) {
-    visitor.visitPackageName(this);
+    visitor.visitPackageVersion(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof WitVisitor) accept((WitVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public WitModuleName getModuleName() {
-    return findNotNullChildByClass(WitModuleName.class);
-  }
-
-  @Override
-  @Nullable
-  public WitOrganizationName getOrganizationName() {
-    return findChildByClass(WitOrganizationName.class);
-  }
-
-  @Override
-  @Nullable
-  public WitPackageVersion getPackageVersion() {
-    return findChildByClass(WitPackageVersion.class);
   }
 
 }

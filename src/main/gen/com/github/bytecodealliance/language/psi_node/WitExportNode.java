@@ -29,8 +29,8 @@ public class WitExportNode extends WitElement implements WitExport {
 
   @Override
   @Nullable
-  public WitInterfaceName getInterfaceName() {
-    return findChildByClass(WitInterfaceName.class);
+  public WitExportTerm getExportTerm() {
+    return findChildByClass(WitExportTerm.class);
   }
 
 }
