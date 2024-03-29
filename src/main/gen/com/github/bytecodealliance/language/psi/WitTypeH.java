@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WitxVariant extends PsiElement {
+public interface WitTypeH extends PsiElement {
 
   @Nullable
-  WitxIdentifier getIdentifier();
+  WitTypeGeneric getTypeGeneric();
 
-  @NotNull
-  List<WitxVariantItem> getVariantItemList();
+  @Nullable
+  WitTypeTuple getTypeTuple();
 
 }

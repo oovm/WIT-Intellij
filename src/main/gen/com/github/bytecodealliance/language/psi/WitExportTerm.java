@@ -13,4 +13,7 @@ public interface WitExportTerm extends PsiElement {
   @Nullable
   WitIncludeName getIncludeName();
 
+  @Nullable
+  WitInterface getInterface();
+
 }

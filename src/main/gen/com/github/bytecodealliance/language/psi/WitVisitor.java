@@ -15,6 +15,10 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDefineType(@NotNull WitDefineType o) {
+    visitPsiElement(o);
+  }
+
   public void visitEnum(@NotNull WitEnum o) {
     visitPsiElement(o);
   }
@@ -115,11 +119,15 @@ public class WitVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitType(@NotNull WitType o) {
+  public void visitTypeGeneric(@NotNull WitTypeGeneric o) {
     visitPsiElement(o);
   }
 
   public void visitTypeHint(@NotNull WitTypeHint o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeTuple(@NotNull WitTypeTuple o) {
     visitPsiElement(o);
   }
 

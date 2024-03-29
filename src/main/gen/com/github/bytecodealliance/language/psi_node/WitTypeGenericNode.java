@@ -11,14 +11,14 @@ import static com.github.bytecodealliance.language.psi.WitTypes.*;
 import com.github.bytecodealliance.language.psi.WitElement;
 import com.github.bytecodealliance.language.psi.*;
 
-public class WitTypeNode extends WitElement implements WitType {
+public class WitTypeGenericNode extends WitElement implements WitTypeGeneric {
 
-  public WitTypeNode(@NotNull ASTNode node) {
+  public WitTypeGenericNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WitVisitor visitor) {
-    visitor.visitType(this);
+    visitor.visitTypeGeneric(this);
   }
 
   @Override
@@ -29,14 +29,14 @@ public class WitTypeNode extends WitElement implements WitType {
 
   @Override
   @Nullable
-  public WitIdentifier getIdentifier() {
-    return findChildByClass(WitIdentifier.class);
+  public WitGeneric getGeneric() {
+    return findChildByClass(WitGeneric.class);
   }
 
   @Override
-  @Nullable
-  public WitTypeHint getTypeHint() {
-    return findChildByClass(WitTypeHint.class);
+  @NotNull
+  public WitIdentifier getIdentifier() {
+    return findNotNullChildByClass(WitIdentifier.class);
   }
 
 }

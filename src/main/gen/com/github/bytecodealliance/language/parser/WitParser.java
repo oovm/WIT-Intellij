@@ -63,6 +63,22 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // KW_TYPE identifier EQ type-hint
+  public static boolean define_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "define_type")) return false;
+    if (!nextTokenIs(b, KW_TYPE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, DEFINE_TYPE, null);
+    r = consumeToken(b, KW_TYPE);
+    p = r; // pin = 1
+    r = r && report_error_(b, identifier(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, EQ)) && r;
+    r = p && type_hint(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
   // KW_ENUM identifier BRACE_L (semantic-number (COMMA semantic-number)* COMMA?)? BRACE_R
   public static boolean enum_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_$")) return false;
@@ -144,13 +160,14 @@ public class WitParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // function
   //   | include-name
+  //   | interface
   public static boolean export_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "export_term")) return false;
-    if (!nextTokenIs(b, "<export term>", ESCAPED, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPORT_TERM, "<export term>");
     r = function(b, l + 1);
     if (!r) r = include_name(b, l + 1);
+    if (!r) r = interface_$(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -496,7 +513,7 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_INTERFACE interface-name BRACE_L interface-element* BRACE_R
+  // KW_INTERFACE interface-name? BRACE_L interface-element* BRACE_R
   public static boolean interface_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "interface_$")) return false;
     if (!nextTokenIs(b, KW_INTERFACE)) return false;
@@ -504,12 +521,19 @@ public class WitParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, INTERFACE, null);
     r = consumeToken(b, KW_INTERFACE);
     p = r; // pin = 1
-    r = r && report_error_(b, interface_name(b, l + 1));
+    r = r && report_error_(b, interface_1(b, l + 1));
     r = p && report_error_(b, consumeToken(b, BRACE_L)) && r;
     r = p && report_error_(b, interface_3(b, l + 1)) && r;
     r = p && consumeToken(b, BRACE_R) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // interface-name?
+  private static boolean interface_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "interface_1")) return false;
+    interface_name(b, l + 1);
+    return true;
   }
 
   // interface-element*
@@ -525,7 +549,7 @@ public class WitParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // use
-  //   | type
+  //   | define-type
   //   | resource
   //   | record
   //   | flags
@@ -537,7 +561,7 @@ public class WitParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "interface_element")) return false;
     boolean r;
     r = use(b, l + 1);
-    if (!r) r = type(b, l + 1);
+    if (!r) r = define_type(b, l + 1);
     if (!r) r = resource(b, l + 1);
     if (!r) r = record(b, l + 1);
     if (!r) r = flags(b, l + 1);
@@ -853,38 +877,96 @@ public class WitParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // KW_TYPE identifier EQ type-hint
-  public static boolean type(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type")) return false;
-    if (!nextTokenIs(b, KW_TYPE)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, TYPE, null);
-    r = consumeToken(b, KW_TYPE);
-    p = r; // pin = 1
-    r = r && report_error_(b, identifier(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, EQ)) && r;
-    r = p && type_hint(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  /* ********************************************************** */
   // identifier generic?
-  public static boolean type_hint(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_hint")) return false;
-    if (!nextTokenIs(b, "<type hint>", ESCAPED, SYMBOL)) return false;
+  public static boolean type_generic(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_generic")) return false;
+    if (!nextTokenIs(b, "<type generic>", ESCAPED, SYMBOL)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TYPE_HINT, "<type hint>");
+    Marker m = enter_section_(b, l, _NONE_, TYPE_GENERIC, "<type generic>");
     r = identifier(b, l + 1);
-    r = r && type_hint_1(b, l + 1);
+    r = r && type_generic_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   // generic?
-  private static boolean type_hint_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_hint_1")) return false;
+  private static boolean type_generic_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_generic_1")) return false;
     generic(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // type-tuple | type-generic
+  public static boolean type_hint(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_hint")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TYPE_HINT, "<type hint>");
+    r = type_tuple(b, l + 1);
+    if (!r) r = type_generic(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PARENTHESIS_L (type-hint (COMMA type-hint)* COMMA?)? PARENTHESIS_R
+  public static boolean type_tuple(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_tuple")) return false;
+    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, PARENTHESIS_L);
+    r = r && type_tuple_1(b, l + 1);
+    r = r && consumeToken(b, PARENTHESIS_R);
+    exit_section_(b, m, TYPE_TUPLE, r);
+    return r;
+  }
+
+  // (type-hint (COMMA type-hint)* COMMA?)?
+  private static boolean type_tuple_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_tuple_1")) return false;
+    type_tuple_1_0(b, l + 1);
+    return true;
+  }
+
+  // type-hint (COMMA type-hint)* COMMA?
+  private static boolean type_tuple_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_tuple_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = type_hint(b, l + 1);
+    r = r && type_tuple_1_0_1(b, l + 1);
+    r = r && type_tuple_1_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA type-hint)*
+  private static boolean type_tuple_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_tuple_1_0_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!type_tuple_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "type_tuple_1_0_1", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA type-hint
+  private static boolean type_tuple_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_tuple_1_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && type_hint(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // COMMA?
+  private static boolean type_tuple_1_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_tuple_1_0_2")) return false;
+    consumeToken(b, COMMA);
     return true;
   }
 

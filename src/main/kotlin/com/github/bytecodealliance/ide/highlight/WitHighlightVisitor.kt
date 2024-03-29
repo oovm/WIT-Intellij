@@ -73,11 +73,12 @@ class WitHighlightVisitor : WitVisitor(), HighlightVisitor {
         highlight(o.identifier, SYM_FIELD)
     }
 
-    override fun visitType(o: WitType) {
+
+    override fun visitDefineType(o: WitDefineType) {
         o.identifier?.let { highlight(it, SYM_TYPE) }
     }
 
-    override fun visitTypeHint(o: WitTypeHint) {
+    override fun visitTypeGeneric(o: WitTypeGeneric) {
         when (o.identifier.text) {
             "_", "bool",
             "u8", "u16", "u32", "u64",

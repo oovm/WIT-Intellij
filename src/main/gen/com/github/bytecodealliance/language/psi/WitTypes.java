@@ -10,6 +10,7 @@ public interface WitTypes {
 
   IElementType ALIAS_NAME = new WitElementType("ALIAS_NAME");
   IElementType CONSTRUCTOR = new WitElementType("CONSTRUCTOR");
+  IElementType DEFINE_TYPE = new WitElementType("DEFINE_TYPE");
   IElementType ENUM = new WitElementType("ENUM");
   IElementType EXPORT = new WitElementType("EXPORT");
   IElementType EXPORT_TERM = new WitElementType("EXPORT_TERM");
@@ -35,8 +36,9 @@ public interface WitTypes {
   IElementType RECORD_FIELD = new WitElementType("RECORD_FIELD");
   IElementType RESOURCE = new WitElementType("RESOURCE");
   IElementType SEMANTIC_NUMBER = new WitElementType("SEMANTIC_NUMBER");
-  IElementType TYPE = new WitElementType("TYPE");
+  IElementType TYPE_GENERIC = new WitElementType("TYPE_GENERIC");
   IElementType TYPE_HINT = new WitElementType("TYPE_HINT");
+  IElementType TYPE_TUPLE = new WitElementType("TYPE_TUPLE");
   IElementType USE = new WitElementType("USE");
   IElementType USE_ALIAS = new WitElementType("USE_ALIAS");
   IElementType USE_ITEMS = new WitElementType("USE_ITEMS");
@@ -103,6 +105,9 @@ public interface WitTypes {
       }
       else if (type == CONSTRUCTOR) {
         return new WitConstructorNode(node);
+      }
+      else if (type == DEFINE_TYPE) {
+        return new WitDefineTypeNode(node);
       }
       else if (type == ENUM) {
         return new WitEnumNode(node);
@@ -179,11 +184,14 @@ public interface WitTypes {
       else if (type == SEMANTIC_NUMBER) {
         return new WitSemanticNumberNode(node);
       }
-      else if (type == TYPE) {
-        return new WitTypeNode(node);
+      else if (type == TYPE_GENERIC) {
+        return new WitTypeGenericNode(node);
       }
       else if (type == TYPE_HINT) {
         return new WitTypeHintNode(node);
+      }
+      else if (type == TYPE_TUPLE) {
+        return new WitTypeTupleNode(node);
       }
       else if (type == USE) {
         return new WitUseNode(node);
